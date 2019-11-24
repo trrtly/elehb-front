@@ -32,7 +32,7 @@ body {
     font-family: 'DIN Medium';
 }
 
-/* overWrite vant ui css */
+/* overWrite vant ui Swipe css */
 /* swiper indicator */
 #app .van-swipe__indicator {
     width: 0.2rem;
@@ -48,6 +48,11 @@ body {
     background-size: cover;
 }
 
+/* overWrite vant ui Dialog css */
+#app .van-dialog {
+    border-radius: 0.1rem;
+}
+
 /* common */
 .fz-32 {
     font-size: 0.32rem;
@@ -55,5 +60,11 @@ body {
 
 .fz-28 {
     font-size: 0.28rem;
+}
+
+/* modal */
+.modal-title {
+    font-size: 0.3rem;
+    font-weight: bold;
 }
 </style>

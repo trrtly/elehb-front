@@ -1,7 +1,9 @@
-<template><div></div></template>
+<template>
+    <div class="hb-modal"></div>
+</template>
 
 <script>
 export default {};
 </script>
 
-<style></style>
+<style scoped></style>

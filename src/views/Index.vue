@@ -34,7 +34,7 @@
                 <van-field class="phone-input van-hairline--surround" type="number" required clearable v-model="phoneNum" maxlength="11" placeholder="请输入饿了么账号（手机号）" />
             </div>
 
-            <van-button class="hb-form-submit fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)">立即领取</van-button>
+            <van-button class="hb-form-submit fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getHb">立即领取</van-button>
 
             <div class="hb-description">
                 <p>领取规则：</p>
@@ -66,16 +66,30 @@
                 <span class="user-center-text fz-28">个人中心</span>
             </div>
         </div>
+
+        <!-- 验证码回执模态框 -->
+        <van-dialog v-model="getCbModalShow" close-on-click-overlay :show-confirm-button="false">
+            <div slot="title" class="modal-title">
+                请输入接收到的短信验证码
+            </div>
+            <div style="padding: 0 0.4rem; margin-top: 0.4rem; margin-bottom: 0.62rem;">
+                <div style="margin-bottom: 0.4rem;">
+                    <van-field class="valida-code-input van-hairline--surround" type="number" required clearable v-model="validaCode" placeholder="短信验证码" />
+                </div>
+                <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)">立即领取</van-button>
+            </div>
+        </van-dialog>
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Vue from 'vue';
-import { Swipe, SwipeItem, Field, Button } from 'vant';
+import { Swipe, SwipeItem, Dialog, Field, Button } from 'vant';
 
 Vue.use(Swipe)
     .use(SwipeItem)
+    .use(Dialog)
     .use(Field)
     .use(Button);
 
@@ -121,7 +135,10 @@ export default {
             ],
             currentHbSelection: 0, // 默认选中第一个红包
             phoneNum: '',
-            phoneErrMsg: ''
+            phoneErrMsg: '',
+            getCbModalShow: false,
+
+            validaCode: ''
         };
     },
     computed: {
@@ -130,9 +147,13 @@ export default {
         }
     },
     methods: {
+        // 选择红包类型
         hbSelect(index) {
-            // 选择红包
             this.currentHbSelection = index;
+        },
+        // 获取红包
+        getHb() {
+            this.getCbModalShow = true;
         }
     }
 };
