@@ -1,6 +1,6 @@
 <template>
     <div>
-        Me
+        Recharge Page
         <router-link to="/">Home</router-link>
     </div>
 </template>
@@ -9,4 +9,4 @@
 export default {};
 </script>
 
-<style scoped></style>
+<style></style>

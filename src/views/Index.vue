@@ -57,12 +57,11 @@
                     </span>
                 </div>
             </div>
-            <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)">充值积分</van-button>
+            <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/recharge">充值积分</van-button>
         </footer>
 
-        <div class="user-center-wrapper" @click="toMeRouter">
+        <div class="user-center-wrapper" v-route-jump="'/me'">
             <div class="user-center-btn fz-32">
-                <!-- <van-button icon="../assets/index/icon-my@2x.png" type="info">个人中心</van-button> -->
                 <span class="user-center-icon"></span>
                 <span class="user-center-text fz-28">个人中心</span>
             </div>
@@ -121,7 +120,8 @@ export default {
                 }
             ],
             currentHbSelection: 0, // 默认选中第一个红包
-            phoneNum: ''
+            phoneNum: '',
+            phoneErrMsg: ''
         };
     },
     computed: {
@@ -133,9 +133,6 @@ export default {
         hbSelect(index) {
             // 选择红包
             this.currentHbSelection = index;
-        },
-        toMeRouter() {
-            this.$router.push('/me');
         }
     }
 };
@@ -302,6 +299,7 @@ export default {
 
 .hb-bar .hb-recharge {
     width: 2.6rem;
+    border-radius: 0;
 }
 
 .hb-bar .user-info {
