@@ -1,32 +1,33 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app">
+        <router-view />
     </div>
-    <router-view />
-  </div>
 </template>
 
+<script>
+import 'reset-css'; // reset-css
+
+export default {};
+</script>
+
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+body {
+    font-family: 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', Arial, sans-serif;
 }
 
-#nav {
-  padding: 30px;
+/* overWrite vant ui css */
+/* swiper indicator */
+#app .van-swipe__indicator {
+    width: 0.2rem;
+    height: 0.06rem;
+    border-radius: 0;
+    background: url('./assets/index/swipe-indicator-no@2x.png');
+    background-size: contain;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+#app .van-swipe__indicator--active {
+    width: 0.3rem;
+    background: url('./assets/index/swipe-indicator-active@2x.png');
+    background-size: contain;
 }
 </style>
