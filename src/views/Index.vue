@@ -68,9 +68,10 @@
         </div>
 
         <!-- 验证码回执模态框 -->
-        <van-dialog v-model="getCbModalShow" close-on-click-overlay :show-confirm-button="false">
+        <!-- <van-dialog v-model="getCbModalShow" close-on-click-overlay :show-confirm-button="false">
             <div slot="title" class="modal-title">
                 请输入接收到的短信验证码
+                <van-icon name="cross" />
             </div>
             <div style="padding: 0 0.4rem; margin-top: 0.4rem; margin-bottom: 0.62rem;">
                 <div style="margin-bottom: 0.4rem;">
@@ -78,7 +79,8 @@
                 </div>
                 <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)">立即领取</van-button>
             </div>
-        </van-dialog>
+        </van-dialog> -->
+        <hb-modal v-model="getCbModalShow" />
     </div>
 </template>
 
@@ -86,6 +88,7 @@
 // @ is an alias to /src
 import Vue from 'vue';
 import { Swipe, SwipeItem, Dialog, Field, Button } from 'vant';
+import hbModal from '../components/WmqModal/WmqModal.vue';
 
 Vue.use(Swipe)
     .use(SwipeItem)
@@ -155,6 +158,9 @@ export default {
         getHb() {
             this.getCbModalShow = true;
         }
+    },
+    components: {
+        hbModal
     }
 };
 </script>
