@@ -1,5 +1,5 @@
 <template>
-    <van-dialog v-model="innerShowFlag" close-on-click-overlay :show-confirm-button="false" @closed="closeModal">
+    <van-dialog v-model="innerShowFlag" :close-on-click-overlay="closeOnClickOverlay" :show-confirm-button="false" @closed="closeModal">
         <div slot="title" class="hb-modal-title">
             {{ title }}
             <van-icon class="hb-modal-close-btn" name="cross" @click="closeModal" />
@@ -7,12 +7,6 @@
         <div class="hb-modal-body">
             <slot></slot>
         </div>
-        <!-- <div style="padding: 0 0.4rem; margin-top: 0.4rem; margin-bottom: 0.62rem;">
-            <div style="margin-bottom: 0.4rem;">
-                <van-field class="valida-code-input van-hairline--surround" type="number" required clearable v-model="validaCode" placeholder="短信验证码" />
-            </div>
-            <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)">立即领取</van-button>
-        </div> -->
     </van-dialog>
 </template>
 
@@ -32,6 +26,10 @@ export default {
         title: {
             required: true,
             type: String
+        },
+        closeOnClickOverlay: {
+            type: Boolean,
+            default: false
         }
     },
     model: {

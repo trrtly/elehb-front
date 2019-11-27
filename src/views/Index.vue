@@ -31,7 +31,16 @@
             </ul>
 
             <div class="hb-form">
-                <van-field class="phone-input van-hairline--surround" type="number" required clearable v-model="phoneNum" maxlength="11" placeholder="请输入饿了么账号（手机号）" />
+                <van-field
+                    class="phone-input van-hairline--surround"
+                    type="number"
+                    required
+                    clearable
+                    v-model="phoneNum"
+                    maxlength="11"
+                    placeholder="请输入饿了么账号（手机号）"
+                    :error-message="phoneErrMsg"
+                />
             </div>
 
             <van-button class="hb-form-submit fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getHb">立即领取</van-button>
@@ -68,11 +77,11 @@
         </div>
 
         <!-- 验证码回执模态框 -->
-        <hb-modal v-model="getCbModalShow" title="请输入接收到的短信验证码">
+        <hb-modal v-model="getCbModalShow" :close-on-click-overlay="false" title="请输入接收到的短信验证码">
             <div style="margin-bottom: 0.4rem;">
                 <van-field class="valida-code-input van-hairline--surround" type="number" required clearable v-model="validaCode" placeholder="短信验证码">
-                    <!-- <van-button slot="button" size="small" type="info" color="#2c3ffb" round plain hairline @click="getValidationCode">发送验证码</van-button> -->
-                    <van-count-down slot="button" :time="30000" />
+                    <van-button v-if="!isGetingCode" slot="button" size="small" type="info" color="#2c3ffb" round plain hairline @click="getValidationCode">发送验证码</van-button>
+                    <van-count-down v-else slot="button" ref="textCountDown" :time="30000" format="ss s" :auto-start="false" @finish="isGetingCode = false" />
                 </van-field>
             </div>
             <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)">立即领取</van-button>
@@ -111,7 +120,7 @@ export default {
                     desc: `
                         <p style="margin-bottom: 0.2rem;">◆ 平台通用红包【满30减4】</p>
                         <p style="margin-bottom: 0.2rem;">◆ 平台通用红包【满45减5】</p>
-                        <p style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">◆ 手气好有可能领取到16减16、66减66红包哦~</p>
+                        <p class="van-ellipsis">◆ 手气好有可能领取到16减16、66减66红包哦~</p>
                     `
                 },
                 {
@@ -135,10 +144,11 @@ export default {
             ],
             currentHbSelection: 0, // 默认选中第一个红包
             phoneNum: '',
-            phoneErrMsg: '',
+            phoneErrMsg: '手机号格式有误',
             getCbModalShow: false,
 
-            validaCode: ''
+            validaCode: '',
+            isGetingCode: false // 是否正在获取验证码
         };
     },
     computed: {
@@ -157,10 +167,24 @@ export default {
         },
         getValidationCode() {
             // 通过手机号获取验证码
+            this.isGetingCode = true;
+            // 调短信接口
         }
     },
     components: {
         hbModal
+    },
+    watch: {
+        getCbModalShow(newVal) {
+            // 弹窗关闭时重置计时器
+            if (!newVal && this.$refs.textCountDown) {
+                this.$refs.textCountDown.reset();
+                this.isGetingCode = false;
+            }
+        },
+        isGetingCode(newVal) {
+            newVal && this.$nextTick(() => this.$refs.textCountDown.start());
+        }
     }
 };
 </script>
