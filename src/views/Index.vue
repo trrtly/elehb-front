@@ -68,33 +68,30 @@
         </div>
 
         <!-- 验证码回执模态框 -->
-        <!-- <van-dialog v-model="getCbModalShow" close-on-click-overlay :show-confirm-button="false">
-            <div slot="title" class="modal-title">
-                请输入接收到的短信验证码
-                <van-icon name="cross" />
+        <hb-modal v-model="getCbModalShow" title="请输入接收到的短信验证码">
+            <div style="margin-bottom: 0.4rem;">
+                <van-field class="valida-code-input van-hairline--surround" type="number" required clearable v-model="validaCode" placeholder="短信验证码">
+                    <!-- <van-button slot="button" size="small" type="info" color="#2c3ffb" round plain hairline @click="getValidationCode">发送验证码</van-button> -->
+                    <van-count-down slot="button" :time="30000" />
+                </van-field>
             </div>
-            <div style="padding: 0 0.4rem; margin-top: 0.4rem; margin-bottom: 0.62rem;">
-                <div style="margin-bottom: 0.4rem;">
-                    <van-field class="valida-code-input van-hairline--surround" type="number" required clearable v-model="validaCode" placeholder="短信验证码" />
-                </div>
-                <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)">立即领取</van-button>
-            </div>
-        </van-dialog> -->
-        <hb-modal v-model="getCbModalShow" />
+            <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)">立即领取</van-button>
+        </hb-modal>
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Vue from 'vue';
-import { Swipe, SwipeItem, Dialog, Field, Button } from 'vant';
+import { Swipe, SwipeItem, Dialog, Field, Button, CountDown } from 'vant';
 import hbModal from '../components/WmqModal/WmqModal.vue';
 
 Vue.use(Swipe)
     .use(SwipeItem)
     .use(Dialog)
     .use(Field)
-    .use(Button);
+    .use(Button)
+    .use(CountDown);
 
 export default {
     name: 'home',
@@ -157,6 +154,9 @@ export default {
         // 获取红包
         getHb() {
             this.getCbModalShow = true;
+        },
+        getValidationCode() {
+            // 通过手机号获取验证码
         }
     },
     components: {

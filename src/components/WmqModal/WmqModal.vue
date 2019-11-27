@@ -1,15 +1,11 @@
 <template>
-    <van-dialog v-model="innerShow" close-on-click-overlay :show-confirm-button="false" @closed="onClosed">
+    <van-dialog v-model="innerShowFlag" close-on-click-overlay :show-confirm-button="false" @closed="closeModal">
         <div slot="title" class="hb-modal-title">
             {{ title }}
             <van-icon class="hb-modal-close-btn" name="cross" @click="closeModal" />
         </div>
-        <div>
-            <p>123</p>
-            <p>123</p>
-            <p>123</p>
-            <p>123</p>
-            <p>123</p>
+        <div class="hb-modal-body">
+            <slot></slot>
         </div>
         <!-- <div style="padding: 0 0.4rem; margin-top: 0.4rem; margin-bottom: 0.62rem;">
             <div style="margin-bottom: 0.4rem;">
@@ -34,8 +30,8 @@ export default {
             default: false
         },
         title: {
-            type: String,
-            default: '测试标题'
+            required: true,
+            type: String
         }
     },
     model: {
@@ -44,28 +40,18 @@ export default {
     },
     data() {
         return {
-            innerShow: this.show
+            innerShowFlag: this.show
         };
     },
     methods: {
-        returnShowStatus() {
-            this.$emit('returnBack', this.innerShow);
-        },
         closeModal() {
-            this.innerShow = false;
-            this.returnShowStatus();
-        },
-        onClosed() {
-            this.innerShow = false;
-            this.returnShowStatus();
+            this.innerShowFlag = false;
+            this.$emit('returnBack', this.innerShowFlag);
         }
     },
     watch: {
-        innerShow(newVal) {
-            this.innerShow = newVal;
-        },
-        show(newVal) {
-            this.innerShow = newVal;
+        show(v) {
+            this.innerShowFlag = v;
         }
     }
 };
@@ -74,6 +60,10 @@ export default {
 <style scoped>
 .hb-modal-title {
     position: relative;
+}
+
+.hb-modal-body {
+    padding: 0.4rem 0.4rem 0.62rem;
 }
 
 .hb-modal-close-btn {
