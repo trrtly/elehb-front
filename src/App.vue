@@ -26,6 +26,7 @@ body {
     font-family: 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', Arial, sans-serif;
     user-select: none;
     background-color: #f8f8f8;
+    font-size: 0.16rem;
 }
 
 .din-font {
@@ -60,6 +61,10 @@ body {
 
 .fz-28 {
     font-size: 0.28rem;
+}
+
+.fz-24 {
+    font-size: 0.24rem;
 }
 
 /* modal */

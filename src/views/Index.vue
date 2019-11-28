@@ -91,16 +91,7 @@
 
 <script>
 // @ is an alias to /src
-import Vue from 'vue';
-import { Swipe, SwipeItem, Dialog, Field, Button, CountDown } from 'vant';
 import hbModal from '../components/WmqModal/WmqModal.vue';
-
-Vue.use(Swipe)
-    .use(SwipeItem)
-    .use(Dialog)
-    .use(Field)
-    .use(Button)
-    .use(CountDown);
 
 export default {
     name: 'home',

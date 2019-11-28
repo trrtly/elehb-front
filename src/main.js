@@ -11,6 +11,21 @@ import './utils/directive/routeJump';
 
 Vue.config.productionTip = false;
 
+import { Swipe, SwipeItem, Dialog, Field, Button, CountDown, Toast } from 'vant';
+import VueClipboard from 'vue-clipboard2';
+
+Vue.use(Swipe)
+    .use(SwipeItem)
+    .use(Dialog)
+    .use(Field)
+    .use(Button)
+    .use(CountDown)
+    .use(VueClipboard);
+
+// Toast默认配置
+Toast.setDefaultOptions({ position: 'bottom' });
+Vue.prototype.$toast = Toast;
+
 new Vue({
     router,
     store,
