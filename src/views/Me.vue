@@ -246,7 +246,7 @@ export default {
     width: 100%;
     height: 0.93rem;
     background: url('../assets/me/butten-bg-hongbao@2x.png') no-repeat;
-    background-size: cover;
+    background-size: contain;
 }
 
 .redeem-hb-btn .redeem-hb-btn-text {
