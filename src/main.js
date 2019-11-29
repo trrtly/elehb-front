@@ -4,14 +4,17 @@ import router from './router';
 import store from './store';
 
 // import commonUtils
-// import './utils/commonUtils';
+import './utils/commonUtils';
 
 // import global directive
 import './utils/directive/routeJump';
 
 Vue.config.productionTip = false;
 
+// import vant components
 import { Swipe, SwipeItem, Dialog, Field, Button, CountDown, Toast } from 'vant';
+
+// import vue copy
 import VueClipboard from 'vue-clipboard2';
 
 Vue.use(Swipe)

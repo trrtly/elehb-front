@@ -33,6 +33,10 @@ body {
     font-family: 'DIN Medium';
 }
 
+.font-bold {
+    font-weight: bold;
+}
+
 /* overWrite vant ui Swipe css */
 /* swiper indicator */
 #app .van-swipe__indicator {
@@ -65,6 +69,10 @@ body {
 
 .fz-24 {
     font-size: 0.24rem;
+}
+
+.flex {
+    display: flex;
 }
 
 /* modal */
