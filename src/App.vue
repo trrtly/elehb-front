@@ -25,7 +25,6 @@ body,
 body {
     font-family: 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', Arial, sans-serif;
     user-select: none;
-    background-color: #f8f8f8;
     font-size: 0.16rem;
 }
 

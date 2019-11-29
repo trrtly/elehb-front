@@ -181,6 +181,11 @@ export default {
 </script>
 
 <style scoped>
+/* common */
+body {
+    background-color: #f8f8f8;
+}
+
 /* header */
 .header {
     overflow: hidden;
@@ -231,8 +236,7 @@ export default {
 /* section */
 .main-section {
     font-size: 0.18rem;
-    margin-top: 0.3rem;
-    padding: 0 0.28rem;
+    padding: 0.3rem 0.28rem 0;
     overflow: hidden;
 }
 
@@ -240,10 +244,12 @@ export default {
     padding: 0.28rem;
     background-color: #fff;
     border-radius: 0.12rem;
+    box-shadow: 0.01rem 0.01rem 0.1rem 0.02rem #eeeeee;
 }
 
 /* hb-selections */
 .hb-selections-wrapper > .hb-selection {
+    position: relative;
     padding: 0.3rem 0.28rem 0.24rem 0.14rem;
     box-sizing: border-box;
     background-color: #f7f7f9;
@@ -253,7 +259,7 @@ export default {
 .hb-selections-wrapper > .hb-selection.active {
     min-height: 2.3rem;
     border: 1px solid #2f5ee3;
-    background: url('../assets/index/click-bg@2x.png') right bottom no-repeat;
+    background: #f3f4ff url('../assets/index/click-bg@2x.png') right bottom no-repeat;
     background-size: 2.55rem 1.7rem;
 }
 
