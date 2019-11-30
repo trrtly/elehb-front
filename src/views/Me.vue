@@ -39,17 +39,19 @@
             </div>
         </header>
         <section class="invite-wrapper">
-            <div class="invite-left">
-                <div class="invite-text fz-28">
-                    <p style="color: #545454;">每邀请一位好友的奖励：</p>
-                    <p style="color: #707070;">◆ 立即获得<span class="din-font font-bold" style="color: #2f5ee3;">10</span>积分奖励</p>
-                    <p style="color: #707070;">◆ 好友每笔充值金额的<span class="din-font font-bold" style="color: #2f5ee3;">20%</span>佣金</p>
+            <div class="invite-inner">
+                <div class="invite-left">
+                    <div class="invite-text fz-28">
+                        <p style="color: #545454;">每邀请一位好友的奖励：</p>
+                        <p style="color: #707070;">◆ 立即获得<span class="din-font font-bold" style="color: #2f5ee3;">10</span>积分奖励</p>
+                        <p style="color: #707070;">◆ 好友每笔充值金额的<span class="din-font font-bold" style="color: #2f5ee3;">20%</span>佣金</p>
+                    </div>
+                    <van-button class="invite-link-btn fz-24" color="#2f5ee3" round plain @click="copyText(inviteLink)">复制邀请链接</van-button>
                 </div>
-                <van-button class="invite-link-btn fz-24" color="#2f5ee3" round plain @click="copyText(inviteLink)">复制邀请链接</van-button>
-            </div>
-            <div class="invite-right">
-                <span class="flex fz-28" style="color: #2f5ee3;">好友列表 <van-icon name="arrow"/></span>
-                <van-button class="invite-btn fz-24" color="linear-gradient(to right, #ff8b56, #fb5d37)" round>邀请好友</van-button>
+                <div class="invite-right">
+                    <span class="flex fz-28" style="color: #2f5ee3; align-self: flex-end;">好友列表 <van-icon name="arrow"/></span>
+                    <van-button class="invite-btn fz-24" color="linear-gradient(to right, #ff8b56, #fb5d37)" round>邀请好友</van-button>
+                </div>
             </div>
         </section>
         <section class="common-wrapper">
@@ -70,14 +72,14 @@
             </ul>
         </section>
         <footer class="me-footer">
-            <div class="redeem-hb-btn">
-                <div class="redeem-hb-btn-text font-bold">我要兑换红包</div>
-            </div>
+            <redeem-btn />
         </footer>
     </div>
 </template>
 
 <script>
+import RedeemBtn from '../components/RedeemBtn/RedeemBtn';
+
 export default {
     data() {
         return {
@@ -87,7 +89,10 @@ export default {
             inviteLink: 'www.baidu.com'
         };
     },
-    methods: {}
+    methods: {},
+    components: {
+        RedeemBtn
+    }
 };
 </script>
 
@@ -114,10 +119,12 @@ export default {
     padding-top: 0.15rem;
     margin-left: 0.2rem;
     font-weight: bold;
+    color: #212121;
 }
 
 .header-upper .user-id {
     padding-top: 0.18rem;
+    color: #707070;
 }
 
 .header-upper .avatar-wrapper {
@@ -135,6 +142,8 @@ export default {
     background: url('../assets/me/bg_my@2x.png') no-repeat;
     background-size: cover;
     overflow: hidden;
+    box-shadow: 0.01rem 0.01rem 0.2rem 0.02rem #ccc;
+    border-radius: 0.12rem 0.12rem 0 0;
 }
 
 .header-bottom .credit-wrapper {
@@ -178,12 +187,22 @@ export default {
 
 /* invite */
 .invite-wrapper {
+    padding: 0.3rem 0.28rem 0;
+    background: #fff;
+    overflow: hidden;
+}
+
+.invite-wrapper .invite-inner {
     display: flex;
     justify-content: space-between;
-    margin: 0.3rem 0.28rem 0;
     padding: 0.52rem 0.06rem 0.5rem 0.42rem;
     border-radius: 0.15rem;
     background: #f7f7f9;
+}
+
+.invite-wrapper .invite-right {
+    display: flex;
+    flex-direction: column;
 }
 
 .invite-wrapper .invite-text p:not(:first-child) {
@@ -253,23 +272,8 @@ export default {
     padding: 0 0.28rem;
 }
 
-.me-footer .redeem-hb-btn {
-    width: 100%;
-    height: 0.93rem;
-    background: url('../assets/me/butten_bg_hongbao@2x.png') no-repeat;
-    background-size: contain;
-}
-
-.redeem-hb-btn .redeem-hb-btn-text {
-    font-size: 0.36rem;
-    color: #ffdc39;
-    line-height: 0.93rem;
-    text-align: center;
-}
-
 /* common */
-.common-btn-list li:active,
-.redeem-hb-btn:active {
+.common-btn-list li:active {
     opacity: 0.8;
 }
 </style>

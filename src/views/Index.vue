@@ -2,8 +2,8 @@
     <div class="index-wrapper">
         <header class="header">
             <div class="header-upper">
-                <img class="header-element-logo" :src="bannerElementLogo" alt="ElementLogo" />
-                <img class="header-decorate-pic" :src="bannerDecoratePic" alt="Decorate" />
+                <img class="header-element-logo" src="../assets/index/banner-text@2x.png" alt="ElementLogo" />
+                <img class="header-decorate-pic" src="../assets/index/banner-pic@2x.png" alt="Decorate" />
             </div>
             <div class="header-bottom">
                 <!-- 轮播 -->
@@ -17,7 +17,13 @@
 
         <section class="main-section">
             <ul class="hb-selections-wrapper">
-                <li class="hb-selection" :class="{ active: isHbSelected(index) }" v-for="(hb, index) in hbArr" :key="hb.id" @click="hbSelect(index)">
+                <li
+                    class="hb-selection"
+                    :class="{ active: isHbSelected(index) }"
+                    v-for="(hb, index) in hbArr"
+                    :key="hb.id"
+                    @click="currentHbSelection = index"
+                >
                     <div class="hb-selection-upper">
                         <span class="hb-selection-title">{{ hb.title }}</span>
                         <div class="hb-selection-price">
@@ -96,6 +102,7 @@
                 >
                     <van-button
                         v-if="!isGetingCode"
+                        style="height: 0.4rem; line-height: 0.4rem;"
                         slot="button"
                         size="small"
                         type="info"
@@ -124,17 +131,12 @@
 
 <script>
 // @ is an alias to /src
-import bannerElementLogo from '../assets/index/banner_text@2x.png';
-import bannerDecoratePic from '../assets/index/banner_pic@2x.png';
 import hbModal from '../components/WmqModal/WmqModal.vue';
 
 export default {
     name: 'home',
     data() {
         return {
-            bannerElementLogo,
-            bannerDecoratePic,
-
             swipeImages: [
                 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2754363298,2864020823&fm=26&gp=0.jpg',
                 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2754363298,2864020823&fm=26&gp=0.jpg',
@@ -186,10 +188,6 @@ export default {
         }
     },
     methods: {
-        // 选择红包类型
-        hbSelect(index) {
-            this.currentHbSelection = index;
-        },
         // 获取红包
         getHb() {
             this.getCbModalShow = true;
@@ -207,8 +205,10 @@ export default {
         getCbModalShow(newVal) {
             // 弹窗关闭时重置计时器
             if (!newVal && this.$refs.textCountDown) {
-                this.$refs.textCountDown.reset();
-                this.isGetingCode = false;
+                setTimeout(() => {
+                    this.$refs.textCountDown.reset();
+                    this.isGetingCode = false;
+                }, 200);
             }
         },
         isGetingCode(newVal) {

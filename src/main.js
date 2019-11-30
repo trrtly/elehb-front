@@ -3,8 +3,11 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
-// import commonUtils
-import './utils/commonUtils';
+// import utils
+import './utils';
+
+// import Filter
+import './utils/filter';
 
 // import global directive
 import './utils/directive/routeJump';

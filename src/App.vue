@@ -58,6 +58,10 @@ body {
 }
 
 /* common */
+.fz-36 {
+    font-size: 0.36rem;
+}
+
 .fz-32 {
     font-size: 0.32rem;
 }
