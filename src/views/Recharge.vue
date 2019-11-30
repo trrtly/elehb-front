@@ -1,7 +1,8 @@
 <template>
-    <div>
+    <div class="wrapper">
         Recharge Page
         <router-link to="/">Home</router-link>
+        <div class="you">12312312</div>
     </div>
 </template>
 
@@ -9,4 +10,11 @@
 export default {};
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+// scss配置测试
+.wrapper {
+    .you {
+        font-size: 15px;
+    }
+}
+</style>

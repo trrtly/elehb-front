@@ -132,7 +132,7 @@ export default {
     margin-top: -0.4rem;
     width: 100%;
     height: 2.94rem;
-    background: url('../assets/me/bg-my@2x.png') no-repeat;
+    background: url('../assets/me/bg_my@2x.png') no-repeat;
     background-size: cover;
     overflow: hidden;
 }
@@ -256,7 +256,7 @@ export default {
 .me-footer .redeem-hb-btn {
     width: 100%;
     height: 0.93rem;
-    background: url('../assets/me/butten-bg-hongbao@2x.png') no-repeat;
+    background: url('../assets/me/butten_bg_hongbao@2x.png') no-repeat;
     background-size: contain;
 }
 
