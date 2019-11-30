@@ -21,7 +21,8 @@
                     <div class="hb-selection-upper">
                         <span class="hb-selection-title">{{ hb.title }}</span>
                         <div class="hb-selection-price">
-                            <span class="hb-selection-price-num din-font">{{ hb.price }}</span> <span class="hb-selection-price-text">积分/次</span>
+                            <span class="hb-selection-price-num din-font">{{ hb.price }}</span>
+                            <span class="hb-selection-price-text">积分/次</span>
                         </div>
                     </div>
                     <div class="hb-selection-bottom" v-if="isHbSelected(index)">
@@ -47,7 +48,9 @@
 
             <div class="hb-description">
                 <p>领取规则：</p>
-                <p>1、每个手机号每日限领1次，部分异常账号由于饿了么风控原因，无法领取红包，请更换其他手机号领取；</p>
+                <p>
+                    1、每个手机号每日限领1次，部分异常账号由于饿了么风控原因，无法领取红包，请更换其他手机号领取；
+                </p>
                 <p>2、若领取失败，不会消耗积分；</p>
                 <p>3、领取的红包有效期以饿了么为准，请及时使用 。</p>
             </div>
@@ -56,7 +59,11 @@
         <footer class="hb-bar van-hairline--top">
             <div class="hb-user">
                 <div class="user-info">
-                    <img class="user-avatar" src="https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png?x-oss-process=image/format,webp/resize,w_120,h_120,m_fixed" alt="avatar" />
+                    <img
+                        class="user-avatar"
+                        src="https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png?x-oss-process=image/format,webp/resize,w_120,h_120,m_fixed"
+                        alt="avatar"
+                    />
                     <span class="user-name van-ellipsis">{{ 'userName' }}</span>
                 </div>
                 <div class="user-credit">
@@ -79,9 +86,35 @@
         <!-- 验证码回执模态框 -->
         <hb-modal v-model="getCbModalShow" :close-on-click-overlay="false" title="请输入接收到的短信验证码">
             <div style="margin-bottom: 0.4rem;">
-                <van-field class="valida-code-input van-hairline--surround" type="number" required clearable v-model="validaCode" placeholder="短信验证码">
-                    <van-button v-if="!isGetingCode" slot="button" size="small" type="info" color="#2c3ffb" round plain hairline @click="getValidationCode">发送验证码</van-button>
-                    <van-count-down v-else slot="button" ref="textCountDown" :time="30000" format="ss s" :auto-start="false" @finish="isGetingCode = false" />
+                <van-field
+                    class="valida-code-input van-hairline--surround"
+                    type="number"
+                    required
+                    clearable
+                    v-model="validaCode"
+                    placeholder="短信验证码"
+                >
+                    <van-button
+                        v-if="!isGetingCode"
+                        slot="button"
+                        size="small"
+                        type="info"
+                        color="#2c3ffb"
+                        round
+                        plain
+                        hairline
+                        @click="getValidationCode"
+                        >发送验证码</van-button
+                    >
+                    <van-count-down
+                        v-else
+                        slot="button"
+                        ref="textCountDown"
+                        :time="30000"
+                        format="ss s"
+                        :auto-start="false"
+                        @finish="isGetingCode = false"
+                    />
                 </van-field>
             </div>
             <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)">立即领取</van-button>

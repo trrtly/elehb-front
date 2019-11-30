@@ -3,7 +3,11 @@
         <header class="header">
             <div class="header-upper">
                 <div class="avatar-wrapper">
-                    <img class="user-avatar" src="https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png?x-oss-process=image/format,webp/resize,w_120,h_120,m_fixed" alt="avatar" />
+                    <img
+                        class="user-avatar"
+                        src="https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png?x-oss-process=image/format,webp/resize,w_120,h_120,m_fixed"
+                        alt="avatar"
+                    />
                     <span class="user-name fz-32">绿色森林</span>
                 </div>
 
@@ -17,7 +21,14 @@
                     <div class="user-credit">
                         <span class="credit-num din-font">{{ userCredit }}</span>
                         <span class="my-credit flex fz-28">我的积分 <van-icon name="arrow"/></span>
-                        <van-button class="me-recharge-btn fz-28 font-bold" size="small" color="linear-gradient(to right, #ffe28a, #ffcf51)" round to="/recharge">充值</van-button>
+                        <van-button
+                            class="me-recharge-btn fz-28 font-bold"
+                            size="small"
+                            color="linear-gradient(to right, #ffe28a, #ffcf51)"
+                            round
+                            to="/recharge"
+                            >充值</van-button
+                        >
                     </div>
                     <div class="user-money">
                         <span class="din-font">{{ userMoney }} <span class="fz-28">元</span></span>

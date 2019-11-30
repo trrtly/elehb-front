@@ -7,7 +7,8 @@ module.exports = {
     rules: {
         'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'indent': ['error', 4],
+        indent: ['error', 4],
+        'linebreak-style': ['error', 'unix'],
         'no-floating-decimal': 'off',
         'prettier/prettier': [
             'error',
@@ -20,7 +21,7 @@ module.exports = {
                 bracketSpacing: true, // 括号空格
                 jsxBracketSameLine: true,
                 arrowParens: 'always',
-                printWidth: 200
+                printWidth: 150
             }
         ]
     },
