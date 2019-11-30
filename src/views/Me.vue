@@ -20,7 +20,7 @@
                 <div class="credit-wrapper">
                     <div class="user-credit">
                         <span class="credit-num din-font">{{ userCredit }}</span>
-                        <span class="my-credit flex fz-28">我的积分 <van-icon name="arrow"/></span>
+                        <span class="my-credit flex fz-28" v-route-jump="'/recharge'">我的积分 <van-icon name="arrow"/></span>
                         <van-button
                             class="me-recharge-btn fz-28 font-bold"
                             size="small"
@@ -43,8 +43,8 @@
                 <div class="invite-left">
                     <div class="invite-text fz-28">
                         <p style="color: #545454;">每邀请一位好友的奖励：</p>
-                        <p style="color: #707070;">◆ 立即获得<span class="din-font font-bold" style="color: #2f5ee3;">10</span>积分奖励</p>
-                        <p style="color: #707070;">◆ 好友每笔充值金额的<span class="din-font font-bold" style="color: #2f5ee3;">20%</span>佣金</p>
+                        <p>◆ 立即获得<span class="din-font font-bold" style="color: #2f5ee3;">10</span>积分奖励</p>
+                        <p>◆ 好友每笔充值金额的<span class="din-font font-bold" style="color: #2f5ee3;">20%</span>佣金</p>
                     </div>
                     <van-button class="invite-link-btn fz-24" color="#2f5ee3" round plain @click="copyText(inviteLink)">复制邀请链接</van-button>
                 </div>
@@ -207,6 +207,7 @@ export default {
 
 .invite-wrapper .invite-text p:not(:first-child) {
     margin-top: 0.28rem;
+    color: #707070;
 }
 
 .invite-wrapper .invite-link-btn {
