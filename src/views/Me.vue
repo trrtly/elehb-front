@@ -142,7 +142,7 @@ export default {
     margin-top: -0.4rem;
     width: 100%;
     height: 2.94rem;
-    background: url('../assets/me/bg_my@2x.png') no-repeat;
+    background: #eee url('../assets/me/bg_my@2x.png') no-repeat;
     background-size: cover;
     overflow: hidden;
     box-shadow: 0.01rem 0.01rem 0.2rem 0.02rem #ccc;

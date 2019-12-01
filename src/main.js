@@ -15,10 +15,14 @@ import './utils/directive/routeJump';
 Vue.config.productionTip = false;
 
 // import vant components
-import { Swipe, SwipeItem, Dialog, Field, Button, CountDown, Toast } from 'vant';
+import { Swipe, SwipeItem, Dialog, Field, Button, CountDown } from 'vant';
 
 // import vue copy
 import VueClipboard from 'vue-clipboard2';
+
+// import axios
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 
 Vue.use(Swipe)
     .use(SwipeItem)
@@ -26,11 +30,8 @@ Vue.use(Swipe)
     .use(Field)
     .use(Button)
     .use(CountDown)
-    .use(VueClipboard);
-
-// Toast默认配置
-Toast.setDefaultOptions({ position: 'bottom' });
-Vue.prototype.$toast = Toast;
+    .use(VueClipboard)
+    .use(VueAxios, axios);
 
 new Vue({
     router,

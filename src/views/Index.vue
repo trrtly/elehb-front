@@ -182,6 +182,11 @@ export default {
             isGetingCode: false // 是否正在获取验证码
         };
     },
+    // axios 测试
+    // async created() {
+    //     let res = await this.axios.get('https://api.apiopen.top/getAllUrl');
+    //     console.log(res);
+    // },
     computed: {
         isHbSelected() {
             return (index) => this.currentHbSelection === index;
