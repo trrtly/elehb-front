@@ -49,7 +49,10 @@
                     <van-button class="invite-link-btn fz-24" color="#2f5ee3" round plain @click="copyText(inviteLink)">复制邀请链接</van-button>
                 </div>
                 <div class="invite-right">
-                    <span class="flex fz-28" style="color: #2f5ee3; align-self: flex-end;">好友列表 <van-icon name="arrow"/></span>
+                    <span class="flex fz-28" style="color: #2f5ee3; align-self: flex-end;" v-route-jump="'/friends'">
+                        好友列表
+                        <van-icon name="arrow" />
+                    </span>
                     <van-button class="invite-btn fz-24" color="linear-gradient(to right, #ff8b56, #fb5d37)" round>邀请好友</van-button>
                 </div>
             </div>

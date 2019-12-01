@@ -57,6 +57,12 @@ body {
     border-radius: 0.1rem;
 }
 
+/* overWrite vant ui Cell css */
+#app .van-cell:not(:last-child)::after {
+    right: 0.28rem;
+    border-bottom-color: #e6e6e6;
+}
+
 /* common */
 .fz-36 {
     font-size: 0.36rem;
