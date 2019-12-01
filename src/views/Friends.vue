@@ -26,11 +26,9 @@
 
 <script>
 import Vue from 'vue';
-import { List, Cell, CellGroup } from 'vant';
+import { List, Cell } from 'vant';
 
-Vue.use(List)
-    .use(Cell)
-    .use(CellGroup);
+Vue.use(List).use(Cell);
 
 export default {
     data() {
