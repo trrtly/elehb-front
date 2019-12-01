@@ -10,7 +10,7 @@ import 'reset-css'; // reset-css
 export default {};
 </script>
 
-<style>
+<style lang="scss">
 @font-face {
     font-family: 'DIN Medium';
     src: url('./assets/font/DIN_Medium.ttf');
@@ -20,6 +20,11 @@ html,
 body,
 #app {
     height: 100%;
+    background: #fff;
+}
+
+#app > div {
+    min-height: 100% !important;
 }
 
 body {

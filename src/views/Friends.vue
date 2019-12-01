@@ -76,7 +76,6 @@ export default {
 .friends-wrapper {
     display: flex;
     flex-direction: column;
-    height: 100%;
     color: #fff;
 
     .friends-header {

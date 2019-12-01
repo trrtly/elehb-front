@@ -67,7 +67,6 @@ export default {
 .brokerage-wrapper {
     display: flex;
     flex-direction: column;
-    height: 100%;
     color: #fff;
 
     .brokerage-header {

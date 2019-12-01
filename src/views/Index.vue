@@ -111,8 +111,9 @@
                         plain
                         hairline
                         @click="getValidationCode"
-                        >发送验证码</van-button
                     >
+                        发送验证码
+                    </van-button>
                     <van-count-down
                         v-else
                         slot="button"
@@ -237,8 +238,8 @@ export default {
 
 <style scoped>
 /* common */
-body {
-    background-color: #f8f8f8;
+.index-wrapper {
+    background: #f8f8f8;
 }
 
 /* header */

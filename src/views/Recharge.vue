@@ -20,7 +20,7 @@
                         <span class="din-font fz-36">{{ item.creditNum }}</span>
                         积分
                     </p>
-                    <p class="credit-price">售价: {{ item.price }}元</p>
+                    <p class="credit-price fz-24">售价: {{ item.price }}元</p>
                     <div v-if="item.recommended" class="credit-recommended">推荐</div>
                 </li>
             </ul>
@@ -113,7 +113,6 @@ export default {
 <style lang="scss" scoped>
 .recharge-wrapper {
     $commonShadow: 1px 1px 5px 1px #efefef;
-    height: 100%;
     background: #f1f6f9;
 
     // header

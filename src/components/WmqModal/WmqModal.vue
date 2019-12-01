@@ -4,7 +4,10 @@
             {{ title }}
             <van-icon class="hb-modal-close-btn" name="cross" @click="closeModal" />
         </div>
-        <div class="hb-modal-body" v-html="text">
+        <div class="hb-modal-body">
+            <template v-if="text">
+                <div v-html="text"></div>
+            </template>
             <slot></slot>
         </div>
     </van-dialog>

@@ -100,10 +100,14 @@ export default {
 </script>
 
 <style scoped>
+.me-wrapper {
+    height: 100%;
+    background: #fff;
+    overflow: hidden;
+}
 /* header */
 .me-wrapper .header {
-    padding-top: 0.4rem;
-    margin: 0 0.28rem;
+    margin: 0.4rem 0.28rem 0;
     width: 6.96rem;
 }
 
@@ -115,6 +119,7 @@ export default {
 .header-upper .user-avatar {
     margin-left: 0.42rem;
     width: 0.98rem;
+    height: 0.98rem;
     border-radius: 50%;
 }
 
@@ -167,7 +172,7 @@ export default {
 .user-credit .my-credit,
 .user-money .my-money {
     align-items: center;
-    color: #ccffffff;
+    color: #ccffff;
 }
 
 .user-credit .credit-num,
