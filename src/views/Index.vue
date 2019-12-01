@@ -158,19 +158,30 @@ export default {
                     id: 2,
                     price: 6,
                     title: '品质联盟30-5组合包',
-                    desc: '2222'
+                    desc: `
+                        <p style="margin-bottom: 0.2rem;">◆ 品质联盟商家福利红包【无门槛减2】
+                        <p style="margin-bottom: 0.2rem;">◆ 品质联盟专享红包【满30减5】
+                        <p>◆ 品质联盟商家福利红包【满15减2】</p>
+                    `
                 },
                 {
                     id: 3,
                     price: 6,
                     title: '随机批量组合包',
-                    desc: '3333'
+                    desc: `
+                        <p>◆ 凭手气领取大量金额随机的红包</p>
+                    `
                 },
                 {
                     id: 4,
                     price: 6,
                     title: '每日四合一礼包',
-                    desc: '4444'
+                    desc: `
+                            <p style="margin-bottom: 0.2rem;">◆ 平台通用红包【满25或35减4】
+                            <p style="margin-bottom: 0.2rem;">◆ 品质联盟专享红包【满25或35减5】
+                            <p style="margin-bottom: 0.2rem;">◆ 下午茶红包【满30或35减5】
+                            <p>◆ 夜宵红包【满45减6】</p>
+                        `
                 }
             ],
             currentHbSelection: 0, // 默认选中第一个红包
