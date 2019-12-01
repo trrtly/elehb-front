@@ -12,6 +12,8 @@ import './utils/filter';
 // import global directive
 import './utils/directive/routeJump';
 
+import './components/WmqModal/WmqModal.js';
+
 Vue.config.productionTip = false;
 
 // import vant components

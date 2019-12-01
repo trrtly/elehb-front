@@ -5,6 +5,7 @@
             <van-icon class="hb-modal-close-btn" name="cross" @click="closeModal" />
         </div>
         <div class="hb-modal-body">
+            {{ text }}
             <slot></slot>
         </div>
     </van-dialog>
@@ -27,6 +28,7 @@ export default {
             required: true,
             type: String
         },
+        text: String,
         closeOnClickOverlay: {
             type: Boolean,
             default: false
@@ -62,6 +64,7 @@ export default {
 
 .hb-modal-body {
     padding: 0.4rem 0.4rem 0.62rem;
+    text-align: center;
 }
 
 .hb-modal-close-btn {

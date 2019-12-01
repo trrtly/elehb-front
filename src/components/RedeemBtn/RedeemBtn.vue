@@ -12,10 +12,12 @@ export default {
 
 <style lang="scss" scoped>
 .redeem-hb-btn {
+    position: relative;
+    top: 0;
     width: 100%;
-    height: 0.93rem;
     background: url('../../assets/me/butten_bg_hongbao@2x.png') no-repeat;
-    background-size: contain;
+    background-size: cover;
+    transition: top 0.1s;
 
     .redeem-hb-btn-text {
         font-size: 0.36rem;
@@ -25,6 +27,7 @@ export default {
     }
 
     &:active {
+        top: 0.03rem;
         opacity: 0.8;
     }
 }
