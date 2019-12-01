@@ -32,8 +32,8 @@
                     </div>
                     <div class="user-money">
                         <span class="din-font">{{ userMoney }} <span class="fz-28">元</span></span>
-                        <span class="my-money flex fz-28">我的佣金 <van-icon name="arrow"/></span>
-                        <van-button class="me-get-money-btn fz-28 font-bold" size="small" hairline round to="/recharge">提现</van-button>
+                        <span class="my-money flex fz-28" v-route-jump="'/brokerage'">我的佣金 <van-icon name="arrow"/></span>
+                        <van-button class="me-get-money-btn fz-28 font-bold" size="small" hairline round to="/brokerage">提现</van-button>
                     </div>
                 </div>
             </div>

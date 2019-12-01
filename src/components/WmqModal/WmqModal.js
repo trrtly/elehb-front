@@ -32,7 +32,8 @@ WmqModalConstructor.prototype.close = function() {
 let Modal = (options = {}) => {
     let props = {
         title: options.title || '标题',
-        text: options.text || '默认文字'
+        text: options.text || '默认文字',
+        closeOnClickOverlay: options.closeOnClickOverlay || false
     };
 
     let instance = getAnInstance(props);

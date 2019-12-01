@@ -4,8 +4,7 @@
             {{ title }}
             <van-icon class="hb-modal-close-btn" name="cross" @click="closeModal" />
         </div>
-        <div class="hb-modal-body">
-            {{ text }}
+        <div class="hb-modal-body" v-html="text">
             <slot></slot>
         </div>
     </van-dialog>

@@ -10,13 +10,11 @@
 
         <section class="friends-list">
             <van-list v-model="friendsLoading" :finished="finished" finished-text="没有更多了">
-                <van-cell v-for="(friend, index) in friendsList" :key="index">
-                    <van-cell :title="friend.name" :value="friend.time" value-class="friend-join-time">
-                        <template slot="title">
-                            <img class="friend-avatar" :src="friend.avatar" alt="avatar" />
-                            <span class="friend-name fz-28 font-bold">好友{{ friend.name }}加入了</span>
-                        </template>
-                    </van-cell>
+                <van-cell v-for="(friend, index) in friendsList" :key="index" :value="friend.time" value-class="friend-join-time">
+                    <template slot="title">
+                        <img class="friend-avatar" :src="friend.avatar" alt="avatar" />
+                        <span class="friend-name fz-28 font-bold">好友{{ friend.name }}加入了</span>
+                    </template>
                 </van-cell>
             </van-list>
             <van-button block color="linear-gradient(to right, #6552ff, #2c3ffb)">邀请好友</van-button>
@@ -33,9 +31,10 @@ Vue.use(List).use(Cell);
 export default {
     data() {
         return {
+            totalFriends: 245,
+
             friendsLoading: false,
             finished: true,
-            totalFriends: 245,
             friendsList: [
                 {
                     name: '昊昊',
@@ -135,10 +134,6 @@ export default {
 
             & > .van-cell {
                 background-color: transparent;
-            }
-
-            .van-cell__value > .van-cell {
-                padding: 0 0 0 0.32rem;
             }
         }
     }
