@@ -1,5 +1,5 @@
 <template>
-    <div></div>
+    <div class="friends-wrapper"></div>
 </template>
 
 <script>

@@ -190,6 +190,7 @@ export default {
     methods: {
         // 获取红包
         getHb() {
+            // 校验手机号
             this.getCbModalShow = true;
         },
         getValidationCode() {

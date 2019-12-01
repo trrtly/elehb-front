@@ -1,5 +1,5 @@
 <template>
-    <div></div>
+    <div class="brokerage-wrapper"></div>
 </template>
 
 <script>

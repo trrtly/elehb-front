@@ -22,6 +22,16 @@ const routes = [
         path: '/recharge',
         name: 'recharge',
         component: () => import(/* webpackChunkName: "recharge" */ '../views/Recharge.vue')
+    },
+    {
+        path: '/brokerage',
+        name: 'brokerage',
+        component: () => import(/* webpackChunkName: "brokerage" */ '../views/Brokerage.vue')
+    },
+    {
+        path: '/friends',
+        name: 'friends',
+        component: () => import(/* webpackChunkName: "friends" */ '../views/Friends.vue')
     }
 ];
 
