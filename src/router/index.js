@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Index from '../views/Index.vue';
+import Guard from './guard.js';
 
 Vue.use(VueRouter);
 
@@ -39,5 +40,8 @@ const router = new VueRouter({
     // mode: 'history',
     routes
 });
+
+// 全局前置守卫导航
+router.beforeEach(Guard.bind(router));
 
 export default router;
