@@ -66,11 +66,7 @@
         <footer class="hb-bar van-hairline--top">
             <div class="hb-user">
                 <div class="user-info">
-                    <img
-                        class="user-avatar"
-                        src="https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png?x-oss-process=image/format,webp/resize,w_120,h_120,m_fixed"
-                        alt="avatar"
-                    />
+                    <img class="user-avatar" src="https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png" alt="avatar" />
                     <span class="user-name van-ellipsis">{{ 'userName' }}</span>
                 </div>
                 <div class="user-credit">

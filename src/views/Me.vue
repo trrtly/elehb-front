@@ -3,11 +3,7 @@
         <header class="header">
             <div class="header-upper">
                 <div class="avatar-wrapper">
-                    <img
-                        class="user-avatar"
-                        src="https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png?x-oss-process=image/format,webp/resize,w_120,h_120,m_fixed"
-                        alt="avatar"
-                    />
+                    <img class="user-avatar" src="https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png" alt="avatar" />
                     <span class="user-name fz-32">绿色森林</span>
                 </div>
 
@@ -102,7 +98,6 @@ export default {
 
 <style scoped>
 .me-wrapper {
-    height: 100%;
     background: #fff;
     overflow: hidden;
 }
@@ -282,8 +277,7 @@ export default {
 
 /* footer */
 .me-footer {
-    margin-top: 0.74rem;
-    padding: 0 0.28rem;
+    margin: 0.74rem 0.28rem 0;
 }
 
 /* common */
