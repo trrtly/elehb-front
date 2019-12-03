@@ -3,6 +3,13 @@ const ImageminWebpWebpackPlugin = require('imagemin-webp-webpack-plugin');
 
 // vue.config.js
 module.exports = {
+    css: {
+        loaderOptions: {
+            scss: {
+                prependData: `@import "~@/scss/bemMixins.scss";`
+            }
+        }
+    },
     configureWebpack: () => {
         if (process.env.NODE_ENV === 'production') {
             return {

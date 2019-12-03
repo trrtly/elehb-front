@@ -24,7 +24,7 @@ import VueClipboard from 'vue-clipboard2';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 
-// mixins
+// import bemMixins
 import bemMixins from './utils/mixins/bemMixins';
 Vue.mixin(bemMixins);
 

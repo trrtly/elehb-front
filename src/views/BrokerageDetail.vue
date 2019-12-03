@@ -16,7 +16,7 @@
                 <van-cell v-for="(brokerage, index) in 5 /*brokerageHistory*/" :key="index">
                     <!-- 左侧插槽  -->
                     <template slot="title">
-                        <p class="friend-name fz-28 font-bold">好友充值返佣</p>
+                        <p class="brokerage-source fz-28 font-bold">好友充值返佣</p>
                         <p style="font-size: 0.22rem; color: #a8a8a8;">{{ new Date().toLocaleString() /*brokerage.time*/ }}</p>
                     </template>
 

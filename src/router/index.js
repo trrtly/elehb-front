@@ -27,12 +27,17 @@ const routes = [
     {
         path: '/brokerage',
         name: 'brokerage',
-        component: () => import(/* webpackChunkName: "brokerage" */ '../views/Brokerage.vue')
+        component: () => import(/* webpackChunkName: "brokerage" */ '../views/BrokerageDetail.vue')
     },
     {
         path: '/friends',
         name: 'friends',
         component: () => import(/* webpackChunkName: "friends" */ '../views/Friends.vue')
+    },
+    {
+        path: '/credit',
+        name: 'credit',
+        component: () => import(/* webpackChunkName: "credit" */ '../views/CreditDetail.vue')
     }
 ];
 

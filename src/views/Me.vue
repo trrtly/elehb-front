@@ -20,7 +20,7 @@
                 <div class="credit-wrapper">
                     <div class="user-credit">
                         <span class="credit-num din-font">{{ userCredit }}</span>
-                        <span class="my-credit flex fz-28" v-route-jump="'/recharge'">我的积分 <van-icon name="arrow"/></span>
+                        <span class="my-credit flex fz-28" v-route-jump="'/credit'">我的积分 <van-icon name="arrow"/></span>
                         <van-button
                             class="me-recharge-btn fz-28 font-bold"
                             size="small"

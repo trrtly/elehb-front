@@ -48,13 +48,13 @@ body {
     height: 0.06rem;
     border-radius: 0;
     background: url('./assets/index/swipe-indicator-no@2x.png') no-repeat;
-    background-size: cover;
+    background-size: contain;
 }
 
 #app .van-swipe__indicator--active {
     width: 0.3rem;
     background: url('./assets/index/swipe-indicator-active@2x.png') no-repeat;
-    background-size: cover;
+    background-size: contain;
 }
 
 /* overWrite vant ui Dialog css */

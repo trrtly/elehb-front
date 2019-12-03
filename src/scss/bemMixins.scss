@@ -1,0 +1,37 @@
+// ----
+// Sass (v3.3.0.rc.1)
+// Compass (v0.13.alpha.10)
+// ----
+
+/*
+A slightly more automated approach to BEM modifier classes:
+using '&' parent selector interpolation, modifiers extend their bases,
+so that HTML markup requires only the modifier class not the base *and* modifier
+*/
+
+// the BEM modifier() mixin
+@mixin modifier($name) {
+  @at-root {
+    // '&' is a double-wrapped list
+    $selector: nth(&, 1);
+    // direct parent will be the last item in that list
+    $direct-parent: nth($selector, length($selector));
+    // modifier should have all properties of parent
+    #{$direct-parent}--#{$name} {
+      @extend #{$direct-parent};
+    }
+    // '@content' will be in a nested selector however, if that is the context
+    #{&}--#{$name} {
+      @content;
+    }
+  }
+}
+
+// a BEM element() mixin--as has been seen elsewhere
+@mixin element($name) {
+  @at-root {
+    #{&}__#{$name} {
+      @content;
+    }
+  }
+}
