@@ -14,8 +14,6 @@ import './utils/directive/routeJump';
 
 import './components/WmqModal/WmqModal.js';
 
-Vue.config.productionTip = false;
-
 // import vant components
 import { Swipe, SwipeItem, Dialog, Field, Button, CountDown } from 'vant';
 
@@ -26,6 +24,10 @@ import VueClipboard from 'vue-clipboard2';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 
+// mixins
+import bemMixins from './utils/mixins/bemMixins';
+Vue.mixin(bemMixins);
+
 Vue.use(Swipe)
     .use(SwipeItem)
     .use(Dialog)
@@ -34,6 +36,8 @@ Vue.use(Swipe)
     .use(CountDown)
     .use(VueClipboard)
     .use(VueAxios, axios);
+
+Vue.config.productionTip = false;
 
 new Vue({
     router,

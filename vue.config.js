@@ -1,14 +1,31 @@
 const WebpackDeepScopeAnalysisPlugin = require('webpack-deep-scope-plugin').default;
+const ImageminWebpWebpackPlugin = require('imagemin-webp-webpack-plugin');
 
 // vue.config.js
 module.exports = {
     configureWebpack: () => {
         if (process.env.NODE_ENV === 'production') {
             return {
-                plugins: [new WebpackDeepScopeAnalysisPlugin()] // deep tree shaking
+                plugins: [
+                    new WebpackDeepScopeAnalysisPlugin(), // deep tree shaking
+                    new ImageminWebpWebpackPlugin({
+                        config: [
+                            {
+                                test: /\.(jpe?g|png)$/,
+                                options: {
+                                    quality: 75
+                                }
+                            }
+                        ],
+                        overrideExtension: false,
+                        detailedLogs: true,
+                        strict: false
+                    })
+                ]
             };
         }
     },
+
     chainWebpack: (config) => {
         // minify images
         config.module
@@ -33,13 +50,15 @@ module.exports = {
                     },
                     gifsicle: {
                         interlaced: false
-                    },
-                    // the webp option will enable WEBP
-                    webp: {
-                        quality: 75,
-                        enabled: true
                     }
+                    // the webp option will enable WEBP
+                    // webp: {
+                    //     quality: 75,
+                    //     enabled: true
+                    // }
                 };
             });
-    }
+    },
+
+    productionSourceMap: false
 };

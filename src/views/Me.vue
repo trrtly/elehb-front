@@ -84,6 +84,7 @@
 import RedeemBtn from '../components/RedeemBtn/RedeemBtn';
 
 export default {
+    name: 'me',
     data() {
         return {
             userId: '2019011',
@@ -181,14 +182,18 @@ export default {
     color: #fefefe;
 }
 
-.credit-wrapper .me-recharge-btn {
+.credit-wrapper .me-recharge-btn,
+.user-money .me-get-money-btn {
     width: 1.48rem;
     height: 0.56rem;
+    line-height: 0.56rem;
+}
+
+.credit-wrapper .me-recharge-btn {
     color: #b37013 !important;
 }
 
 .user-money .me-get-money-btn {
-    width: 1.48rem;
     background: transparent;
     color: #fff;
 }
@@ -227,7 +232,7 @@ export default {
 
 .invite-wrapper .invite-btn {
     margin-top: 0.6rem;
-    width: 1.58rem;
+    /* width: 1.58rem; */
     height: 0.56rem;
     line-height: 0.56rem;
 }
