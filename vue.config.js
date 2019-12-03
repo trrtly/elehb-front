@@ -20,7 +20,10 @@ module.exports = {
                             {
                                 test: /\.(jpe?g|png)$/,
                                 options: {
-                                    quality: 75
+                                    // quality: 85
+                                    lossless: true,
+                                    method: 6
+                                    // nearLossless: 0
                                 }
                             }
                         ],
@@ -53,7 +56,7 @@ module.exports = {
                     },
                     pngquant: {
                         quality: [0.65, 0.9],
-                        speed: 4
+                        speed: 3
                     },
                     gifsicle: {
                         interlaced: false
