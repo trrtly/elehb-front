@@ -96,7 +96,7 @@ export default {
                     price: '20.00'
                 }
             ],
-            currentSelection: 0
+            currentSelection: '' // 默认无选中
         };
     },
     computed: {

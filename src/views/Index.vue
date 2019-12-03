@@ -46,6 +46,7 @@
                     v-model="phoneNum"
                     maxlength="11"
                     placeholder="请输入饿了么账号（手机号）"
+                    @input="phoneValid = isPhoneNum(phoneNum)"
                     :error-message="phoneErrMsg"
                 />
             </div>
@@ -186,8 +187,9 @@ export default {
                 }
             ],
             currentHbSelection: 0, // 默认选中第一个红包
+
+            phoneValid: false,
             phoneNum: '',
-            phoneErrMsg: '手机号格式有误',
             getCbModalShow: false,
 
             validaCode: '',
@@ -202,13 +204,16 @@ export default {
     computed: {
         isHbSelected() {
             return (index) => this.currentHbSelection === index;
+        },
+        phoneErrMsg() {
+            return this.phoneNum === '' || this.phoneValid ? '' : '手机号格式有误';
         }
     },
     methods: {
-        // 获取红包
+        // 获取红包弹窗
         getHb() {
             // 校验手机号
-            this.getCbModalShow = true;
+            this.phoneValid && (this.getCbModalShow = true);
         },
         getValidationCode() {
             // 通过手机号获取验证码

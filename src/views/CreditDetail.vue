@@ -22,7 +22,7 @@
                     </div>
                 </van-cell>
             </van-list>
-            <van-button block color="linear-gradient(to right, #6552ff, #2c3ffb)">充值积分</van-button>
+            <van-button block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/recharge">充值积分</van-button>
         </section>
     </div>
 </template>
