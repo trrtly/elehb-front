@@ -25,7 +25,7 @@
                     @click="currentHbSelection = index"
                 >
                     <div class="hb-selection-upper">
-                        <span class="hb-selection-title">{{ hb.title }}</span>
+                        <div class="hb-selection-title">{{ hb.title }}</div>
                         <div class="hb-selection-price">
                             <span class="hb-selection-price-num din-font">{{ hb.price }}</span>
                             <span class="hb-selection-price-text">积分/次</span>
@@ -237,7 +237,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 /* common */
 .index-wrapper {
     background: #f8f8f8;
@@ -342,13 +342,23 @@ export default {
     color: #455ac3;
 }
 
-.hb-selection .hb-selection-price span {
-    vertical-align: middle;
+.hb-selections-wrapper .hb-selection-upper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .hb-selection .hb-selection-price {
-    float: right;
+    display: flex;
+    align-items: center;
     color: #fb5227;
+
+    // 修正移动端偏差
+    & span:nth-child(2) {
+        margin-left: 0.04rem;
+        position: relative;
+        top: -3px;
+    }
 }
 
 .hb-selection .hb-selection-price-num {
