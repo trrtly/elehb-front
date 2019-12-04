@@ -1,10 +1,16 @@
 <template>
-    <van-dialog v-model="innerShowFlag" :close-on-click-overlay="closeOnClickOverlay" :show-confirm-button="false" @closed="closeModal">
-        <div slot="title" class="hb-modal-title">
+    <van-dialog
+        :class="bem()"
+        v-model="innerShowFlag"
+        :close-on-click-overlay="closeOnClickOverlay"
+        :show-confirm-button="false"
+        @closed="closeModal"
+    >
+        <div slot="title" :class="bem('title')">
             {{ title }}
-            <van-icon class="hb-modal-close-btn" name="cross" @click="closeModal" />
+            <van-icon :class="bem('close-btn')" name="cross" @click="closeModal" />
         </div>
-        <div class="hb-modal-body">
+        <div :class="bem('body')">
             <template v-if="text">
                 <div v-html="text"></div>
             </template>
@@ -59,21 +65,23 @@ export default {
 };
 </script>
 
-<style scoped>
-.hb-modal-title {
-    position: relative;
-}
+<style lang="scss" scoped>
+.hb-modal {
+    @include element('title') {
+        position: relative;
+    }
 
-.hb-modal-body {
-    padding: 0.4rem 0.4rem 0.62rem;
-    text-align: center;
-}
+    @include element('body') {
+        padding: 0.4rem 0.4rem 0.62rem;
+        text-align: center;
+    }
 
-.hb-modal-close-btn {
-    position: absolute;
-    top: -0.25rem;
-    right: 0.15rem;
-    color: #ababab;
-    font-size: 0.35rem;
+    @include element('close-btn') {
+        position: absolute;
+        top: -0.25rem;
+        right: 0.15rem;
+        color: #ababab;
+        font-size: 0.35rem;
+    }
 }
 </style>

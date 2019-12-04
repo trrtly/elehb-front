@@ -96,192 +96,194 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .me-wrapper {
     background: #fff;
     overflow: hidden;
-}
-/* header */
-.me-wrapper .header {
-    margin: 0.4rem 0.28rem 0;
-    width: 6.96rem;
-}
 
-.header .header-upper {
-    display: flex;
-    justify-content: space-between;
-}
+    // header
+    .header {
+        margin: 0.4rem 0.28rem 0;
+        width: 6.96rem;
 
-.header-upper .user-avatar {
-    margin-left: 0.42rem;
-    width: 0.98rem;
-    height: 0.98rem;
-    border-radius: 50%;
-}
+        // header upper
+        .header-upper {
+            display: flex;
+            justify-content: space-between;
 
-.header-upper .user-name {
-    padding-top: 0.15rem;
-    margin-left: 0.2rem;
-    font-weight: bold;
-    color: #212121;
-}
+            .avatar-wrapper {
+                display: flex;
+            }
 
-.header-upper .user-id {
-    padding-top: 0.18rem;
-    color: #707070;
-}
+            .user-name {
+                padding-top: 0.15rem;
+                margin-left: 0.2rem;
+                font-weight: bold;
+                color: #212121;
+            }
 
-.header-upper .avatar-wrapper {
-    display: flex;
-}
+            .user-id {
+                padding-top: 0.18rem;
+                color: #707070;
+            }
 
-.header-upper .user-id-copy-btn {
-    color: #2f5ee3;
-}
+            .user-id-copy-btn {
+                color: #2f5ee3;
+            }
+        }
 
-.header .header-bottom {
-    margin-top: -0.4rem;
-    width: 100%;
-    height: 2.94rem;
-    background: #eee url('../assets/me/bg_my@2x.png') no-repeat;
-    background-size: cover;
-    overflow: hidden;
-    box-shadow: 0.01rem 0.01rem 0.2rem 0.02rem #ccc;
-    border-radius: 0.12rem 0.12rem 0 0;
-}
+        // header bottom
+        .header-bottom {
+            margin-top: -0.4rem;
+            width: 100%;
+            height: 2.94rem;
+            background: #eee url('../assets/me/bg_my@2x.png') no-repeat;
+            background-size: cover;
+            overflow: hidden;
+            box-shadow: 0.01rem 0.01rem 0.2rem 0.02rem #ccc;
+            border-radius: 0.12rem 0.12rem 0 0;
 
-.header-bottom .credit-wrapper {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin: 0.68rem 0 0.4rem;
-    padding: 0 0.64rem 0 1.06rem;
-}
+            .credit-wrapper {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                margin: 0.68rem 0 0.4rem;
+                padding: 0 0.64rem 0 1.06rem;
 
-.credit-wrapper .user-credit,
-.credit-wrapper .user-money {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+                @at-root .user-credit,
+                    .user-money {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
 
-.user-credit .my-credit,
-.user-money .my-money {
-    align-items: center;
-    color: #ccffff;
-}
+                    & .my-credit,
+                    & .my-money {
+                        align-items: center;
+                        color: #ccffff;
+                    }
 
-.user-credit .credit-num,
-.credit-wrapper .user-money {
-    font-size: 0.6rem;
-    color: #fefefe;
-}
+                    .credit-num,
+                    &.user-money {
+                        font-size: 0.6rem;
+                        color: #fefefe;
+                    }
 
-.credit-wrapper .me-recharge-btn,
-.user-money .me-get-money-btn {
-    width: 1.48rem;
-    height: 0.56rem;
-    line-height: 0.56rem;
-}
+                    .me-recharge-btn,
+                    .me-get-money-btn {
+                        width: 1.48rem;
+                        height: 0.56rem;
+                        line-height: 0.56rem;
 
-.credit-wrapper .me-recharge-btn {
-    color: #b37013 !important;
-}
+                        &.me-get-money-btn {
+                            background: transparent;
+                            color: #fff;
+                        }
 
-.user-money .me-get-money-btn {
-    background: transparent;
-    color: #fff;
-}
+                        &.me-recharge-btn {
+                            color: #b37013 !important;
+                        }
+                    }
+                }
+            }
+        }
 
-/* invite */
-.invite-wrapper {
-    padding: 0.3rem 0.28rem 0;
-    background: #fff;
-    overflow: hidden;
-}
+        .user-avatar {
+            margin-left: 0.42rem;
+            width: 0.98rem;
+            height: 0.98rem;
+            border-radius: 50%;
+        }
+    }
 
-.invite-wrapper .invite-inner {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.52rem 0.06rem 0.5rem 0.42rem;
-    border-radius: 0.15rem;
-    background: #f7f7f9;
-}
+    // invite
+    .invite-wrapper {
+        padding: 0.3rem 0.28rem 0;
+        background: #fff;
+        overflow: hidden;
 
-.invite-wrapper .invite-right {
-    display: flex;
-    flex-direction: column;
-}
+        .invite-inner {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.52rem 0.06rem 0.5rem 0.42rem;
+            border-radius: 0.15rem;
+            background: #f7f7f9;
+        }
 
-.invite-wrapper .invite-text p:not(:first-child) {
-    margin-top: 0.28rem;
-    color: #707070;
-}
+        .invite-right {
+            display: flex;
+            flex-direction: column;
+        }
 
-.invite-wrapper .invite-link-btn {
-    margin-top: 0.44rem;
-    width: 2.4rem;
-    height: 0.56rem;
-    line-height: 0.56rem;
-}
+        .invite-text p:not(:first-child) {
+            margin-top: 0.28rem;
+            color: #707070;
+        }
 
-.invite-wrapper .invite-btn {
-    margin-top: 0.6rem;
-    /* width: 1.58rem; */
-    height: 0.56rem;
-    line-height: 0.56rem;
-}
+        .invite-link-btn {
+            margin-top: 0.44rem;
+            width: 2.4rem;
+            height: 0.56rem;
+            line-height: 0.56rem;
+        }
 
-/* common */
-.common-wrapper {
-    margin: 0.3rem 0.28rem 0;
-}
+        .invite-btn {
+            margin-top: 0.6rem;
+            /* width: 1.58rem; */
+            height: 0.56rem;
+            line-height: 0.56rem;
+        }
+    }
 
-.common-wrapper .common-btn-list {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0.26rem;
-}
+    // common
+    .common-wrapper {
+        margin: 0.3rem 0.28rem 0;
 
-.common-btn-list li {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 2.06rem;
-    height: 2.06rem;
-    border-radius: 0.04rem;
-}
+        .common-btn-list {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.26rem;
 
-.common-btn-list li .common-btn-icon {
-    width: 0.58rem;
-    height: 0.58rem;
-}
+            .new {
+                background: #fefaf2;
+            }
 
-.common-btn-text {
-    position: relative;
-    top: 0.4rem;
-}
+            .faq {
+                background: #eff9f7;
+            }
 
-.common-btn-list .new {
-    background: #fefaf2;
-}
+            .kefu {
+                background: #f2f6fe;
+            }
+        }
 
-.common-btn-list .faq {
-    background: #eff9f7;
-}
+        .common-btn-list li {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 2.06rem;
+            height: 2.06rem;
+            border-radius: 0.04rem;
 
-.common-btn-list .kefu {
-    background: #f2f6fe;
-}
+            .common-btn-icon {
+                width: 0.58rem;
+                height: 0.58rem;
+            }
 
-/* footer */
-.me-footer {
-    margin: 0.74rem 0.28rem 0;
-}
+            &:active {
+                opacity: 0.8;
+            }
+        }
 
-/* common */
-.common-btn-list li:active {
-    opacity: 0.8;
+        .common-btn-text {
+            position: relative;
+            top: 0.4rem;
+        }
+    }
+
+    // footer
+    .me-footer {
+        margin: 0.74rem 0.28rem 0;
+    }
 }
 </style>

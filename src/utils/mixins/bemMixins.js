@@ -30,19 +30,19 @@ const prefix = (name, mods) => {
 
 export default {
     methods: {
-        // bem(el, mods) {
-        //     let { name } = this.$options;
-        //     if (typeof name == 'string') {
-        //         name = name.replace(/^./, (m) => m.toLowerCase()).replace(/[A-Z]/g, (m) => '-' + m.toLowerCase());
-        //     }
-        //     if (el && typeof el !== 'string') {
-        //         mods = el;
-        //         el = '';
-        //     }
-        //     el = join(name, el, ELEMENT);
+        bem(el, mods) {
+            let { name } = this.$options;
+            if (typeof name == 'string') {
+                name = name.replace(/^./, (m) => m.toLowerCase()).replace(/[A-Z]/g, (m) => '-' + m.toLowerCase());
+            }
+            if (el && typeof el !== 'string') {
+                mods = el;
+                el = '';
+            }
+            el = join(name, el, ELEMENT);
 
-        //     return mods ? [el, prefix(el, mods)] : el;
-        // },
+            return mods ? [el, prefix(el, mods)] : el;
+        },
         vBem(name, el, mods) {
             if (el && typeof el !== 'string') {
                 mods = el;
