@@ -4,7 +4,7 @@
             <div class="fz-28" :class="vBem('credit-header', 'title')"><span>当前积分余额</span></div>
             <div class="fz-28" :class="vBem('credit-header', 'detail')">
                 <span class="din-font">{{ myCredit }}</span>
-                元
+                点
             </div>
         </header>
         <section :class="vBem('credit-list')">
