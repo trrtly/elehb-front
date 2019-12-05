@@ -72,7 +72,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .friends-wrapper {
     display: flex;
     flex-direction: column;

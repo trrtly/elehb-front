@@ -14,7 +14,7 @@
                     :class="{ active: isCreditSelected(index) }"
                     v-for="(item, index) in creditSelection"
                     :key="index"
-                    @click="currentSelection = index"
+                    @click="toRecharge(index)"
                 >
                     <p class="credit-text fz-28">
                         <span class="din-font fz-36">{{ item.creditNum }}</span>
@@ -102,6 +102,21 @@ export default {
     computed: {
         isCreditSelected() {
             return (index) => this.currentSelection === index;
+        }
+    },
+    methods: {
+        toRecharge(index) {
+            this.currentSelection = index;
+
+            this.$wmqModal({
+                title: '支付成功',
+                text: '积分充值已完成，赶快去领取红包吧！',
+                showConfirmButton: true,
+                confirmButtonText: '立即领取',
+                confirm: () => {
+                    this.$router.push('/');
+                }
+            });
         }
     },
     components: {

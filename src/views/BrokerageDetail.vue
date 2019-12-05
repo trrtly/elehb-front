@@ -63,7 +63,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .brokerage-wrapper {
     display: flex;
     flex-direction: column;

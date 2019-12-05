@@ -3,8 +3,13 @@
         :class="bem()"
         v-model="innerShowFlag"
         :close-on-click-overlay="closeOnClickOverlay"
-        :show-confirm-button="false"
+        :show-confirm-button="showConfirmButton"
+        :show-cancel-button="showCancelButton"
+        :confirm-button-text="confirmButtonText"
+        :cancel-button-text="cancelButtonText"
         @closed="closeModal"
+        @confirm="confirm"
+        @cancel="cancel"
     >
         <div slot="title" :class="bem('title')">
             {{ title }}
@@ -40,6 +45,24 @@ export default {
         closeOnClickOverlay: {
             type: Boolean,
             default: false
+        },
+        showConfirmButton: {
+            type: Boolean,
+            default: false
+        },
+        showCancelButton: {
+            type: Boolean,
+            default: false
+        },
+        confirmButtonText: String,
+        cancelButtonText: String,
+        confirm: {
+            type: Function,
+            default: () => {}
+        },
+        cancel: {
+            type: Function,
+            default: () => {}
         }
     },
     model: {

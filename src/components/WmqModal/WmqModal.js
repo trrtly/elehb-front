@@ -33,7 +33,13 @@ let Modal = (options = {}) => {
     let props = {
         title: options.title || '标题',
         text: options.text || '默认文字',
-        closeOnClickOverlay: options.closeOnClickOverlay || false
+        closeOnClickOverlay: options.closeOnClickOverlay || false,
+        showConfirmButton: options.showConfirmButton,
+        showCancelButton: options.showCancelButton,
+        confirmButtonText: options.confirmButtonText,
+        cancelButtonText: options.cancelButtonText,
+        confirm: options.confirm,
+        cancel: options.cancel
     };
 
     let instance = getAnInstance(props);
