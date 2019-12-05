@@ -10,6 +10,7 @@
         @closed="closeModal"
         @confirm="confirm"
         @cancel="cancel"
+        :before-close="beforeClose"
     >
         <div slot="title" :class="bem('title')">
             {{ title }}
@@ -61,6 +62,10 @@ export default {
             default: () => {}
         },
         cancel: {
+            type: Function,
+            default: () => {}
+        },
+        beforeClose: {
             type: Function,
             default: () => {}
         }

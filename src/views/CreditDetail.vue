@@ -77,7 +77,7 @@ export default {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
-        margin-top: -0.52rem;
+        margin-top: -1.35rem;
         border-radius: 16px;
         background: #fff;
 

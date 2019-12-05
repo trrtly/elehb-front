@@ -31,15 +31,16 @@ WmqModalConstructor.prototype.close = function() {
 
 let Modal = (options = {}) => {
     let props = {
-        title: options.title || '标题',
-        text: options.text || '默认文字',
+        title: options.title || '',
+        text: options.text || '',
         closeOnClickOverlay: options.closeOnClickOverlay || false,
         showConfirmButton: options.showConfirmButton,
         showCancelButton: options.showCancelButton,
         confirmButtonText: options.confirmButtonText,
         cancelButtonText: options.cancelButtonText,
         confirm: options.confirm,
-        cancel: options.cancel
+        cancel: options.cancel,
+        beforeClose: options.beforeClose
     };
 
     let instance = getAnInstance(props);

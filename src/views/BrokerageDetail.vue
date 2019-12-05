@@ -26,7 +26,7 @@
                     </div>
                 </van-cell>
             </van-list>
-            <van-button block color="linear-gradient(to right, #6552ff, #2c3ffb)">佣金提现</van-button>
+            <van-button block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="withDraw">佣金提现</van-button>
         </section>
     </div>
 </template>
@@ -57,6 +57,22 @@ export default {
                     <p>①佣金获得：您使用专属二维码邀请好友，可获得好友每笔充值金额20%的佣金。举例，您邀请了胖虎，胖虎充值10元，你可获得2元佣金（10元*20%）</p>
                     <p style="margin-top: 0.42rem;">②佣金提现：单次提现最低1元，最高200元，每人每日做多可提现3次</p>
                 </div>`
+            });
+        },
+        withDraw() {
+            this.$wmqModal({
+                title: '确认提现吗？',
+                text: `提现金额：${200}元`,
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: '确认提现',
+                cancelButtonText: '稍后再说',
+                beforeClose: (action, done) => {
+                    setTimeout(() => {
+                        this.$toast('提现成功');
+                        done();
+                    }, 500);
+                }
             });
         }
     }

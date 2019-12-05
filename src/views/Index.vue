@@ -51,7 +51,9 @@
                 />
             </div>
 
-            <van-button class="hb-form-submit fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getHb">立即领取</van-button>
+            <van-button class="hb-form-submit fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getHbModal">
+                立即领取
+            </van-button>
 
             <div class="hb-description">
                 <p>领取规则：</p>
@@ -122,7 +124,7 @@
                     />
                 </van-field>
             </div>
-            <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)">立即领取</van-button>
+            <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getCoupon">立即领取</van-button>
         </hb-modal>
     </div>
 </template>
@@ -208,7 +210,7 @@ export default {
     },
     methods: {
         // 获取红包弹窗
-        getHb() {
+        getHbModal() {
             // 校验手机号
             this.phoneValid && (this.getCbModalShow = true);
         },
@@ -216,6 +218,18 @@ export default {
             // 通过手机号获取验证码
             this.isGetingCode = true;
             // 调短信接口
+        },
+        getCoupon() {
+            // 积分余额不足
+            this.getCbModalShow = false;
+            this.$wmqModal({
+                text: '您的积分余额不足，快来充值积分吧！',
+                showConfirmButton: true,
+                confirmButtonText: '前往充值',
+                confirm: () => {
+                    this.$router.push('/recharge');
+                }
+            });
         }
     },
     components: {
