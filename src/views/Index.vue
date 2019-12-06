@@ -126,12 +126,15 @@
             </div>
             <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getCoupon">立即领取</van-button>
         </hb-modal>
+
+        <hb-success-modal v-model="hbSuccessModalShow"></hb-success-modal>
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import hbModal from '../components/WmqModal/WmqModal.vue';
+import hbSuccessModal from '../components/HbSuccessModal/HbSuccessModal.vue';
 
 export default {
     name: 'home',
@@ -191,7 +194,9 @@ export default {
             getCbModalShow: false,
 
             validaCode: '',
-            isGetingCode: false // 是否正在获取验证码
+            isGetingCode: false, // 是否正在获取验证码
+
+            hbSuccessModalShow: false
         };
     },
     // axios 测试
@@ -212,7 +217,11 @@ export default {
         // 获取红包弹窗
         getHbModal() {
             // 校验手机号
-            this.phoneValid && (this.getCbModalShow = true);
+            // this.phoneValid && (this.getCbModalShow = true);
+            this.hbSuccessModalShow = true;
+            // setTimeout(() => {
+            //     this.hbSuccessModalShow = false;
+            // }, 5000);
         },
         getValidationCode() {
             // 通过手机号获取验证码
@@ -233,7 +242,8 @@ export default {
         }
     },
     components: {
-        hbModal
+        hbModal,
+        hbSuccessModal
     },
     watch: {
         getCbModalShow(newVal) {
@@ -265,7 +275,7 @@ export default {
 
 .header > .header-upper {
     position: absolute;
-    z-index: 1;
+    z-index: 0;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -289,7 +299,7 @@ export default {
 
 .header-bottom {
     position: relative;
-    z-index: 2;
+    z-index: 1;
     width: 100%;
     margin-top: 1.4rem;
 }

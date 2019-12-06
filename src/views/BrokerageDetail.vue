@@ -59,6 +59,7 @@ export default {
                 </div>`
             });
         },
+        // 提现
         withDraw() {
             this.$wmqModal({
                 title: '确认提现吗？',
