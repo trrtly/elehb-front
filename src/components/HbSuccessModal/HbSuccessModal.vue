@@ -22,7 +22,7 @@
                         </ul>
                     </div>
                     <div :class="bem('hb-bottom')">
-                        bottom
+                        <div class="hb-bottom-button"></div>
                     </div>
                 </section>
                 <div :class="bem('hb-footer')">
@@ -68,7 +68,7 @@ export default {
             const touchY = e.changedTouches[0].pageY - this.touchStartY;
             if (
                 e.cancelable &&
-                ((touchY > 0 && scrollTop === 0) || (touchY < 0 && Math.ceil(targetHeight + scrollTop) === Math.ceil(scrollHeight)))
+                ((touchY > 0 && scrollTop === 0) || (touchY < 0 && Math.ceil(targetHeight + scrollTop + 2) >= Math.ceil(scrollHeight)))
             ) {
                 e.preventDefault();
             }
@@ -146,6 +146,19 @@ export default {
 
     @include element('hb-item-right') {
         margin-left: 0.38rem;
+    }
+
+    @include element('hb-bottom') {
+        margin-top: 0.83rem;
+
+        .hb-bottom-button {
+            margin: 0 auto;
+            padding-bottom: 0.2rem;
+            width: 5.33rem;
+            height: 0.98rem;
+            background: url('./assets//button-pop@2x.png') no-repeat;
+            background-size: contain;
+        }
     }
 
     @include element('hb-footer') {
