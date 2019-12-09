@@ -67,7 +67,9 @@ export default {
         },
         beforeClose: {
             type: Function,
-            default: () => {}
+            default: (action, done) => {
+                done();
+            }
         }
     },
     model: {

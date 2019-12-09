@@ -159,7 +159,7 @@ export default {
                     & .my-credit,
                     & .my-money {
                         align-items: center;
-                        color: #ccffff;
+                        color: #dadaff;
                     }
 
                     .credit-num,

@@ -22,7 +22,13 @@
                         </ul>
                     </div>
                     <div :class="bem('hb-bottom')">
-                        <div class="hb-bottom-button"></div>
+                        <p class="hb-bottom-desc fz-24">请打开饿了么APP“我的-红包-店铺红包”查看</p>
+                        <div class="hb-bottom-button font-bold">
+                            <p class="fz-36" style="margin-top: 0.14rem;">再领一个免费红包</p>
+                            <p class="fz-24" style="margin-top: 0.04rem;">
+                                (<van-count-down ref="jumpCountDown" :time="5000" format="ss秒" :auto-start="false" />后跳转)
+                            </p>
+                        </div>
                     </div>
                 </section>
                 <div :class="bem('hb-footer')">
@@ -34,7 +40,7 @@
 </template>
 
 <script>
-import { Overlay, Icon } from 'vant';
+import { Overlay, CountDown, Icon } from 'vant';
 
 export default {
     name: 'hbSuccessModal',
@@ -54,6 +60,7 @@ export default {
     },
     data() {
         return {
+            scrollTop: 0, // 记录当前页面scrollTop
             touchStartY: 0,
             innerShow: this.show,
 
@@ -81,10 +88,29 @@ export default {
     watch: {
         show(v) {
             this.innerShow = v;
+        },
+        innerShow(v) {
+            this.$refs.jumpCountDown[v ? 'start' : 'reset']();
+
+            // 处理QQ浏览器滚动穿透--暂时
+            if (v) {
+                this.scrollTop = document.body.parentNode.scrollTop || document.body.scrollTop;
+                document.body.style.top = `${-this.scrollTop}px`;
+            }
+
+            // 处理QQ浏览器滚动穿透--暂时
+            document.body.style.position = v ? 'fixed' : 'static';
+            document.body.style.overflow = v ? 'hidden' : 'auto';
+
+            // 处理QQ浏览器滚动穿透--暂时
+            if (!v) {
+                document.body.scrollTop = document.body.parentNode.scrollTop = this.scrollTop;
+            }
         }
     },
     components: {
         vanOverlay: Overlay,
+        vanCountDown: CountDown,
         vanIcon: Icon
     }
 };
@@ -120,6 +146,7 @@ export default {
         min-height: 4.14rem;
         max-height: 4.14rem;
         overflow-y: scroll;
+        -webkit-overflow-scrolling: auto;
         touch-action: pan-y;
     }
 
@@ -149,15 +176,39 @@ export default {
     }
 
     @include element('hb-bottom') {
-        margin-top: 0.83rem;
+        margin-top: 0.38rem;
+        text-align: center;
+
+        .hb-bottom-desc {
+            margin-bottom: 0.2rem;
+            color: #f8d1bb;
+        }
 
         .hb-bottom-button {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
             margin: 0 auto;
             padding-bottom: 0.2rem;
             width: 5.33rem;
             height: 0.98rem;
             background: url('./assets//button-pop@2x.png') no-repeat;
             background-size: contain;
+            color: #6c2701;
+            transition: top 0.2s;
+
+            &:active {
+                top: 2px;
+                opacity: 0.8;
+            }
+
+            // overWrite this count down css
+            .van-count-down {
+                display: inline;
+                font-size: 0.24rem;
+                color: #6c2701;
+            }
         }
     }
 
