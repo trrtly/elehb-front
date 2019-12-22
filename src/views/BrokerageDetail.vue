@@ -3,7 +3,7 @@
         <header class="brokerage-header">
             <div class="brokerage-header-title fz-28"><span>当前佣金余额</span></div>
             <div class="brokerage-header-detail fz-28">
-                <span class="din-font">{{ myBrokerage }}</span>
+                <span class="din-font">{{ userInfo.cms }}</span>
                 元
             </div>
             <div class="brokerage-rule">
@@ -33,6 +33,7 @@
 
 <script>
 import Vue from 'vue';
+import { mapState } from 'vuex';
 import { List, Cell } from 'vant';
 
 Vue.use(List).use(Cell);
@@ -40,12 +41,13 @@ Vue.use(List).use(Cell);
 export default {
     data() {
         return {
-            myBrokerage: '663.50',
-
             brokerageLoading: false,
             finished: true,
             brokerageHistory: []
         };
+    },
+    computed: {
+        ...mapState(['userInfo'])
     },
     methods: {
         viewBrokerageDetail() {

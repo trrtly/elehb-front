@@ -5,7 +5,7 @@
                 <img class="my-credit-icon" src="../assets/recharge/icon-jifen@2x.png" alt="credit" />
                 <span class="my-current-credit fz-28">
                     当前积分:
-                    <span class="din-font">{{ credit | currencyFormat }}</span>
+                    <span class="din-font">{{ userInfo.score | currencyFormat }}</span>
                 </span>
             </div>
             <ul class="credit-selection-list">
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import RedeemBtn from '../components/RedeemBtn/RedeemBtn';
 
 export default {
@@ -102,7 +103,8 @@ export default {
     computed: {
         isCreditSelected() {
             return (index) => this.currentSelection === index;
-        }
+        },
+        ...mapState(['userInfo'])
     },
     methods: {
         toRecharge(index) {

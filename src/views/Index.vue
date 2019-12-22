@@ -8,8 +8,8 @@
             <div class="header-bottom">
                 <!-- 轮播 -->
                 <van-swipe class="header-swiper" :autoplay="2000" indicator-color="#00000000">
-                    <van-swipe-item v-for="(e, i) in swipeImages" :key="i" style="background-color: #39a9ed;">
-                        <img style="height: 100%;" :src="e" alt="i" />
+                    <van-swipe-item v-for="e in swipeImages" :key="e.id" style="background-color: #39a9ed;">
+                        <a :href="e.url"><img style="withd: 100%;" :src="e.img" alt="i"/></a>
                     </van-swipe-item>
                 </van-swipe>
             </div>
@@ -20,20 +20,18 @@
                 <li
                     class="hb-selection"
                     :class="{ active: isHbSelected(index) }"
-                    v-for="(hb, index) in hbArr"
+                    v-for="(hb, index) in hbList"
                     :key="hb.id"
                     @click="currentHbSelection = index"
                 >
                     <div class="hb-selection-upper">
                         <div class="hb-selection-title">{{ hb.title }}</div>
                         <div class="hb-selection-price">
-                            <span class="hb-selection-price-num din-font">{{ hb.price }}</span>
+                            <span class="hb-selection-price-num din-font">{{ hb.score }}</span>
                             <span class="hb-selection-price-text">积分/次</span>
                         </div>
                     </div>
-                    <div class="hb-selection-bottom" v-if="isHbSelected(index)">
-                        <p v-html="hb.desc"></p>
-                    </div>
+                    <div class="hb-selection-bottom" v-if="isHbSelected(index)" v-html="hb.description"></div>
                 </li>
             </ul>
 
@@ -55,26 +53,27 @@
                 立即领取
             </van-button>
 
-            <div class="hb-description">
+            <div class="hb-rules-wrapper">
                 <p>领取规则：</p>
-                <p>
+                <div class="hb-rules" v-html="hbList[currentHbSelection] && hbList[currentHbSelection].rule"></div>
+                <!-- <p>
                     1、每个手机号每日限领1次，部分异常账号由于饿了么风控原因，无法领取红包，请更换其他手机号领取；
                 </p>
                 <p>2、若领取失败，不会消耗积分；</p>
-                <p>3、领取的红包有效期以饿了么为准，请及时使用 。</p>
+                <p>3、领取的红包有效期以饿了么为准，请及时使用 。</p> -->
             </div>
         </section>
 
         <footer class="hb-bar van-hairline--top">
             <div class="hb-user">
                 <div class="user-info">
-                    <img class="user-avatar" src="https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png" alt="avatar" />
-                    <span class="user-name van-ellipsis">{{ 'userName' }}</span>
+                    <img class="user-avatar" :src="userInfo.headimgurl" alt="avatar" />
+                    <span class="user-name van-ellipsis">{{ userInfo.nickname }}</span>
                 </div>
                 <div class="user-credit">
                     我的积分：
                     <span class="user-credit-num din-font">
-                        {{ '999' }}
+                        {{ userInfo.score }}
                     </span>
                 </div>
             </div>
@@ -133,60 +132,21 @@
 
 <script>
 // @ is an alias to /src
+import { mapState } from 'vuex';
 import hbModal from '../components/WmqModal/WmqModal.vue';
 import hbSuccessModal from '../components/HbSuccessModal/HbSuccessModal.vue';
 
 export default {
     name: 'home',
+    async created() {
+        !this.$store.state.platformInfo && (await this.$store.dispatch('fetchSetPlatformInfo'));
+        this.hbList = this.$store.state?.platformInfo?.redpacks;
+        this.swipeImages = this.$store.state?.platformInfo?.banners;
+    },
     data() {
         return {
-            swipeImages: [
-                'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2754363298,2864020823&fm=26&gp=0.jpg',
-                'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2754363298,2864020823&fm=26&gp=0.jpg',
-                'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2754363298,2864020823&fm=26&gp=0.jpg',
-                'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2754363298,2864020823&fm=26&gp=0.jpg'
-            ],
-            hbArr: [
-                {
-                    id: 1,
-                    price: 6,
-                    title: '通用组合红包',
-                    desc: `
-                        <p style="margin-bottom: 0.2rem;">◆ 平台通用红包【满30减4】</p>
-                        <p style="margin-bottom: 0.2rem;">◆ 平台通用红包【满45减5】</p>
-                        <p class="van-ellipsis">◆ 手气好有可能领取到16减16、66减66红包哦~</p>
-                    `
-                },
-                {
-                    id: 2,
-                    price: 6,
-                    title: '品质联盟30-5组合包',
-                    desc: `
-                        <p style="margin-bottom: 0.2rem;">◆ 品质联盟商家福利红包【无门槛减2】
-                        <p style="margin-bottom: 0.2rem;">◆ 品质联盟专享红包【满30减5】
-                        <p>◆ 品质联盟商家福利红包【满15减2】</p>
-                    `
-                },
-                {
-                    id: 3,
-                    price: 6,
-                    title: '随机批量组合包',
-                    desc: `
-                        <p>◆ 凭手气领取大量金额随机的红包</p>
-                    `
-                },
-                {
-                    id: 4,
-                    price: 6,
-                    title: '每日四合一礼包',
-                    desc: `
-                            <p style="margin-bottom: 0.2rem;">◆ 平台通用红包【满25或35减4】
-                            <p style="margin-bottom: 0.2rem;">◆ 品质联盟专享红包【满25或35减5】
-                            <p style="margin-bottom: 0.2rem;">◆ 下午茶红包【满30或35减5】
-                            <p>◆ 夜宵红包【满45减6】</p>
-                        `
-                }
-            ],
+            swipeImages: [],
+            hbList: [],
             currentHbSelection: 0, // 默认选中第一个红包
 
             phoneValid: false,
@@ -199,19 +159,14 @@ export default {
             hbSuccessModalShow: false
         };
     },
-    // axios 测试
-    // async created() {
-    //     let res = await this.axios.get('https://api.apiopen.top/getAllUrl');
-    //     console.log(res);
-    // },
-
     computed: {
         isHbSelected() {
             return (index) => this.currentHbSelection === index;
         },
         phoneErrMsg() {
             return this.phoneNum === '' || this.phoneValid ? '' : '手机号格式有误';
-        }
+        },
+        ...mapState(['userInfo'])
     },
     methods: {
         // 获取红包弹窗
@@ -339,7 +294,7 @@ export default {
 }
 
 .hb-selections-wrapper > .hb-selection.active {
-    min-height: 2.3rem;
+    // min-height: 2.3rem;
     border: 1px solid #2f5ee3;
     background: #f3f4ff url('../assets/index/click-bg@2x.png') right bottom no-repeat;
     background-size: 2.55rem 1.7rem;
@@ -351,12 +306,23 @@ export default {
 
 .hb-selection .hb-selection-bottom {
     font-size: 0.24rem;
-    margin-top: 0.24rem;
+    margin-top: 0.14rem;
+    line-height: 0.34rem;
+    color: #545454;
+
+    /deep/ .hb-selection-bottom__rules p:not(:last-child) {
+        margin-bottom: 0.2rem;
+    }
+
+    .hb-selection-bottom__desc {
+        margin-top: 0.2rem;
+    }
 }
 
 .hb-selection .hb-selection-title {
     font-size: 0.32rem;
     font-weight: bold;
+    color: #3d3d3d;
 }
 
 .hb-selection.active .hb-selection-title {
@@ -408,15 +374,15 @@ export default {
     font-size: 0.32rem;
 }
 
-/* hb-description */
-.hb-description {
+/* hb-rules-wrapper */
+.hb-rules-wrapper {
     margin: 0.3rem 0 0.95rem;
     font-size: 0.24rem;
     color: #858585;
     line-height: normal;
 }
 
-.hb-description p {
+/deep/ .hb-rules-wrapper p {
     margin-bottom: 0.08rem;
 }
 

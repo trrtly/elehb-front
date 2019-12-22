@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router from './router';
 import store from './store';
+import router from './router';
 
 // import utils
 import './utils';
@@ -21,8 +21,7 @@ import { Swipe, SwipeItem, Dialog, Field, Button, CountDown } from 'vant';
 import VueClipboard from 'vue-clipboard2';
 
 // import axios
-import axios from 'axios';
-import VueAxios from 'vue-axios';
+import './service/axios';
 
 // import bemMixins
 import bemMixins from './utils/mixins/bemMixins';
@@ -34,8 +33,7 @@ Vue.use(Swipe)
     .use(Field)
     .use(Button)
     .use(CountDown)
-    .use(VueClipboard)
-    .use(VueAxios, axios);
+    .use(VueClipboard);
 
 Vue.config.productionTip = false;
 

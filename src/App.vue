@@ -19,7 +19,8 @@ export default {};
 html,
 body,
 #app {
-    min-height: 100%;
+    height: 100%;
+    // min-height: 100%;
     background: #fff;
 }
 
@@ -66,6 +67,11 @@ body {
 #app .van-cell:not(:last-child)::after {
     right: 0.28rem;
     border-bottom-color: #e6e6e6;
+}
+
+/* overWrite vant field required */
+.van-cell--required::before {
+    content: '';
 }
 
 /* common */

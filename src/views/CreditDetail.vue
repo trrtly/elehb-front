@@ -3,7 +3,7 @@
         <header :class="vBem('credit-header')">
             <div class="fz-28" :class="vBem('credit-header', 'title')"><span>当前积分余额</span></div>
             <div class="fz-28" :class="vBem('credit-header', 'detail')">
-                <span class="din-font">{{ myCredit }}</span>
+                <span class="din-font">{{ userInfo.score }}</span>
                 点
             </div>
         </header>
@@ -30,18 +30,22 @@
 <script>
 import Vue from 'vue';
 import { List, Cell } from 'vant';
+import { mapState } from 'vuex';
 
 Vue.use(List).use(Cell);
 
 export default {
     data() {
         return {
-            myCredit: 1000,
+            // myCredit: 1000,
 
             creditLoading: false,
             finished: true,
             creditDetailHistory: []
         };
+    },
+    computed: {
+        ...mapState(['userInfo'])
     }
 };
 </script>

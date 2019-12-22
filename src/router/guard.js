@@ -1,20 +1,31 @@
-// import commonService from '../service/commonService';
+import commonService from '../service/commonService';
 
 export default async function(to, from, next) {
     // 判断一下有没有微信授权
-    // let query = to.query;
+    let query = to.query;
 
-    // let userCode = localStorage.getItem('userCode');
+    let token = localStorage.getItem('token');
 
-    // if (!query.code || !userCode) {
-    //     // 如果code不存在
-    //     window.location.href = commonService.validateHref();
-    // } else {
-    //     this.app.$toast(query.code || userCode);
-    //     localStorage.setItem('userCode', query.code);
-    next();
-    // }
+    if (query.code) {
+        // code存在
+        let userToken = await commonService.getToken(query.code);
+        userToken && localStorage.setItem('token', userToken?.data?.data?.token);
+    } else {
+        if (token) {
+            // 拉取用户信息
+            !this.app.$store.state.userInfo && (await this.app.$store.dispatch('fetchSetUserInfo'));
+            next();
+        } else {
+            // 无code 无token
+            // this.app.$toast('登录失效');
+            setTimeout(async () => {
+                const platformInfo = await commonService.getPlatformInfo();
+                const appId = platformInfo?.data?.data?.appid;
 
-    // await commonService.validateLogin();
-    // document.write(data.data);
+                window.location.href = commonService.validateHref({
+                    app_id: appId
+                });
+            }, 1000);
+        }
+    }
 }

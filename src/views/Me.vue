@@ -3,19 +3,19 @@
         <header class="header">
             <div class="header-upper">
                 <div class="avatar-wrapper">
-                    <img class="user-avatar" src="https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png" alt="avatar" />
-                    <span class="user-name fz-32">绿色森林</span>
+                    <img class="user-avatar" :src="userInfo.headimgurl" />
+                    <span class="user-name fz-32">{{ userInfo.nickname }}</span>
                 </div>
 
                 <span class="user-id fz-24">
-                    账户ID：{{ userId }}
-                    <span class="user-id-copy-btn" @click="copyText(userId)">复制</span>
+                    账户ID：{{ userInfo.id }}
+                    <span class="user-id-copy-btn" @click="copyText(userInfo.id)">复制</span>
                 </span>
             </div>
             <div class="header-bottom flex">
                 <div class="credit-wrapper">
                     <div class="user-credit">
-                        <span class="credit-num din-font">{{ userCredit }}</span>
+                        <span class="credit-num din-font">{{ userInfo.score }}</span>
                         <span class="my-credit flex fz-28" v-route-jump="'/credit'">我的积分 <van-icon name="arrow"/></span>
                         <van-button
                             class="me-recharge-btn fz-28 font-bold"
@@ -27,7 +27,7 @@
                         >
                     </div>
                     <div class="user-money">
-                        <span class="din-font">{{ userMoney }} <span class="fz-28">元</span></span>
+                        <span class="din-font">{{ userInfo.cms }} <span class="fz-28">元</span></span>
                         <span class="my-money flex fz-28" v-route-jump="'/brokerage'">我的佣金 <van-icon name="arrow"/></span>
                         <van-button class="me-get-money-btn fz-28 font-bold" size="small" hairline round to="/brokerage">提现</van-button>
                     </div>
@@ -77,17 +77,21 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import RedeemBtn from '../components/RedeemBtn/RedeemBtn';
 
 export default {
     name: 'me',
     data() {
         return {
-            userId: '2019011',
-            userCredit: 1024,
-            userMoney: 879.99,
+            // userId: '2019011',
+            // userCredit: 1024,
+            // userMoney: 879.99,
             inviteLink: 'www.baidu.com'
         };
+    },
+    computed: {
+        ...mapState(['userInfo'])
     },
     methods: {},
     components: {
@@ -149,6 +153,7 @@ export default {
                 width: 100%;
                 margin: 0.68rem 0 0.4rem;
                 padding: 0 0.64rem 0 1.06rem;
+                text-align: center;
 
                 @at-root .user-credit,
                     .user-money {
