@@ -10,6 +10,8 @@ export default async function(to, from, next) {
         // code存在
         let userToken = await commonService.getToken(query.code);
         userToken && localStorage.setItem('token', userToken?.data?.data?.token);
+        !this.app.$store.state.userInfo && (await this.app.$store.dispatch('fetchSetUserInfo'));
+        next(to.path);
     } else {
         if (token) {
             // 拉取用户信息
@@ -18,13 +20,8 @@ export default async function(to, from, next) {
         } else {
             // 无code 无token
             // this.app.$toast('登录失效');
-            setTimeout(async () => {
-                const platformInfo = await commonService.getPlatformInfo();
-                const appId = platformInfo?.data?.data?.appid;
-
-                window.location.href = commonService.validateHref({
-                    app_id: appId
-                });
+            setTimeout(() => {
+                commonService.toValidateHref();
             }, 1000);
         }
     }

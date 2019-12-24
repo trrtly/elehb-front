@@ -1,4 +1,4 @@
-// import store from '../store';
+import store from '../store';
 import axios from 'axios';
 import { Toast } from 'vant';
 
@@ -17,17 +17,34 @@ export default {
     },
     // 获取token
     async getToken(userCode) {
-        return axios.post(urls.getToken, {
-            code: userCode
-        });
+        return axios
+            .post(urls.getToken, {
+                code: userCode
+            })
+            .catch(() => {
+                Toast('获取token失败');
+            });
     },
     // 获取用户微信信息
     async getUserInfo() {
-        return axios.get(urls.getUserInfo);
+        return axios.get(urls.getUserInfo).catch(() => {
+            Toast('获取用户信息失败');
+        });
     },
-    // 拼接授权页面链接
-    validateHref(params = {}) {
-        const { app_id, redirect_uri = location.href.split('#')[0], response_type = 'scope', scope = 'snsapi_userinfo', state = '' } = params;
-        return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${app_id}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}&connect_redirect=1#wechat_redirect`;
+    // 获取拼接授权页面链接
+    async validateHref(params = {}) {
+        return new Promise(async (rs) => {
+            let { app_id, redirect_uri = location.href.split('#')[0], response_type = 'scope', scope = 'snsapi_userinfo', state = '' } = params;
+            if (app_id) {
+                await this.getPlatformInfo();
+                app_id = store.state.platformInfo.appid;
+            }
+            rs(
+                `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${app_id}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}&connect_redirect=1#wechat_redirect`
+            );
+        });
+    },
+    async toValidateHref() {
+        window.location.href = await this.validateHref();
     }
 };

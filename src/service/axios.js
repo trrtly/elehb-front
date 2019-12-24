@@ -35,7 +35,7 @@ axios.interceptors.response.use(
 
         // 接口401则重新跳转微信授权页面
         if (+resp.status === 401) {
-            window.location = commonService.validateHref();
+            commonService.toValidateHref();
         } else {
             return Promise.reject(error);
         }

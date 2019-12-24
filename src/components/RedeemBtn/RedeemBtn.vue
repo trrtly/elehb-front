@@ -17,7 +17,7 @@ export default {
     width: 100%;
     background: url('../../assets/me/butten_bg_hongbao@2x.png') no-repeat;
     background-size: cover;
-    transition: top 0.2s;
+    transition: transform 0.2s;
 
     @include element('text') {
         font-size: 0.36rem;
@@ -27,7 +27,7 @@ export default {
     }
 
     &:active {
-        top: 2px;
+        transform: translate3d(0, 2px, 0);
         opacity: 0.8;
     }
 }
