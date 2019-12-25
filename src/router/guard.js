@@ -1,6 +1,6 @@
 import commonService from '../service/commonService';
 
-export default async function(to, from, next) {
+export async function beforeEnter(to, from, next) {
     // 判断一下有没有微信授权
     let query = to.query;
 
@@ -11,7 +11,10 @@ export default async function(to, from, next) {
         let userToken = await commonService.getToken(query.code);
         userToken && localStorage.setItem('token', userToken?.data?.data?.token);
         !this.app.$store.state.userInfo && (await this.app.$store.dispatch('fetchSetUserInfo'));
-        next(to.path);
+        next({
+            path: to.path,
+            replace: true
+        });
     } else {
         if (token) {
             // 拉取用户信息
