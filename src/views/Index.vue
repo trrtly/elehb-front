@@ -15,14 +15,14 @@
             </div>
         </header>
 
-        <section class="main-section">
+        <section class="main-section" ref="mainSection">
             <ul class="hb-selections-wrapper">
                 <li
                     class="hb-selection"
                     :class="{ active: isHbSelected(index) }"
                     v-for="(hb, index) in hbList"
                     :key="hb.id"
-                    @click="currentHbSelection = index"
+                    @click="itemClick(index)"
                 >
                     <div class="hb-selection-upper">
                         <div class="hb-selection-title">{{ hb.title }}</div>
@@ -143,6 +143,9 @@ export default {
         this.hbList = this.$store.state?.platformInfo?.redpacks;
         this.swipeImages = this.$store.state?.platformInfo?.banners;
     },
+    mounted() {
+        this.mainOffsetTop = this.$refs.mainSection.offsetTop;
+    },
     data() {
         return {
             swipeImages: [],
@@ -169,6 +172,13 @@ export default {
         ...mapState(['userInfo'])
     },
     methods: {
+        itemClick(index) {
+            this.currentHbSelection = index;
+            window.scrollTo({
+                top: this.mainOffsetTop,
+                behavior: 'smooth'
+            });
+        },
         // 获取红包弹窗
         getHbModal() {
             // 校验手机号

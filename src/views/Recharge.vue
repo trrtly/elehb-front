@@ -129,6 +129,8 @@ export default {
 
 <style lang="scss" scoped>
 .recharge-wrapper {
+    display: flex;
+    flex-direction: column;
     $commonShadow: 1px 1px 5px 1px #efefef;
     background: #f1f6f9;
 
@@ -289,7 +291,13 @@ export default {
 
     // footer
     .recharge-footer {
-        margin: 0.6rem 0.28rem 0;
+        display: flex;
+        flex-grow: 1;
+        margin: 0.6rem 0.28rem;
+
+        .hb-redeem-btn {
+            align-self: flex-end;
+        }
     }
 }
 </style>

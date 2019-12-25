@@ -13,7 +13,6 @@ export default {
 <style lang="scss" scoped>
 .hb-redeem-btn {
     position: relative;
-    top: 0;
     width: 100%;
     background: url('../../assets/me/butten_bg_hongbao@2x.png') no-repeat;
     background-size: cover;
