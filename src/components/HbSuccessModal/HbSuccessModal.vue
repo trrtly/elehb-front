@@ -24,8 +24,8 @@
                     <div :class="bem('hb-bottom')">
                         <p class="hb-bottom-desc fz-24">请打开饿了么APP“我的-红包-店铺红包”查看</p>
                         <div class="hb-bottom-button font-bold">
-                            <p class="fz-36" style="margin-top: 0.14rem;">再领一个免费红包</p>
-                            <p class="fz-24" style="margin-top: 0.04rem;">
+                            <p class="hb-bottom-button__text fz-36" style="margin-top: 0.14rem;">再领一个免费红包</p>
+                            <p class="hb-bottom-button__countdown fz-24" style="margin-top: 0.04rem;">
                                 (<van-count-down ref="jumpCountDown" :time="5000" format="ss秒" :auto-start="false" />后跳转)
                             </p>
                         </div>

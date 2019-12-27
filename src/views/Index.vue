@@ -137,7 +137,7 @@
 import { mapState } from 'vuex';
 import hbModal from '../components/WmqModal/WmqModal.vue';
 import hbSuccessModal from '../components/HbSuccessModal/HbSuccessModal.vue';
-import BScroll from 'better-scroll';
+import BScroll from '@better-scroll/core';
 
 export default {
     name: 'home',
@@ -145,14 +145,17 @@ export default {
         !this.$store.state.platformInfo && (await this.$store.dispatch('fetchSetPlatformInfo'));
         this.hbList = this.$store.state?.platformInfo?.redpacks;
         this.swipeImages = this.$store.state?.platformInfo?.banners;
-    },
-    mounted() {
-        this.$nextTick(() => {
-            this.scroller = new BScroll(this.$refs.indexWrapper, {
-                bounce: false,
-                click: true,
-                tap: true
-            });
+
+        await this.$nextTick();
+        // init betterScroll
+        this.scroller = new BScroll(this.$refs.indexWrapper, {
+            bounce: {
+                top: false,
+                bottom: false
+            },
+            preventDefaultException: {
+                className: /[(^|\s)hb-|(^|\s)van-]/
+            }
         });
     },
     data() {
@@ -225,9 +228,6 @@ export default {
                     this.isGetingCode = false;
                 }, 200);
             }
-        },
-        hbSuccessModalShow(newVal) {
-            this.scroller[newVal ? 'disable' : 'enable']();
         },
         isGetingCode(newVal) {
             newVal && this.$nextTick(() => this.$refs.textCountDown.start());
