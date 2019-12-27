@@ -174,10 +174,7 @@ export default {
     methods: {
         itemClick(index) {
             this.currentHbSelection = index;
-            window.scrollTo({
-                top: this.mainOffsetTop,
-                behavior: 'smooth'
-            });
+            this.smoothScroll(this.mainOffsetTop);
         },
         // 获取红包弹窗
         getHbModal() {

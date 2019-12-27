@@ -32,12 +32,17 @@ export default {
         });
     },
     // 获取拼接授权页面链接
-    async validateHref(params = {}) {
+    async validateHref(
+        params = {
+            app_id: store.state?.platformInfo?.appid
+        }
+    ) {
         return new Promise(async (rs) => {
             let { app_id, redirect_uri = location.href.split('#')[0], response_type = 'scope', scope = 'snsapi_userinfo', state = '' } = params;
-            if (app_id) {
-                await this.getPlatformInfo();
-                app_id = store.state.platformInfo.appid;
+
+            if (!app_id) {
+                let platformInfo = await this.getPlatformInfo();
+                app_id = platformInfo.appid;
             }
             rs(
                 `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${app_id}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}&connect_redirect=1#wechat_redirect`
