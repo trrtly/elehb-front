@@ -1,68 +1,70 @@
 <template>
-    <div class="index-wrapper">
-        <header class="header">
-            <div class="header-upper">
-                <img class="header-element-logo" src="../assets/index/banner-text@2x.png" alt="ElementLogo" />
-                <img class="header-decorate-pic" src="../assets/index/banner-pic@2x.png" alt="Decorate" />
-            </div>
-            <div class="header-bottom">
-                <!-- 轮播 -->
-                <van-swipe class="header-swiper" :autoplay="2000" indicator-color="#00000000">
-                    <van-swipe-item v-for="e in swipeImages" :key="e.id" style="background-color: #39a9ed;">
-                        <a :href="e.url"><img style="withd: 100%;" :src="e.img" alt="i"/></a>
-                    </van-swipe-item>
-                </van-swipe>
-            </div>
-        </header>
+    <div class="index-wrapper" ref="indexWrapper">
+        <div class="scroll-container">
+            <header class="header">
+                <div class="header-upper">
+                    <img class="header-element-logo" src="../assets/index/banner-text@2x.png" alt="ElementLogo" />
+                    <img class="header-decorate-pic" src="../assets/index/banner-pic@2x.png" alt="Decorate" />
+                </div>
+                <div class="header-bottom">
+                    <!-- 轮播 -->
+                    <van-swipe class="header-swiper" :autoplay="2000" indicator-color="#00000000">
+                        <van-swipe-item v-for="e in swipeImages" :key="e.id" style="background-color: #39a9ed;">
+                            <a :href="e.url"><img style="withd: 100%;" :src="e.img" alt="i"/></a>
+                        </van-swipe-item>
+                    </van-swipe>
+                </div>
+            </header>
 
-        <section class="main-section" ref="mainSection">
-            <ul class="hb-selections-wrapper">
-                <li
-                    class="hb-selection"
-                    :class="{ active: isHbSelected(index) }"
-                    v-for="(hb, index) in hbList"
-                    :key="hb.id"
-                    @click="itemClick(index)"
-                >
-                    <div class="hb-selection-upper">
-                        <div class="hb-selection-title">{{ hb.title }}</div>
-                        <div class="hb-selection-price">
-                            <span class="hb-selection-price-num din-font">{{ hb.score }}</span>
-                            <span class="hb-selection-price-text">积分/次</span>
+            <section class="main-section" ref="mainSection">
+                <ul class="hb-selections-wrapper">
+                    <li
+                        class="hb-selection"
+                        :class="{ active: isHbSelected(index) }"
+                        v-for="(hb, index) in hbList"
+                        :key="hb.id"
+                        @click="itemClick(index)"
+                    >
+                        <div class="hb-selection-upper">
+                            <div class="hb-selection-title">{{ hb.title }}</div>
+                            <div class="hb-selection-price">
+                                <span class="hb-selection-price-num din-font">{{ hb.score }}</span>
+                                <span class="hb-selection-price-text">积分/次</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="hb-selection-bottom" v-if="isHbSelected(index)" v-html="hb.description"></div>
-                </li>
-            </ul>
+                        <div class="hb-selection-bottom" v-if="isHbSelected(index)" v-html="hb.description"></div>
+                    </li>
+                </ul>
 
-            <div class="hb-form">
-                <van-field
-                    class="phone-input van-hairline--surround"
-                    type="number"
-                    required
-                    clearable
-                    v-model="phoneNum"
-                    maxlength="11"
-                    placeholder="请输入饿了么账号（手机号）"
-                    @input="phoneValid = isPhoneNum(phoneNum)"
-                    :error-message="phoneErrMsg"
-                />
-            </div>
+                <div class="hb-form">
+                    <van-field
+                        class="phone-input van-hairline--surround"
+                        type="number"
+                        required
+                        clearable
+                        v-model="phoneNum"
+                        maxlength="11"
+                        placeholder="请输入饿了么账号（手机号）"
+                        @input="phoneValid = isPhoneNum(phoneNum)"
+                        :error-message="phoneErrMsg"
+                    />
+                </div>
 
-            <van-button class="hb-form-submit fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getHbModal">
-                立即领取
-            </van-button>
+                <van-button class="hb-form-submit fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getHbModal">
+                    立即领取
+                </van-button>
 
-            <div class="hb-rules-wrapper">
-                <p>领取规则：</p>
-                <div class="hb-rules" v-html="hbList[currentHbSelection] && hbList[currentHbSelection].rule"></div>
-                <!-- <p>
-                    1、每个手机号每日限领1次，部分异常账号由于饿了么风控原因，无法领取红包，请更换其他手机号领取；
-                </p>
-                <p>2、若领取失败，不会消耗积分；</p>
-                <p>3、领取的红包有效期以饿了么为准，请及时使用 。</p> -->
-            </div>
-        </section>
+                <div class="hb-rules-wrapper">
+                    <p>领取规则：</p>
+                    <div class="hb-rules" v-html="hbList[currentHbSelection] && hbList[currentHbSelection].rule"></div>
+                    <!-- <p>
+                        1、每个手机号每日限领1次，部分异常账号由于饿了么风控原因，无法领取红包，请更换其他手机号领取；
+                    </p>
+                    <p>2、若领取失败，不会消耗积分；</p>
+                    <p>3、领取的红包有效期以饿了么为准，请及时使用 。</p> -->
+                </div>
+            </section>
+        </div>
 
         <footer class="hb-bar van-hairline--top">
             <div class="hb-user">
@@ -135,6 +137,7 @@
 import { mapState } from 'vuex';
 import hbModal from '../components/WmqModal/WmqModal.vue';
 import hbSuccessModal from '../components/HbSuccessModal/HbSuccessModal.vue';
+import BScroll from 'better-scroll';
 
 export default {
     name: 'home',
@@ -144,7 +147,13 @@ export default {
         this.swipeImages = this.$store.state?.platformInfo?.banners;
     },
     mounted() {
-        this.mainOffsetTop = this.$refs.mainSection.offsetTop;
+        this.$nextTick(() => {
+            this.scroller = new BScroll(this.$refs.indexWrapper, {
+                bounce: false,
+                click: true,
+                tap: true
+            });
+        });
     },
     data() {
         return {
@@ -174,7 +183,7 @@ export default {
     methods: {
         itemClick(index) {
             this.currentHbSelection = index;
-            this.smoothScroll(this.mainOffsetTop);
+            this.scroller.scrollToElement(this.$refs.mainSection, 500);
         },
         // 获取红包弹窗
         getHbModal() {
@@ -216,6 +225,9 @@ export default {
                     this.isGetingCode = false;
                 }, 200);
             }
+        },
+        hbSuccessModalShow(newVal) {
+            this.scroller[newVal ? 'disable' : 'enable']();
         },
         isGetingCode(newVal) {
             newVal && this.$nextTick(() => this.$refs.textCountDown.start());

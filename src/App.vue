@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" ref="appWrapper">
         <router-view />
     </div>
 </template>
@@ -25,7 +25,8 @@ body,
 }
 
 #app > div {
-    min-height: 100% !important;
+    // min-height: 100% !important;
+    height: 100%;
 }
 
 body {
