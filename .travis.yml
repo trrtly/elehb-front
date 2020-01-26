@@ -1,0 +1,30 @@
+dist: xenial
+
+language: node_js
+
+node_js:
+- lts/*
+
+cache:
+  directories:
+  - "$HOME/.npm"
+
+git:
+  depth: 3
+
+before_install:
+- openssl aes-256-cbc -K $encrypted_f161604da62a_key -iv $encrypted_f161604da62a_iv -in deploy_key.enc -out deploy_key -d
+
+before_script:
+- chmod 600 ./deploy_key
+- echo -e "Host $SSH_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- eval "$(ssh-agent -s)"
+- ssh-add ./deploy_key
+
+script:
+- npm run build
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: bash scripts/deploy.sh
