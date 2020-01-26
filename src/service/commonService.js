@@ -34,7 +34,7 @@ export default {
     // 获取拼接授权页面链接
     async validateHref(
         params = {
-            app_id: store.state?.platformInfo?.appid
+            app_id: store.state?.platformInfo?.data.appid
         }
     ) {
         return new Promise(async (rs) => {
@@ -42,7 +42,7 @@ export default {
 
             if (!app_id) {
                 let platformInfo = await this.getPlatformInfo();
-                app_id = platformInfo.appid;
+                app_id = platformInfo.data.appid;
             }
             rs(
                 `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${app_id}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}&connect_redirect=1#wechat_redirect`
