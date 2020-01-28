@@ -6,7 +6,7 @@ import commonService from './commonService';
 Vue.use(VueAxios, axios);
 
 // 不需要auth头的url
-const noAuthUrls = ['/api/v1/platform', '/api/v1/token'];
+const noAuthUrls = ['/api/v1/platform', '/api/v1/token', '/api/v1/scores'];
 
 // request interceptor request拦截器
 axios.interceptors.request.use(
@@ -27,7 +27,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     function(response) {
         // 对响应数据做点什么
-        return response;
+        return response.data;
     },
     function(error) {
         // 对响应错误做点什么

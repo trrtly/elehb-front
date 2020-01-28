@@ -68,6 +68,10 @@
                     <img class="common-btn-icon" src="../assets/me/icon_kefu@2x.png" alt="kefu" />
                     <span class="common-btn-text">联系客服</span>
                 </li>
+                <li class="setting">
+                    <img class="common-btn-icon" src="../assets/me/icon_setting@2x.png" alt="setting" />
+                    <span class="common-btn-text">系统设置</span>
+                </li>
             </ul>
         </section>
         <footer class="me-footer">

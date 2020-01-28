@@ -73,8 +73,13 @@
 <script>
 import { mapState } from 'vuex';
 import RedeemBtn from '../components/RedeemBtn/RedeemBtn';
+import rechargeService from '@/service/rechargeService';
 
 export default {
+    async created() {
+        const list = await rechargeService.getRechargeList();
+        list.score && (this.creditSelection = list.score);
+    },
     data() {
         return {
             credit: 1000,

@@ -8,7 +8,7 @@
                 </div>
                 <div class="header-bottom">
                     <!-- 轮播 -->
-                    <van-swipe class="header-swiper" :autoplay="2000" indicator-color="#00000000">
+                    <van-swipe class="header-swiper" :autoplay="3000" indicator-color="#00000000">
                         <van-swipe-item v-for="e in swipeImages" :key="e.id" style="background-color: #39a9ed;">
                             <a :href="e.url"><img style="withd: 100%;" :src="e.img" alt="i"/></a>
                         </van-swipe-item>
@@ -139,12 +139,14 @@ import hbModal from '../components/WmqModal/WmqModal.vue';
 import hbSuccessModal from '../components/HbSuccessModal/HbSuccessModal.vue';
 import BScroll from '@better-scroll/core';
 
+import indexService from '../service/indexService';
+
 export default {
     name: 'home',
     async created() {
-        !this.$store.state.platformInfo && (await this.$store.dispatch('fetchSetPlatformInfo'));
-        this.hbList = this.$store.state?.platformInfo?.redpacks;
-        this.swipeImages = this.$store.state?.platformInfo?.banners;
+        // let platformInfo = await indexService.fetchSetPlatformInfo();
+        this.hbList = await indexService.getRedPacks();
+        this.swipeImages = await indexService.getBanners();
 
         await this.$nextTick();
         // init betterScroll

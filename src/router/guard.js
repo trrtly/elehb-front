@@ -8,9 +8,9 @@ export async function beforeEnter(to, from, next) {
 
     if (query.code) {
         // code存在
-        let userToken = await commonService.getToken(query.code);
-        userToken && localStorage.setItem('token', userToken?.data?.data?.token);
-        !this.app.$store.state.userInfo && (await this.app.$store.dispatch('fetchSetUserInfo'));
+        let res = await commonService.getToken(query.code);
+        res && localStorage.setItem('token', res?.token);
+        await commonService.fetchSetUserInfo();
         next({
             path: to.path,
             replace: true
@@ -18,7 +18,7 @@ export async function beforeEnter(to, from, next) {
     } else {
         if (token) {
             // 拉取用户信息
-            !this.app.$store.state.userInfo && (await this.app.$store.dispatch('fetchSetUserInfo'));
+            await commonService.fetchSetUserInfo();
             next();
         } else {
             // 无code 无token

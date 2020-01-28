@@ -16,14 +16,14 @@ export default new Vuex.Store({
     },
     actions: {
         async fetchSetPlatformInfo({ commit }) {
-            let res = await commonService.getPlatformInfo();
-            res && commit('setPlatformInfo', res.data.data);
-            return Promise.resolve();
+            let platformInfo = await commonService.getPlatformInfo();
+            platformInfo && commit('setPlatformInfo', platformInfo);
+            return Promise.resolve(platformInfo);
         },
         async fetchSetUserInfo({ commit }) {
-            let res = await commonService.getUserInfo();
-            res && commit('setUserInfo', res.data.data);
-            return Promise.resolve();
+            let userInfo = await commonService.getUserInfo();
+            userInfo && commit('setUserInfo', userInfo);
+            return Promise.resolve(userInfo);
         }
     },
     modules: {}
