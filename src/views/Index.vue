@@ -82,12 +82,17 @@
             <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/recharge">充值积分</van-button>
         </footer>
 
+        <!-- 个人中心悬浮 -->
         <div class="user-center-wrapper" v-route-jump="'/me'">
             <div class="user-center-btn fz-32">
                 <span class="user-center-icon"></span>
                 <span class="user-center-text fz-28">个人中心</span>
             </div>
         </div>
+
+        <draggable :initStyle="{ right: 0, bottom: '2.9rem' }">
+            <div class="auto-comment-wrapper"></div>
+        </draggable>
 
         <!-- 验证码回执模态框 -->
         <hb-modal v-model="getCbModalShow" :close-on-click-overlay="false" title="请输入接收到的短信验证码">
@@ -138,6 +143,7 @@ import { mapState } from 'vuex';
 import hbModal from '../components/WmqModal/WmqModal.vue';
 import hbSuccessModal from '../components/HbSuccessModal/HbSuccessModal.vue';
 import BScroll from '@better-scroll/core';
+import Draggable from '../components/Draggable';
 
 import indexService from '../service/indexService';
 
@@ -219,7 +225,8 @@ export default {
     },
     components: {
         hbModal,
-        hbSuccessModal
+        hbSuccessModal,
+        Draggable
     },
     watch: {
         getCbModalShow(newVal) {
@@ -466,6 +473,13 @@ export default {
     border-radius: 14rem 0 0 14rem;
     background: linear-gradient(to right, #fb6b41, #ff8c56);
     box-shadow: 0 0 0.1rem #fb6b41;
+}
+
+.auto-comment-wrapper {
+    width: 1.96rem;
+    height: 1.38rem;
+    background: url('../assets/index/comment@2x.png') no-repeat;
+    background-size: contain;
 }
 
 .user-center-wrapper:active {
