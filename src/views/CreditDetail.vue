@@ -7,8 +7,9 @@
                 点
             </div>
         </header>
+
         <section :class="vBem('credit-list')">
-            <van-list v-model="creditLoading" :finished="finished" finished-text="没有更多了" @load="getList">
+            <van-list :offset="1" v-model="creditLoading" :finished="finished" finished-text="没有更多了" @load="getList">
                 <van-cell v-for="(creditDetail, index) in creditDetailHistory" :key="index">
                     <!-- 左侧插槽  -->
                     <template slot="title">
@@ -25,8 +26,9 @@
                     </div>
                 </van-cell>
             </van-list>
-            <van-button block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/recharge">充值积分</van-button>
         </section>
+
+        <van-button block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/recharge">充值积分</van-button>
     </div>
 </template>
 
@@ -112,6 +114,7 @@ export default {
         margin-top: -1.35rem;
         border-radius: 16px;
         background: #fff;
+        overflow-y: scroll;
 
         .van-list {
             flex-grow: 1;

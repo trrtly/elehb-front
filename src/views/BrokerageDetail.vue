@@ -12,7 +12,7 @@
         </header>
 
         <section class="brokerage-list">
-            <van-list v-model="brokerageLoading" :finished="finished" finished-text="没有更多了" @load="getList">
+            <van-list :offset="1" v-model="brokerageLoading" :finished="finished" finished-text="没有更多了" @load="getList">
                 <van-cell v-for="brokerage in brokerageHistory" :key="brokerage.id">
                     <!-- 左侧插槽  -->
                     <template slot="title">
@@ -31,7 +31,8 @@
                 </van-cell>
             </van-list>
         </section>
-        <van-button block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="withDraw">佣金提现</van-button>
+
+        <van-button class="bottom-button" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="withDraw">佣金提现</van-button>
     </div>
 </template>
 
@@ -175,6 +176,7 @@ export default {
         margin-top: -0.52rem;
         border-radius: 16px;
         background: #fff;
+        overflow-y: scroll;
 
         .van-list {
             flex-grow: 1;

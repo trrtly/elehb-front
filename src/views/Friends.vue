@@ -9,7 +9,7 @@
         </header>
 
         <section class="friends-list">
-            <van-list v-model="friendsLoading" :finished="finished" finished-text="没有更多了" @load="getList">
+            <van-list :offset="1" v-model="friendsLoading" :finished="finished" finished-text="没有更多了" @load="getList">
                 <van-cell v-for="friend in friendsList" :key="friend.id" :value="formateTime(friend.createdAt)" value-class="friend-join-time">
                     <template slot="title">
                         <div class="friend-left flex-vertical">
@@ -19,8 +19,9 @@
                     </template>
                 </van-cell>
             </van-list>
-            <van-button block color="linear-gradient(to right, #6552ff, #2c3ffb)">邀请好友</van-button>
         </section>
+
+        <van-button block color="linear-gradient(to right, #6552ff, #2c3ffb)">邀请好友</van-button>
     </div>
 </template>
 
@@ -106,6 +107,7 @@ export default {
         margin-top: -1.35rem;
         border-radius: 16px;
         background: #fff;
+        overflow-y: scroll;
 
         .friend-avatar {
             width: 0.82rem;
