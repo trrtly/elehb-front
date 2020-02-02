@@ -5,7 +5,7 @@ const urls = {
 };
 
 export default {
-    async getRechargeList() {
+    getRechargeList() {
         return axios.get(urls.getRechargeList);
     }
 };

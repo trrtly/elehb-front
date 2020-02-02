@@ -9,11 +9,13 @@
         </header>
 
         <section class="friends-list">
-            <van-list v-model="friendsLoading" :finished="finished" finished-text="没有更多了">
-                <van-cell v-for="(friend, index) in friendsList" :key="index" :value="friend.time" value-class="friend-join-time">
+            <van-list v-model="friendsLoading" :finished="finished" finished-text="没有更多了" @load="getList">
+                <van-cell v-for="friend in friendsList" :key="friend.id" :value="formateTime(friend.createdAt)" value-class="friend-join-time">
                     <template slot="title">
-                        <img class="friend-avatar" :src="friend.avatar" alt="avatar" />
-                        <span class="friend-name fz-28 font-bold">好友{{ friend.name }}加入了</span>
+                        <div class="friend-left flex-vertical">
+                            <img class="friend-avatar" :src="friend.headimgurl" alt="avatar" />
+                            <span class="friend-name fz-28 font-bold van-ellipsis">好友 {{ friend.nickname }} 加入了</span>
+                        </div>
                     </template>
                 </van-cell>
             </van-list>
@@ -25,6 +27,7 @@
 <script>
 import Vue from 'vue';
 import { List, Cell } from 'vant';
+import friendsService from '../service/friendsService';
 
 Vue.use(List).use(Cell);
 
@@ -34,40 +37,36 @@ export default {
             totalFriends: 245,
 
             friendsLoading: false,
-            finished: true,
-            friendsList: [
-                {
-                    name: '昊昊',
-                    time: '2019-08-28 18:40',
-                    avatar:
-                        'https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png?x-oss-process=image/format,webp/resize,w_120,h_120,m_fixed'
-                },
-                {
-                    name: '昊昊',
-                    time: '2019-08-28 18:40',
-                    avatar:
-                        'https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png?x-oss-process=image/format,webp/resize,w_120,h_120,m_fixed'
-                },
-                {
-                    name: '昊昊',
-                    time: '2019-08-28 18:40',
-                    avatar:
-                        'https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png?x-oss-process=image/format,webp/resize,w_120,h_120,m_fixed'
-                },
-                {
-                    name: '昊昊',
-                    time: '2019-08-28 18:40',
-                    avatar:
-                        'https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png?x-oss-process=image/format,webp/resize,w_120,h_120,m_fixed'
-                },
-                {
-                    name: '昊昊',
-                    time: '2019-08-28 18:40',
-                    avatar:
-                        'https://cube.elemecdn.com/6/a5/db7ddf9ccce4a54e07f5513520370png.png?x-oss-process=image/format,webp/resize,w_120,h_120,m_fixed'
-                }
-            ]
+            finished: false,
+            friendsList: [],
+
+            currentPage: 1,
+            pageLimit: 5
         };
+    },
+    methods: {
+        async getList() {
+            this.friendsLoading = true;
+
+            let res = await friendsService.getFriends({
+                page: this.currentPage,
+                limit: this.pageLimit
+            });
+
+            this.friendsLoading = false;
+
+            let list = res.list || [];
+
+            if (list.length < this.pageLimit) {
+                this.finished = true;
+            } else {
+                this.currentPage++;
+            }
+
+            this.totalFriends = res.totalInviteNum;
+
+            this.friendsList = [...this.friendsList, ...list];
+        }
     }
 };
 </script>
@@ -125,6 +124,10 @@ export default {
             flex-direction: row-reverse;
             font-size: 0.22rem;
             color: #a8a8a8;
+        }
+
+        .friend-left {
+            max-width: 25rem;
         }
 
         // overwrite van cell css

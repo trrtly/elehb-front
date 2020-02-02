@@ -38,6 +38,16 @@ const routes = [
         path: '/credit',
         name: 'credit',
         component: () => import(/* webpackChunkName: "credit" */ '../views/CreditDetail.vue')
+    },
+    {
+        path: '/comment',
+        name: 'comment',
+        component: () => import(/* webpackChunkName: "comment" */ '../views/AutoComment.vue')
+    },
+    {
+        path: '/setting',
+        name: 'setting',
+        component: () => import(/* webpackChunkName: "setting" */ '../views/Setting.vue')
     }
 ];
 

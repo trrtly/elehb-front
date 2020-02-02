@@ -15,7 +15,7 @@ import './utils/directive/routeJump';
 import './components/WmqModal/WmqModal.js';
 
 // import vant components
-import { Swipe, SwipeItem, Dialog, Field, Button, CountDown } from 'vant';
+import { Swipe, SwipeItem, Dialog, Field, Button, CountDown, Image, Overlay } from 'vant';
 
 // import vue copy
 import VueClipboard from 'vue-clipboard2';
@@ -33,6 +33,8 @@ Vue.use(Swipe)
     .use(Field)
     .use(Button)
     .use(CountDown)
+    .use(Image)
+    .use(Overlay)
     .use(VueClipboard);
 
 Vue.config.productionTip = false;

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import commonService from './commonService';
+import { Toast } from 'vant';
 
 Vue.use(VueAxios, axios);
 
@@ -37,6 +38,7 @@ axios.interceptors.response.use(
         if (+resp.status === 401) {
             commonService.toValidateHref();
         } else {
+            resp.msg && Toast(`错误：${resp.msg}`);
             return Promise.reject(error);
         }
     }

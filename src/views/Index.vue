@@ -28,15 +28,15 @@
                         <div class="hb-selection-upper">
                             <div class="hb-selection-title">{{ hb.title }}</div>
                             <div class="hb-selection-price">
-                                <span class="hb-selection-price-num din-font">{{ hb.score }}</span>
-                                <span class="hb-selection-price-text">积分/次</span>
+                                <span class="hb-selection-price-num din-font" v-show="hb.score > 0">{{ hb.score }}</span>
+                                <span class="hb-selection-price-text">{{ hb.score > 0 ? '积分/次' : '免费' }}</span>
                             </div>
                         </div>
                         <div class="hb-selection-bottom" v-if="isHbSelected(index)" v-html="hb.description"></div>
                     </li>
                 </ul>
 
-                <div class="hb-form">
+                <div class="hb-form" v-if="hbList[currentHbSelection] && hbList[currentHbSelection].score > 0">
                     <van-field
                         class="phone-input van-hairline--surround"
                         type="number"
@@ -150,7 +150,6 @@ import indexService from '../service/indexService';
 export default {
     name: 'home',
     async created() {
-        // let platformInfo = await indexService.fetchSetPlatformInfo();
         this.hbList = await indexService.getRedPacks();
         this.swipeImages = await indexService.getBanners();
 

@@ -10,7 +10,11 @@ export async function beforeEnter(to, from, next) {
         // code存在
         let res = await commonService.getToken(query.code);
         res && localStorage.setItem('token', res?.token);
+
+        // 后续需要优化
         await commonService.fetchSetUserInfo();
+        await commonService.fetchSetPlatformInfo();
+
         next({
             path: to.path,
             replace: true
@@ -18,11 +22,13 @@ export async function beforeEnter(to, from, next) {
     } else {
         if (token) {
             // 拉取用户信息
+            // 后续需要优化
             await commonService.fetchSetUserInfo();
+            await commonService.fetchSetPlatformInfo();
+
             next();
         } else {
             // 无code 无token
-            // this.app.$toast('登录失效');
             setTimeout(() => {
                 commonService.toValidateHref();
             }, 1000);

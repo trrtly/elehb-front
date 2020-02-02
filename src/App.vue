@@ -96,6 +96,11 @@ body {
     display: flex;
 }
 
+.flex-vertical {
+    @extend .flex;
+    align-items: center;
+}
+
 /* modal */
 .modal-title {
     font-size: 0.3rem;

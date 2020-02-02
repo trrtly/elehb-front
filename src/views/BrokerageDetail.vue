@@ -3,7 +3,7 @@
         <header class="brokerage-header">
             <div class="brokerage-header-title fz-28"><span>当前佣金余额</span></div>
             <div class="brokerage-header-detail fz-28">
-                <span class="din-font">{{ userInfo.cms }}</span>
+                <span class="din-font">{{ userBrokerage }}.00</span>
                 元
             </div>
             <div class="brokerage-rule">
@@ -12,22 +12,26 @@
         </header>
 
         <section class="brokerage-list">
-            <van-list v-model="brokerageLoading" :finished="finished" finished-text="没有更多了">
-                <van-cell v-for="(brokerage, index) in 5 /*brokerageHistory*/" :key="index">
+            <van-list v-model="brokerageLoading" :finished="finished" finished-text="没有更多了" @load="getList">
+                <van-cell v-for="brokerage in brokerageHistory" :key="brokerage.id">
                     <!-- 左侧插槽  -->
                     <template slot="title">
-                        <p class="brokerage-source fz-28 font-bold">好友充值返佣</p>
-                        <p style="font-size: 0.22rem; color: #a8a8a8;">{{ new Date().toLocaleString() /*brokerage.time*/ }}</p>
+                        <p class="brokerage-source fz-28 font-bold">{{ brokerage.title }}</p>
+                        <p style="font-size: 0.22rem; color: #a8a8a8;">{{ formateTime(brokerage.createdAt) }}</p>
                     </template>
 
                     <!-- 右侧插槽 -->
                     <div class="brokerage-item-right">
-                        <span class="din-font fz-28" style="color: #fb5227;"><i>+</i>2.00</span><span class="fz-24">元</span>
+                        <span class="din-font fz-28" :style="brokerage.cms > 0 && { color: '#fb5227' }">
+                            <i>{{ brokerage.cms > 0 ? '+' : '-' }}</i>
+                            {{ brokerage.cms }}.00
+                        </span>
+                        <span class="fz-24">元</span>
                     </div>
                 </van-cell>
             </van-list>
-            <van-button block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="withDraw">佣金提现</van-button>
         </section>
+        <van-button block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="withDraw">佣金提现</van-button>
     </div>
 </template>
 
@@ -35,6 +39,7 @@
 import Vue from 'vue';
 import { mapState } from 'vuex';
 import { List, Cell } from 'vant';
+import brokerageDetailService from '../service/brokerageDetailService';
 
 Vue.use(List).use(Cell);
 
@@ -42,8 +47,12 @@ export default {
     data() {
         return {
             brokerageLoading: false,
-            finished: true,
-            brokerageHistory: []
+            finished: false,
+            brokerageHistory: [],
+            userBrokerage: 0,
+
+            currentPage: 1,
+            pageLimit: 5
         };
     },
     computed: {
@@ -63,20 +72,58 @@ export default {
         },
         // 提现
         withDraw() {
+            if (this.userBrokerage === 0) {
+                this.$toast('您没有可以提现的佣金');
+                return;
+            }
+
             this.$wmqModal({
                 title: '确认提现吗？',
-                text: `提现金额：${200}元`,
+                text: `提现金额：${this.userBrokerage > 200 ? 200 : this.userBrokerage}元`,
                 showConfirmButton: true,
                 showCancelButton: true,
                 confirmButtonText: '确认提现',
                 cancelButtonText: '稍后再说',
                 beforeClose: (action, done) => {
-                    setTimeout(() => {
-                        this.$toast('提现成功');
+                    if (action === 'cancel') {
                         done();
-                    }, 500);
+                        return;
+                    }
+
+                    brokerageDetailService
+                        .withDraw()
+                        .then(() => {
+                            this.$toast('提现成功');
+                            done();
+                        })
+                        .catch(() => {
+                            this.$toast('提现失败');
+                            done();
+                        });
                 }
             });
+        },
+        async getList() {
+            this.brokerageLoading = true;
+
+            let res = await brokerageDetailService.getBrokerage({
+                page: this.currentPage,
+                limit: this.pageLimit
+            });
+
+            this.brokerageLoading = false;
+
+            let list = res.list || [];
+
+            if (list.length < this.pageLimit) {
+                this.finished = true;
+            } else {
+                this.currentPage++;
+            }
+
+            this.userBrokerage = res.totalCms;
+
+            this.brokerageHistory = [...this.brokerageHistory, ...list];
         }
     }
 };

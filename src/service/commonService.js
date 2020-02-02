@@ -9,14 +9,18 @@ const urls = {
 };
 
 export default {
+    // 获取并设置平台相关信息
+    async fetchSetPlatformInfo() {
+        return store.state.platformInfo || (await store.dispatch('fetchSetPlatformInfo'));
+    },
     // 获取平台相关信息
-    async getPlatformInfo() {
+    getPlatformInfo() {
         return axios.get(urls.getPlatformInfo).catch(() => {
             Toast('获取平台信息失败');
         });
     },
     // 获取token
-    async getToken(userCode) {
+    getToken(userCode) {
         return axios
             .post(urls.getToken, {
                 code: userCode
@@ -26,7 +30,7 @@ export default {
             });
     },
     // 获取用户微信信息
-    async getUserInfo() {
+    getUserInfo() {
         return axios.get(urls.getUserInfo).catch(() => {
             Toast('获取用户信息失败');
         });
@@ -38,14 +42,14 @@ export default {
     // 获取拼接授权页面链接
     async validateHref(
         params = {
-            app_id: store.state?.platformInfo?.data.appid
+            app_id: store.state?.platformInfo?.appid
         }
     ) {
         return new Promise(async (rs) => {
             let { app_id, redirect_uri = location.href.split('#')[0], response_type = 'scope', scope = 'snsapi_userinfo', state = '' } = params;
 
             if (!app_id) {
-                let platformInfo = await this.getPlatformInfo();
+                let platformInfo = await this.fetchSetPlatformInfo();
                 app_id = platformInfo.data.appid;
             }
             rs(

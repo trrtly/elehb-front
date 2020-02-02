@@ -8,17 +8,20 @@
             </div>
         </header>
         <section :class="vBem('credit-list')">
-            <van-list v-model="creditLoading" :finished="finished" finished-text="没有更多了">
-                <van-cell v-for="(creditDetail, index) in 5 /*brokerageHistory*/" :key="index">
+            <van-list v-model="creditLoading" :finished="finished" finished-text="没有更多了" @load="getList">
+                <van-cell v-for="(creditDetail, index) in creditDetailHistory" :key="index">
                     <!-- 左侧插槽  -->
                     <template slot="title">
-                        <p class="fz-28 font-bold">兑换饿了么红包</p>
-                        <p style="font-size: 0.22rem; color: #a8a8a8;">{{ new Date().toLocaleString() /*brokerage.time*/ }}</p>
+                        <p class="fz-28 font-bold">{{ creditDetail.title }}</p>
+                        <p style="font-size: 0.22rem; color: #a8a8a8;">{{ formateTime(creditDetail.createdAt) }}</p>
                     </template>
 
                     <!-- 右侧插槽 -->
                     <div :class="vBem('credit-list', 'item', 'right')">
-                        <span class="din-font fz-28" style="color: #fb5227;"><i>+</i>200</span>
+                        <span class="din-font fz-28" :style="creditDetail.score > 0 && { color: '#fb5227' }">
+                            <i>{{ creditDetail.score > 0 ? '+' : '-' }}</i>
+                            {{ Math.abs(creditDetail.score) }}
+                        </span>
                     </div>
                 </van-cell>
             </van-list>
@@ -31,6 +34,7 @@
 import Vue from 'vue';
 import { List, Cell } from 'vant';
 import { mapState } from 'vuex';
+import creditDetailService from '@/service/creditDetailService';
 
 Vue.use(List).use(Cell);
 
@@ -40,12 +44,36 @@ export default {
             // myCredit: 1000,
 
             creditLoading: false,
-            finished: true,
-            creditDetailHistory: []
+            finished: false,
+            creditDetailHistory: [],
+
+            // 当前页数
+            currentPage: 1,
+            pageLimit: 5
         };
     },
     computed: {
         ...mapState(['userInfo'])
+    },
+    methods: {
+        async getList() {
+            this.creditLoading = true;
+            let res =
+                (await creditDetailService.getCreditDetail({
+                    page: this.currentPage,
+                    limit: this.pageLimit
+                })) || [];
+
+            this.creditLoading = false;
+
+            if (res.length < this.pageLimit) {
+                this.finished = true;
+            } else {
+                this.currentPage++;
+            }
+
+            this.creditDetailHistory = [...this.creditDetailHistory, ...res];
+        }
     }
 };
 </script>

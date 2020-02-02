@@ -1,4 +1,3 @@
-import store from '@/store';
 import axios from 'axios';
 
 const urls = {
@@ -7,15 +6,12 @@ const urls = {
 };
 
 export default {
-    async fetchSetPlatformInfo() {
-        return store.state.platformInfo || store.dispatch('fetchSetPlatformInfo');
-    },
     // 获取轮播图
-    async getBanners() {
+    getBanners() {
         return axios.get(urls.getBanners);
     },
     // 获取红包列表
-    async getRedPacks() {
+    getRedPacks() {
         return axios.get(urls.getRedPacks);
     }
 };
