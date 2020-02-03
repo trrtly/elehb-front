@@ -2,7 +2,8 @@ import axios from 'axios';
 
 const urls = {
     getBanners: '/api/v1/banners',
-    getRedPacks: '/api/v1/redpacks'
+    getRedPacks: '/api/v1/redpacks',
+    getCaptcha: '/api/v1/redpacks/captcha'
 };
 
 export default {
@@ -13,5 +14,11 @@ export default {
     // 获取红包列表
     getRedPacks() {
         return axios.get(urls.getRedPacks);
+    },
+    // 获取图形验证码
+    getCaptcha(phoneNum) {
+        return axios.get(urls.getCaptcha, {
+            params: phoneNum
+        });
     }
 };

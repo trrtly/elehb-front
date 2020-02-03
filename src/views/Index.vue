@@ -18,22 +18,25 @@
 
             <section class="main-section" ref="mainSection">
                 <ul class="hb-selections-wrapper">
-                    <li
-                        class="hb-selection"
-                        :class="{ active: isHbSelected(index) }"
-                        v-for="(hb, index) in hbList"
-                        :key="hb.id"
-                        @click="itemClick(index)"
-                    >
-                        <div class="hb-selection-upper">
-                            <div class="hb-selection-title">{{ hb.title }}</div>
-                            <div class="hb-selection-price">
-                                <span class="hb-selection-price-num din-font" v-show="hb.score > 0">{{ hb.score }}</span>
-                                <span class="hb-selection-price-text">{{ hb.score > 0 ? '积分/次' : '免费' }}</span>
+                    <van-skeleton title title-width="30%" :row="2" :loading="loading">
+                        <li
+                            class="hb-selection"
+                            :class="{ active: isHbSelected(index) }"
+                            v-for="(hb, index) in hbList"
+                            :key="hb.id"
+                            @click="itemClick(index)"
+                        >
+                            <div class="hb-selection-upper">
+                                <div class="hb-selection-title">{{ hb.title }}</div>
+                                <div class="hb-selection-price">
+                                    <span class="hb-selection-price-num din-font" v-show="hb.score > 0">{{ hb.score }}</span>
+                                    <span class="hb-selection-price-text">{{ hb.score > 0 ? '积分/次' : '免费' }}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="hb-selection-bottom" v-if="isHbSelected(index)" v-html="hb.description"></div>
-                    </li>
+                            <div class="hb-selection-bottom" v-if="isHbSelected(index)" v-html="hb.description"></div>
+                        </li>
+                    </van-skeleton>
+                    <van-skeleton v-for="(e, index) in 2" :key="index" title title-width="30%" :row="2" :loading="loading" />
                 </ul>
 
                 <div class="hb-form" v-if="hbList[currentHbSelection] && hbList[currentHbSelection].score > 0">
@@ -95,42 +98,24 @@
         </draggable>
 
         <!-- 验证码回执模态框 -->
-        <hb-modal v-model="getCbModalShow" :close-on-click-overlay="false" title="请输入接收到的短信验证码">
+        <hb-modal v-model="getCbModalShow" :close-on-click-overlay="false" title="输入图形验证码">
             <div style="margin-bottom: 0.4rem;">
                 <van-field
                     class="valida-code-input van-hairline--surround"
-                    type="number"
+                    type="text"
                     required
                     clearable
                     v-model="validaCode"
-                    placeholder="短信验证码"
+                    placeholder="请输入图形验证码"
                 >
-                    <van-button
-                        v-if="!isGetingCode"
-                        style="height: 0.4rem; line-height: 0.4rem;"
-                        slot="button"
-                        size="small"
-                        type="info"
-                        color="#2c3ffb"
-                        round
-                        plain
-                        hairline
-                        @click="getValidationCode"
-                    >
-                        发送验证码
-                    </van-button>
-                    <van-count-down
-                        v-else
-                        slot="button"
-                        ref="textCountDown"
-                        :time="30000"
-                        format="ss s"
-                        :auto-start="false"
-                        @finish="isGetingCode = false"
-                    />
+                    <van-image slot="button" style="width: 2rem; height: 0.98rem;" :src="`data:image/png;base64,${captchaImage}`">
+                        <template v-slot:error>
+                            <van-icon name="photo-o" />
+                        </template>
+                    </van-image>
                 </van-field>
             </div>
-            <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getCoupon">立即领取</van-button>
+            <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getCoupon">确定</van-button>
         </hb-modal>
 
         <hb-success-modal v-model="hbSuccessModalShow"></hb-success-modal>
@@ -153,6 +138,8 @@ export default {
         this.hbList = await indexService.getRedPacks();
         this.swipeImages = await indexService.getBanners();
 
+        this.loading = false;
+
         await this.$nextTick();
         // init betterScroll
         this.scroller = new BScroll(this.$refs.indexWrapper, {
@@ -167,6 +154,8 @@ export default {
     },
     data() {
         return {
+            loading: true,
+
             swipeImages: [],
             hbList: [],
             currentHbSelection: 0, // 默认选中第一个红包
@@ -176,7 +165,8 @@ export default {
             getCbModalShow: false,
 
             validaCode: '',
-            isGetingCode: false, // 是否正在获取验证码
+            captchaImage: '', // 图形验证码
+            captchaHash: '',
 
             hbSuccessModalShow: false
         };
@@ -196,10 +186,32 @@ export default {
             this.scroller.scrollToElement(this.$refs.mainSection, 500);
         },
         // 获取红包弹窗
-        getHbModal() {
+        async getHbModal() {
+            // 检测积分余额
+            // this.$wmqModal({
+            //     text: '您的积分余额不足，快来充值积分吧！',
+            //     showConfirmButton: true,
+            //     confirmButtonText: '前往充值',
+            //     confirm: () => {
+            //         this.$router.push('/recharge');
+            //     }
+            // });
+
             // 校验手机号
-            // this.phoneValid && (this.getCbModalShow = true);
-            this.hbSuccessModalShow = true;
+            // if (!this.phoneValid) { return; }
+
+            this.getCbModalShow = true;
+
+            indexService
+                .getCaptcha({
+                    mobile: 18577361464 || this.phoneNum
+                })
+                .then((res) => {
+                    this.captchaHash = res.captchaHash;
+                    this.captchaImage = res.captchaImage;
+                });
+
+            // this.hbSuccessModalShow = true;
             // setTimeout(() => {
             //     this.hbSuccessModalShow = false;
             // }, 5000);
@@ -212,14 +224,6 @@ export default {
         getCoupon() {
             // 积分余额不足
             this.getCbModalShow = false;
-            this.$wmqModal({
-                text: '您的积分余额不足，快来充值积分吧！',
-                showConfirmButton: true,
-                confirmButtonText: '前往充值',
-                confirm: () => {
-                    this.$router.push('/recharge');
-                }
-            });
         }
     },
     components: {
@@ -248,6 +252,10 @@ export default {
 /* common */
 .index-wrapper {
     background: #f8f8f8;
+}
+
+.van-skeleton {
+    margin-bottom: 0.2rem;
 }
 
 /* header */

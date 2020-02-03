@@ -33,12 +33,13 @@ axios.interceptors.response.use(
     function(error) {
         // 对响应错误做点什么
         const resp = error.response;
+        const responeData = resp.data;
 
         // 接口401则重新跳转微信授权页面
         if (+resp.status === 401) {
             commonService.toValidateHref();
         } else {
-            resp.msg && Toast(`错误：${resp.msg}`);
+            responeData.msg && Toast(`错误：${responeData.msg}`);
             return Promise.reject(error);
         }
     }
