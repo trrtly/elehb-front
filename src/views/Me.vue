@@ -282,17 +282,17 @@ export default {
             justify-content: space-between;
             margin-top: 0.26rem;
 
-            .new {
-                background: #fefaf2;
-            }
+            // .new {
+            //     background: #fefaf2;
+            // }
 
-            .faq {
-                background: #eff9f7;
-            }
+            // .faq {
+            //     background: #eff9f7;
+            // }
 
-            .kefu {
-                background: #f2f6fe;
-            }
+            // .kefu {
+            //     background: #f2f6fe;
+            // }
         }
 
         .common-btn-list li {
