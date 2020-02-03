@@ -50,7 +50,7 @@ export default {
 
             if (!app_id) {
                 let platformInfo = await this.fetchSetPlatformInfo();
-                app_id = platformInfo.data.appid;
+                app_id = platformInfo.appid;
             }
             rs(
                 `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${app_id}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}&connect_redirect=1#wechat_redirect`
