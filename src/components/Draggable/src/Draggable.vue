@@ -30,6 +30,16 @@ export default {
         parentHeight: {
             type: Number,
             default: 0
+        },
+        // 水平锁定
+        lockHorizontal: {
+            type: Boolean,
+            default: false
+        },
+        // 垂直锁定
+        lockVertical: {
+            type: Boolean,
+            default: false
         }
     },
     watch: {
@@ -102,10 +112,16 @@ export default {
             } else {
                 newTop = y - this.shiftY;
             }
-            this.elem.style.left = `${newLeft}px`;
-            this.left = newLeft;
-            this.elem.style.top = `${newTop}px`;
-            this.top = newTop;
+
+            if (!this.lockVertical) {
+                this.elem.style.left = `${newLeft}px`;
+                this.left = newLeft;
+            }
+
+            if (!this.lockHorizontal) {
+                this.elem.style.top = `${newTop}px`;
+                this.top = newTop;
+            }
         },
         hang(e) {
             this.$emit('activated');
@@ -145,6 +161,7 @@ export default {
 
         this.elem.style.right = '';
         this.elem.style.bottom = '';
+
         this.elem.style.left = `${this.left}px`;
         this.elem.style.top = `${this.top}px`;
     }

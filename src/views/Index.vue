@@ -93,7 +93,7 @@
             </div>
         </div>
 
-        <draggable :initStyle="{ right: 0, bottom: '2.9rem' }" v-route-jump="'/comment'">
+        <draggable :initStyle="{ right: 0, bottom: '2.9rem' }" lockVertical v-route-jump="'/comment'">
             <div class="auto-comment-wrapper"></div>
         </draggable>
 
