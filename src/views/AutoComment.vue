@@ -266,7 +266,7 @@ export default {
         .swiper-container {
             height: 5.22rem;
             margin-top: -0.59rem;
-            // overflow: visible;
+            overflow: visible;
 
             .swiper-slide {
                 margin-top: 0.29rem;
@@ -275,7 +275,7 @@ export default {
                 background: #fff;
                 border-radius: 5px;
                 box-sizing: border-box;
-                transition: height, margin 300ms;
+                transition: background-image, height, margin 300ms;
 
                 .template-select-icon {
                     background: url('../assets/autoComment/uncheck@2x.png') no-repeat;
