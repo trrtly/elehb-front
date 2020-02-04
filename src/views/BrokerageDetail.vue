@@ -132,10 +132,10 @@ export default {
 
 <style lang="scss" scoped>
 .brokerage-wrapper {
-    position: fixed;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+    // position: fixed;
+    // width: 100%;
+    // display: flex;
+    // flex-direction: column;
     color: #fff;
 
     .brokerage-header {
@@ -172,10 +172,17 @@ export default {
 
     // brokerageList
     .brokerage-list {
+        margin-top: 3.47rem;
+        margin-bottom: 0.88rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
         display: flex;
         flex-direction: column;
-        flex-grow: 1;
-        margin-top: -0.52rem;
+        // flex-grow: 1;
+        // margin-top: -0.52rem;
         border-radius: 16px;
         background: #fff;
         overflow-y: scroll;
@@ -194,6 +201,11 @@ export default {
             top: 50%;
             transform: translate3d(0, -50%, 0);
         }
+    }
+
+    .bottom-button {
+        position: fixed;
+        bottom: 0;
     }
 }
 </style>
