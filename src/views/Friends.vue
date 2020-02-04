@@ -21,7 +21,7 @@
             </van-list>
         </section>
 
-        <van-button block color="linear-gradient(to right, #6552ff, #2c3ffb)">邀请好友</van-button>
+        <van-button class="bottom-button" block color="linear-gradient(to right, #6552ff, #2c3ffb)">邀请好友</van-button>
     </div>
 </template>
 
@@ -74,8 +74,8 @@ export default {
 
 <style lang="scss" scoped>
 .friends-wrapper {
-    display: flex;
-    flex-direction: column;
+    // display: flex;
+    // flex-direction: column;
     color: #fff;
 
     .friends-header {
@@ -101,10 +101,17 @@ export default {
 
     // firends list
     .friends-list {
+        margin-top: 2.55rem;
+        margin-bottom: 0.88rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
         display: flex;
         flex-direction: column;
         flex-grow: 1;
-        margin-top: -1.35rem;
+        // margin-top: -1.35rem;
         border-radius: 16px;
         background: #fff;
         overflow-y: scroll;
@@ -140,6 +147,11 @@ export default {
                 background-color: transparent;
             }
         }
+    }
+
+    .bottom-button {
+        position: fixed;
+        bottom: 0;
     }
 }
 </style>

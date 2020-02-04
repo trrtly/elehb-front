@@ -109,7 +109,12 @@
                     v-model="validaCode"
                     placeholder="请输入图形验证码"
                 >
-                    <van-image slot="button" style="width: 2rem; height: 0.98rem;" :src="`data:image/png;base64,${captchaImage}`">
+                    <van-image
+                        slot="button"
+                        style="width: 2rem; height: 0.98rem;"
+                        :src="`data:image/png;base64,${captchaImage}`"
+                        @click="getNewCaptcha(18577361464 || phoneNum)"
+                    >
                         <template v-slot:error>
                             <van-icon name="photo-o" />
                         </template>
@@ -141,16 +146,17 @@ export default {
 
         this.loading = false;
 
-        await this.$nextTick();
-        // init betterScroll
-        this.scroller = new BScroll(this.$refs.indexWrapper, {
-            bounce: {
-                top: false,
-                bottom: false
-            },
-            preventDefaultException: {
-                className: /[(^|\s)hb-|(^|\s)van-]/
-            }
+        this.$nextTick(() => {
+            // init betterScroll
+            this.scroller = new BScroll(this.$refs.indexWrapper, {
+                bounce: {
+                    top: false,
+                    bottom: false
+                },
+                preventDefaultException: {
+                    className: /[(^|\s)hb-|(^|\s)van-]/
+                }
+            });
         });
     },
     data() {
@@ -184,7 +190,10 @@ export default {
     methods: {
         itemClick(index) {
             this.currentHbSelection = index;
-            this.scroller.scrollToElement(this.$refs.mainSection, 500);
+            this.$nextTick(() => {
+                this.scroller.refresh();
+                this.scroller.scrollToElement(this.$refs.mainSection, 500);
+            });
         },
         // 获取红包弹窗
         async getHbModal() {
@@ -203,14 +212,7 @@ export default {
 
             this.getCbModalShow = true;
 
-            indexService
-                .getCaptcha({
-                    mobile: 18577361464 || this.phoneNum
-                })
-                .then((res) => {
-                    this.captchaHash = res.captchaHash;
-                    this.captchaImage = res.captchaImage;
-                });
+            this.getNewCaptcha(18577361464 || this.phoneNum);
 
             // this.hbSuccessModalShow = true;
             // setTimeout(() => {
@@ -225,6 +227,16 @@ export default {
         getCoupon() {
             // 积分余额不足
             this.getCbModalShow = false;
+        },
+        getNewCaptcha(phone) {
+            indexService
+                .getCaptcha({
+                    mobile: phone
+                })
+                .then((res) => {
+                    this.captchaHash = res.captchaHash;
+                    this.captchaImage = res.captchaImage;
+                });
         }
     },
     components: {
@@ -399,7 +411,7 @@ export default {
 
 /* hb-form */
 .hb-form {
-    margin: 0.3rem 0;
+    margin-top: 0.3rem;
 }
 
 .hb-form .phone-input {
@@ -407,6 +419,7 @@ export default {
 }
 
 .hb-form-submit {
+    margin-top: 0.3rem;
     font-size: 0.32rem;
 }
 
