@@ -21,7 +21,12 @@
             </van-list>
         </section>
 
-        <van-button class="bottom-button" block color="linear-gradient(to right, #6552ff, #2c3ffb)">邀请好友</van-button>
+        <van-button class="bottom-button" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="showQRDialog">邀请好友</van-button>
+
+        <!-- 我的邀请码弹窗 -->
+        <van-overlay :show="myQRShow" @click="myQRShow = false">
+            <van-image class="my-qr-code" :src="myQRCode" @click.stop />
+        </van-overlay>
     </div>
 </template>
 
@@ -29,10 +34,15 @@
 import Vue from 'vue';
 import { List, Cell } from 'vant';
 import friendsService from '../service/friendsService';
+import meService from '../service/meService';
 
 Vue.use(List).use(Cell);
 
 export default {
+    created() {
+        // 预先加载接口
+        this.myQRPromise = meService.getMyQRCode();
+    },
     data() {
         return {
             totalFriends: 245,
@@ -42,7 +52,10 @@ export default {
             friendsList: [],
 
             currentPage: 1,
-            pageLimit: 5
+            pageLimit: 5,
+
+            myQRShow: false,
+            myQRCode: ''
         };
     },
     methods: {
@@ -67,6 +80,14 @@ export default {
             this.totalFriends = res.totalInviteNum;
 
             this.friendsList = [...this.friendsList, ...list];
+        },
+        async showQRDialog() {
+            this.myQRShow = true;
+
+            if (!this.myQRCode) {
+                let res = await this.myQRPromise;
+                this.myQRCode = res.url;
+            }
         }
     }
 };
@@ -152,6 +173,14 @@ export default {
     .bottom-button {
         position: fixed;
         bottom: 0;
+    }
+
+    .my-qr-code {
+        position: absolute;
+        width: 80%;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
     }
 }
 </style>

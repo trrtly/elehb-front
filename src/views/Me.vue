@@ -16,19 +16,22 @@
                 <div class="credit-wrapper">
                     <div class="user-credit">
                         <span class="credit-num din-font">{{ userInfo.score }}</span>
-                        <span class="my-credit flex fz-28" v-route-jump="'/credit'">我的积分 <van-icon name="arrow"/></span>
-                        <van-button
+                        <!-- <span class="my-credit flex fz-28" v-route-jump="'/credit'">我的积分 <van-icon name="arrow"/></span> -->
+                        <span class="my-credit flex fz-28">我的积分</span>
+                        <!-- <van-button
                             class="me-recharge-btn fz-28 font-bold"
                             size="small"
                             color="linear-gradient(to right, #ffe28a, #ffcf51)"
                             round
                             to="/recharge"
                             >充值</van-button
-                        >
+                        > -->
+                        <van-button class="me-recharge-btn fz-28 font-bold" size="small" round to="/credit">查看</van-button>
                     </div>
                     <div class="user-money">
                         <span class="din-font">{{ userInfo.cms }} <span class="fz-28">元</span></span>
-                        <span class="my-money flex fz-28" v-route-jump="'/brokerage'">我的佣金 <van-icon name="arrow"/></span>
+                        <!-- <span class="my-money flex fz-28" v-route-jump="'/brokerage'">我的佣金 <van-icon name="arrow"/></span> -->
+                        <span class="my-money flex fz-28">我的佣金</span>
                         <van-button class="me-get-money-btn fz-28 font-bold" size="small" hairline round to="/brokerage">提现</van-button>
                     </div>
                 </div>
@@ -100,6 +103,8 @@ import meService from '../service/meService';
 export default {
     name: 'me',
     created() {
+        // 更新用户信息
+        this.$store.dispatch('fetchSetUserInfo');
         // 预先加载接口
         this.myQRPromise = meService.getMyQRCode();
     },
@@ -212,15 +217,16 @@ export default {
                         width: 1.48rem;
                         height: 0.56rem;
                         line-height: 0.56rem;
+                        background: transparent;
+                        color: #fff;
 
-                        &.me-get-money-btn {
-                            background: transparent;
-                            color: #fff;
-                        }
+                        // &.me-get-money-btn {
+                        //     color: #fff;
+                        // }
 
-                        &.me-recharge-btn {
-                            color: #b37013 !important;
-                        }
+                        // &.me-recharge-btn {
+                        //     color: #b37013 !important;
+                        // }
                     }
                 }
             }
