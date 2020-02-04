@@ -132,6 +132,8 @@ export default {
 
 <style lang="scss" scoped>
 .brokerage-wrapper {
+    position: fixed;
+    width: 100%;
     display: flex;
     flex-direction: column;
     color: #fff;

@@ -82,16 +82,17 @@
                     </span>
                 </div>
             </div>
-            <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/recharge">充值积分</van-button>
+            <!-- <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/recharge">充值积分</van-button> -->
+            <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/me">个人中心</van-button>
         </footer>
 
         <!-- 个人中心悬浮 -->
-        <div class="user-center-wrapper" v-route-jump="'/me'">
+        <!-- <div class="user-center-wrapper" v-route-jump="'/me'">
             <div class="user-center-btn fz-32">
                 <span class="user-center-icon"></span>
                 <span class="user-center-text fz-28">个人中心</span>
             </div>
-        </div>
+        </div> -->
 
         <draggable :initStyle="{ right: 0, bottom: '2.9rem' }" lockVertical v-route-jump="'/comment'">
             <div class="auto-comment-wrapper"></div>
