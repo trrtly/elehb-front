@@ -40,17 +40,53 @@
                 </ul>
 
                 <div class="hb-form" v-if="hbList[currentHbSelection] && hbList[currentHbSelection].score > 0">
-                    <van-field
-                        class="phone-input van-hairline--surround"
-                        type="number"
-                        required
-                        clearable
-                        v-model="phoneNum"
-                        maxlength="11"
-                        placeholder="请输入饿了么账号（手机号）"
-                        @input="phoneValid = isPhoneNum(phoneNum)"
-                        :error-message="phoneErrMsg"
-                    />
+                    <div>
+                        <van-field
+                            class="phone-input van-hairline--surround"
+                            type="number"
+                            required
+                            clearable
+                            v-model="phoneNum"
+                            maxlength="11"
+                            placeholder="请输入饿了么账号（手机号）"
+                            :error-message="phoneErrMsg"
+                        />
+                    </div>
+
+                    <div>
+                        <van-field
+                            class="valida-code-input van-hairline--surround"
+                            type="number"
+                            required
+                            clearable
+                            v-model="validaCode"
+                            placeholder="短信验证码"
+                        >
+                            <van-button
+                                v-if="!isGetingCode"
+                                style="height: 0.4rem; line-height: 0.4rem;"
+                                slot="button"
+                                size="small"
+                                type="info"
+                                color="#2c3ffb"
+                                round
+                                plain
+                                hairline
+                                @click="getValidationCode"
+                            >
+                                获取验证码
+                            </van-button>
+                            <van-count-down
+                                v-else
+                                slot="button"
+                                ref="textCountDown"
+                                :time="30000"
+                                format="ss s"
+                                :auto-start="false"
+                                @finish="isGetingCode = false"
+                            />
+                        </van-field>
+                    </div>
                 </div>
 
                 <van-button class="hb-form-submit fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getHbModal">
@@ -99,14 +135,14 @@
         </draggable>
 
         <!-- 验证码回执模态框 -->
-        <hb-modal v-model="getCbModalShow" :close-on-click-overlay="false" title="输入图形验证码">
+        <hb-modal v-model="captchaModalShow" :close-on-click-overlay="false" title="输入图形验证码">
             <div style="margin-bottom: 0.4rem;">
                 <van-field
-                    class="valida-code-input van-hairline--surround"
+                    class="captcha-code-input van-hairline--surround"
                     type="text"
                     required
                     clearable
-                    v-model="validaCode"
+                    v-model="captchaCode"
                     placeholder="请输入图形验证码"
                 >
                     <van-image
@@ -121,7 +157,7 @@
                     </van-image>
                 </van-field>
             </div>
-            <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getCoupon">确定</van-button>
+            <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="captchaOK">确定</van-button>
         </hb-modal>
 
         <hb-success-modal v-model="hbSuccessModalShow"></hb-success-modal>
@@ -167,13 +203,17 @@ export default {
             hbList: [],
             currentHbSelection: 0, // 默认选中第一个红包
 
-            phoneValid: false,
-            phoneNum: '',
-            getCbModalShow: false,
+            // phoneValid: false,
+            phoneNum: '18577361464',
+            captchaModalShow: false,
 
-            validaCode: '',
+            captchaCode: '',
             captchaImage: '', // 图形验证码
             captchaHash: '',
+            validateToken: '',
+
+            isGetingCode: false,
+            validaCode: '',
 
             hbSuccessModalShow: false
         };
@@ -183,7 +223,10 @@ export default {
             return (index) => this.currentHbSelection === index;
         },
         phoneErrMsg() {
-            return this.phoneNum === '' || this.phoneValid ? '' : '手机号格式有误';
+            return this.phoneValid ? '' : '手机号格式有误';
+        },
+        phoneValid() {
+            return this.phoneNum !== '' && this.isPhoneNum(this.phoneNum);
         },
         ...mapState(['userInfo'])
     },
@@ -206,28 +249,90 @@ export default {
             //         this.$router.push('/recharge');
             //     }
             // });
-
             // 校验手机号
             // if (!this.phoneValid) { return; }
-
-            this.getCbModalShow = true;
-
-            this.getNewCaptcha(18577361464 || this.phoneNum);
-
             // this.hbSuccessModalShow = true;
             // setTimeout(() => {
             //     this.hbSuccessModalShow = false;
             // }, 5000);
+
+            // 饿了么登陆接口
+            await indexService.eleLogin({
+                mobile: this.phoneNum,
+                smsCode: this.validaCode,
+                validateToken: this.validateToken
+            });
+
+            let currentHb = this.hbList[this.currentHbSelection];
+
+            this.$toast('领取中，请稍后...', {
+                duration: 0
+            });
+
+            let redpacks = await indexService.getRedPack({
+                id: currentHb.id,
+                mobile: this.phoneNum
+            });
+
+            this.$toast.clear();
+
+            // 清空数据
+            this.captchaCode = '';
+            this.captchaHash = '';
+            this.validateToken = '';
+            this.validaCode = '';
+
+            console.log(redpacks);
         },
-        getValidationCode() {
-            // 通过手机号获取验证码
-            this.isGetingCode = true;
-            // 调短信接口
+        async getValidationCode() {
+            if (!this.phoneValid) {
+                this.$toast('请输入正确的手机号');
+                return;
+            }
+
+            // 是否登陆
+            const eleIsLogin = await indexService.eleIsLogin({
+                mobile: this.phoneNum
+            });
+
+            if (!eleIsLogin) {
+                // 弹图形验证码
+                this.captchaModalShow = true;
+                this.getNewCaptcha(this.phoneNum);
+            } else {
+                this.sendMsg();
+                this.isGetingCode = true;
+            }
         },
+        async captchaOK() {
+            // 调提交验证码接口
+            this.sendMsg()
+                .then(() => {
+                    this.captchaModalShow = false;
+                    this.isGetingCode = true;
+                })
+                .catch(() => {
+                    this.getNewCaptcha(this.phoneNum);
+                });
+        },
+        sendMsg() {
+            return indexService
+                .sendMsg({
+                    captchaCode: this.captchaCode,
+                    captchaHash: this.captchaHash,
+                    mobile: this.phoneNum
+                })
+                .then((res) => {
+                    this.validateToken = res.validateToken;
+                    return Promise.resolve(res.validateToken);
+                });
+        },
+        // 领取红包
         getCoupon() {
             // 积分余额不足
-            this.getCbModalShow = false;
+            this.captchaModalShow = false;
         },
+        // 获取新的验证码
         getNewCaptcha(phone) {
             indexService
                 .getCaptcha({
@@ -245,7 +350,7 @@ export default {
         Draggable
     },
     watch: {
-        getCbModalShow(newVal) {
+        captchaModalShow(newVal) {
             // 弹窗关闭时重置计时器
             if (!newVal && this.$refs.textCountDown) {
                 setTimeout(() => {
@@ -416,6 +521,7 @@ export default {
 
 .hb-form .phone-input {
     border-radius: 0.12rem;
+    margin-bottom: 0.3rem;
 }
 
 .hb-form-submit {

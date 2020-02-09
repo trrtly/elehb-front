@@ -74,7 +74,7 @@
                                 hairline
                                 @click="getValidationCode"
                             >
-                                发送验证码
+                                获取验证码
                             </van-button>
                             <van-count-down
                                 v-else
@@ -195,8 +195,8 @@ export default {
         transitionEnd() {
             this.currentSelectedTemplate = this.$refs.commentTemplate.swiper.realIndex;
         },
-        getValidationCode() {
-            if (this.phoneNum === '' || this.phoneValid) {
+        async getValidationCode() {
+            if (this.phoneNum === '' || !this.phoneValid) {
                 this.$toast('请输入正确的手机号');
                 return;
             }
@@ -266,7 +266,8 @@ export default {
         .swiper-container {
             height: 5.22rem;
             margin-top: -0.59rem;
-            overflow: visible;
+            margin-bottom: -0.5rem;
+            padding-bottom: 0.5rem;
 
             .swiper-slide {
                 margin-top: 0.29rem;

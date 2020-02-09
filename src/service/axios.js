@@ -39,7 +39,9 @@ axios.interceptors.response.use(
         if (+resp.status === 401) {
             commonService.toValidateHref();
         } else {
-            responeData.msg && Toast(`错误：${responeData.msg}`);
+            const errMsg = responeData.msg ? `错误：${responeData.msg}` : 'unknow error';
+            errMsg && Toast(`${errMsg}`);
+
             return Promise.reject(error);
         }
     }
