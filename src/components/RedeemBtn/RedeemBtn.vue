@@ -20,7 +20,8 @@ export default {
 
     @include element('text') {
         font-size: 0.36rem;
-        color: #ffdc39;
+        // color: #ffdc39;
+        color: #fff;
         line-height: 0.93rem;
         text-align: center;
     }

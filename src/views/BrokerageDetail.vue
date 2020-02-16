@@ -6,9 +6,9 @@
                 <span class="din-font">{{ userBrokerage }}.00</span>
                 元
             </div>
-            <div class="brokerage-rule">
+            <!-- <div class="brokerage-rule">
                 <van-button class="brokerage-rule-btn" color="rgba(255, 255, 255, 0.3)" round @click="viewBrokerageDetail">查看佣金规则</van-button>
-            </div>
+            </div> -->
         </header>
 
         <section class="brokerage-list">
@@ -32,7 +32,8 @@
             </van-list>
         </section>
 
-        <van-button class="bottom-button" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="withDraw">佣金提现</van-button>
+        <!-- <van-button class="bottom-button" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="withDraw">佣金提现</van-button> -->
+        <van-button class="bottom-button" block color="#E0E0E0">提现暂未开放</van-button>
     </div>
 </template>
 
@@ -172,7 +173,8 @@ export default {
 
     // brokerageList
     .brokerage-list {
-        margin-top: 3.47rem;
+        margin-top: 2.55rem;
+        // margin-top: 3.47rem;
         margin-bottom: 0.88rem;
         position: absolute;
         top: 0;
@@ -206,6 +208,10 @@ export default {
     .bottom-button {
         position: fixed;
         bottom: 0;
+
+        .van-button__text {
+            color: #999;
+        }
     }
 }
 </style>

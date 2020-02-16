@@ -109,17 +109,19 @@
             <div class="hb-user">
                 <div class="user-info">
                     <img class="user-avatar" :src="userInfo.headimgurl" alt="avatar" />
-                    <span class="user-name van-ellipsis">{{ userInfo.nickname }}</span>
-                </div>
-                <div class="user-credit">
-                    我的积分：
-                    <span class="user-credit-num din-font">
-                        {{ userInfo.score }}
-                    </span>
+                    <div class="user-info-text fz-24">
+                        <p class="user-name van-ellipsis">{{ userInfo.nickname }}</p>
+                        <p class="user-credit">
+                            我的积分:
+                            <span class="user-credit-num din-font">
+                                {{ userInfo.score }}
+                            </span>
+                        </p>
+                    </div>
                 </div>
             </div>
             <!-- <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/recharge">充值积分</van-button> -->
-            <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/me">个人中心</van-button>
+            <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/me">前往个人中心</van-button>
         </footer>
 
         <!-- 个人中心悬浮 -->
@@ -568,9 +570,15 @@ export default {
     align-items: center;
 }
 
-.user-info .user-name {
-    max-width: 1.8rem;
+.hb-bar .user-info-text {
     margin-left: 0.16rem;
+    text-align: left;
+}
+
+.user-info .user-name {
+    margin-bottom: 0.1rem;
+    max-width: 1.8rem;
+    // margin-left: 0.16rem;
 }
 
 .user-info .user-avatar {
@@ -580,7 +588,7 @@ export default {
 }
 
 .hb-user .user-credit {
-    display: flex;
+    // display: flex;
     align-items: center;
     color: #999999;
 }

@@ -43,7 +43,7 @@
                     <div class="invite-text fz-28">
                         <p style="color: #545454;">每邀请一位好友的奖励：</p>
                         <p>◆ 立即获得<span class="din-font font-bold" style="color: #2f5ee3;">10</span>积分奖励</p>
-                        <p>◆ 好友每笔充值金额的<span class="din-font font-bold" style="color: #2f5ee3;">20%</span>佣金</p>
+                        <!-- <p>◆ 好友每笔充值金额的<span class="din-font font-bold" style="color: #2f5ee3;">20%</span>佣金</p> -->
                     </div>
                     <van-button class="invite-link-btn fz-24" color="#2f5ee3" round plain @click="copyText(inviteLink)">复制邀请链接</van-button>
                 </div>
@@ -84,9 +84,9 @@
         </footer>
 
         <!-- 客服弹层 -->
-        <van-dialog v-model="kefuShow" title="客服微信号">
-            <van-image :src="platformInfo.kfImg" />
-        </van-dialog>
+        <hb-modal class="kefu-modal" v-model="kefuShow" title="请长按识别二维码">
+            <van-image :src="platformInfo.kfImg" style="width: 3.1rem; height: 3.1rem;" />
+        </hb-modal>
 
         <!-- 我的邀请码弹窗 -->
         <van-overlay :show="myQRShow" @click="myQRShow = false">
@@ -99,6 +99,7 @@
 import { mapState } from 'vuex';
 import RedeemBtn from '../components/RedeemBtn/RedeemBtn';
 import meService from '../service/meService';
+import WmqModal from '../components/WmqModal/WmqModal.vue';
 
 export default {
     name: 'me',
@@ -132,7 +133,8 @@ export default {
         ...mapState(['userInfo', 'platformInfo', 'shareQRCode'])
     },
     components: {
-        RedeemBtn
+        RedeemBtn,
+        HbModal: WmqModal
     }
 };
 </script>
@@ -208,6 +210,7 @@ export default {
 
                     .credit-num,
                     &.user-money {
+                        text-align: left;
                         font-size: 0.6rem;
                         color: #fefefe;
                     }
@@ -260,7 +263,8 @@ export default {
         }
 
         .invite-text p:not(:first-child) {
-            margin-top: 0.28rem;
+            margin-top: 0.4rem;
+            // margin-top: 0.28rem;
             color: #707070;
         }
 
@@ -272,7 +276,8 @@ export default {
         }
 
         .invite-btn {
-            margin-top: 0.6rem;
+            margin-top: 0.25rem;
+            // margin-top: 0.6rem;
             /* width: 1.58rem; */
             height: 0.56rem;
             line-height: 0.56rem;
@@ -343,6 +348,14 @@ export default {
         top: 50%;
         left: 50%;
         transform: translate3d(-50%, -50%, 0);
+    }
+
+    .kefu-modal {
+        width: unset;
+
+        /deep/ .hb-modal__body {
+            padding: 0.4rem 0.9rem 0.6rem;
+        }
     }
 }
 </style>
