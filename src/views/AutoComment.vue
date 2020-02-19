@@ -34,7 +34,7 @@
                             :src="props.checked ? activeIcon : inactiveIcon"
                             style="width: 0.28rem; border-radius: 50%; box-sizing: border-box;"
                         />
-                        我已阅读并同意<a href="#">《隐私条款》</a>即表示同意授权本平台
+                        我已阅读并同意<a href="//v.xiumi.us/board/v5/2XWpR/190719124" @click.stop>《隐私条款》</a>即表示同意授权本平台
                     </van-checkbox>
                 </div>
 

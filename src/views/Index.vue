@@ -156,7 +156,7 @@
                         slot="button"
                         style="width: 2rem; height: 0.98rem;"
                         :src="`data:image/png;base64,${captchaImage}`"
-                        @click="getNewCaptcha(18577361464 || phoneNum)"
+                        @click="getNewCaptcha(phoneNum)"
                     >
                         <template v-slot:error>
                             <van-icon name="photo-o" />
@@ -167,6 +167,28 @@
             <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="captchaOK">确定</van-button>
         </hb-modal>
 
+        <!-- 首次登陆模态框 -->
+        <hb-modal
+            class="first-login-modal"
+            v-model="firstLogin"
+            :close-on-click-overlay="false"
+            :show-confirm-button="true"
+            :show-cancel-button="true"
+            confirm-button-text="同意并授权"
+            cancel-button-text="不同意"
+            :before-close="firstLoginModalClose"
+            title="隐私政策"
+        >
+            <p>请充分阅读并理解以下内容:</p>
+            <p>
+                <a href="//r.xiumi.us/board/v5/2XWpR/190715124">《用户服务协议》</a>
+                和
+                <a href="//v.xiumi.us/board/v5/2XWpR/190719124">《隐私条款》</a>
+            </p>
+            <p style="margin-top: 0.36rem; text-align: left;">1、同意即授权免登录外部平台，将可简化领取各类福利的操作过程。</p>
+            <p style="text-align: left;">2、若您不希望授权登陆外部平台，可在“个人中心-系统设置”中关闭。</p>
+        </hb-modal>
+
         <hb-success-modal v-model="hbSuccessModalShow"></hb-success-modal>
     </div>
 </template>
@@ -174,20 +196,27 @@
 <script>
 // @ is an alias to /src
 import { mapState } from 'vuex';
-import hbModal from '../components/WmqModal/WmqModal.vue';
-import hbSuccessModal from '../components/HbSuccessModal/HbSuccessModal.vue';
+import hbModal from '@/components/WmqModal/WmqModal.vue';
+import hbSuccessModal from '@/components/HbSuccessModal/HbSuccessModal.vue';
 import BScroll from '@better-scroll/core';
-import Draggable from '../components/Draggable';
+import Draggable from '@/components/Draggable';
 
-import indexService from '../service/indexService';
+import indexService from '@/service/indexService';
+import settingService from '@/service/settingService';
 
 export default {
     name: 'home',
     async created() {
-        this.hbList = await indexService.getRedPacks();
-        this.swipeImages = await indexService.getBanners();
+        // 检查是否是第一次进入
+        this.checkFirstLogin();
 
-        this.loading = false;
+        try {
+            this.hbList = await indexService.getRedPacks();
+            this.swipeImages = await indexService.getBanners();
+            this.loading = false;
+        } catch (error) {
+            this.loading = false;
+        }
 
         this.$nextTick(() => {
             // init betterScroll
@@ -204,6 +233,7 @@ export default {
     },
     data() {
         return {
+            firstLogin: false,
             loading: true,
 
             swipeImages: [],
@@ -238,6 +268,20 @@ export default {
         ...mapState(['userInfo'])
     },
     methods: {
+        async firstLoginModalClose(action, done) {
+            if (action === 'confirm') {
+                await settingService.setUserSetting({
+                    agreePrivacy: 1
+                });
+            }
+            done();
+            localStorage.setItem('firstLogin', new Date().getTime());
+
+            this.$toast('已授权登陆');
+        },
+        checkFirstLogin() {
+            this.firstLogin = localStorage.getItem('firstLogin') === null;
+        },
         itemClick(index) {
             this.currentHbSelection = index;
             this.$nextTick(() => {
@@ -644,5 +688,13 @@ export default {
 .user-center-btn .user-center-text {
     margin-left: 0.05rem;
     font-weight: bold;
+}
+
+.first-login-modal {
+    p {
+        color: #666;
+        line-height: 0.42rem;
+        font-size: 0.24rem;
+    }
 }
 </style>

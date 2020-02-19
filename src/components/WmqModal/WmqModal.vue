@@ -11,6 +11,7 @@
         @confirm="confirm"
         @cancel="cancel"
         :before-close="beforeClose"
+        ref="dialog"
     >
         <div slot="title" :class="bem('title')">
             {{ title }}
@@ -83,7 +84,14 @@ export default {
     },
     methods: {
         closeModal() {
-            this.innerShowFlag = false;
+            const action = 'closeCross';
+            const _dialog = this.$refs.dialog;
+            _dialog.beforeClose(action, (state) => {
+                if (state !== false) {
+                    _dialog.onClose(action);
+                }
+            });
+            // this.innerShowFlag = false;
             this.$emit('returnBack', this.innerShowFlag);
         }
     },

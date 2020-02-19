@@ -110,4 +110,12 @@ body {
     font-size: 0.3rem;
     font-weight: bold;
 }
+
+a {
+    color: #2f5ee3;
+
+    &:visited {
+        color: #2f5ee3 !important;
+    }
+}
 </style>

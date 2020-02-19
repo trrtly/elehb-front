@@ -245,7 +245,7 @@ export default {
 
     // invite
     .invite-wrapper {
-        padding: 0.3rem 0.28rem 0;
+        margin: 0.3rem 0.28rem 0;
         background: #fff;
         // overflow: hidden;
 
