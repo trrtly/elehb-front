@@ -95,12 +95,17 @@
 
                 <div class="hb-rules-wrapper">
                     <p>领取规则：</p>
-                    <div class="hb-rules" v-html="hbList[currentHbSelection] && hbList[currentHbSelection].rule"></div>
+                    <!-- <div class="hb-rules" v-html="hbList[currentHbSelection] && hbList[currentHbSelection].rule"></div> -->
                     <!-- <p>
                         1、每个手机号每日限领1次，部分异常账号由于饿了么风控原因，无法领取红包，请更换其他手机号领取；
                     </p>
                     <p>2、若领取失败，不会消耗积分；</p>
                     <p>3、领取的红包有效期以饿了么为准，请及时使用 。</p> -->
+                    <p>1、同个手机号每日可分别免费领取一次午餐红包和晚餐红包</p>
+                    <p>2、积分红包可与店铺满减优惠叠加使用</p>
+                    <p>3、部分异常账号无法领取红包，请更换其他手机号领取</p>
+                    <p>4、若领取失败，不会消耗积分</p>
+                    <p>5、领取的红包有效期以饿了么为准，请及时使用</p>
                 </div>
             </section>
         </div>

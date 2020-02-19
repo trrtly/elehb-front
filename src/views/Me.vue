@@ -247,7 +247,7 @@ export default {
     .invite-wrapper {
         padding: 0.3rem 0.28rem 0;
         background: #fff;
-        overflow: hidden;
+        // overflow: hidden;
 
         .invite-inner {
             display: flex;
@@ -291,7 +291,8 @@ export default {
         .common-btn-list {
             display: flex;
             justify-content: space-between;
-            margin-top: 0.26rem;
+            // margin-top: 0.26rem;
+            margin-top: 0.4rem;
 
             // .new {
             //     background: #fefaf2;
@@ -311,13 +312,16 @@ export default {
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 2.06rem;
-            height: 2.06rem;
+            // width: 2.06rem;
+            width: 1.3rem;
+            // height: 2.06rem;
             border-radius: 0.04rem;
 
             .common-btn-icon {
-                width: 0.58rem;
-                height: 0.58rem;
+                // width: 0.58rem;
+                // height: 0.58rem;
+                width: 0.52rem;
+                height: 0.52rem;
             }
 
             &:active {
@@ -328,6 +332,7 @@ export default {
         .common-btn-text {
             position: relative;
             top: 0.4rem;
+            font-size: 0.24rem;
         }
     }
 
