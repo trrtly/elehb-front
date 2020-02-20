@@ -330,8 +330,7 @@ export default {
         }
 
         .common-btn-text {
-            position: relative;
-            top: 0.4rem;
+            margin-top: 0.3rem;
             font-size: 0.24rem;
         }
     }

@@ -444,6 +444,7 @@ export default {
 
 /* header */
 .header {
+    position: relative;
     overflow: hidden;
 }
 

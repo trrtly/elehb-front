@@ -33,6 +33,7 @@ body,
 #app > div {
     // min-height: 100% !important;
     height: 100%;
+    overflow-y: scroll;
 }
 
 body {
