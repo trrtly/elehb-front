@@ -352,7 +352,7 @@ export default {
         showHbModal(remoteData) {
             this.successHbList = remoteData.list;
             this.successHbTitle = remoteData.subTitle;
-            this.successJumpUrl = remoteData.url;
+            this.successJumpUrl = this.$store.getters.randomCps;
             this.hbSuccessModalShow = true;
         },
         async getValidationCode() {

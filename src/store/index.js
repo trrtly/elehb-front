@@ -1,11 +1,19 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import commonService from '@/service/commonService';
+import { Math } from 'core-js';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {},
+    getters: {
+        randomCps(state) {
+            const cps = state.platformInfo.cps;
+            const randomIndex = Math.floor(Math.random() * cps.length);
+            return cps[randomIndex];
+        }
+    },
     mutations: {
         setPlatformInfo(state, platformInfo) {
             state.platformInfo = platformInfo;

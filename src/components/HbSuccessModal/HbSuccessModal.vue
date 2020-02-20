@@ -92,6 +92,7 @@ export default {
         },
         jumpToUrl() {
             this.jumpUrl && (location.href = this.jumpUrl);
+            this.innerShow = false;
         },
         closeModal() {
             this.$refs.jumpCountDown.reset();
