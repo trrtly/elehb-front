@@ -174,7 +174,7 @@
             <van-button class="fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="captchaOK">确定</van-button>
         </hb-modal>
 
-        <!-- 首次登陆模态框 -->
+        <!-- 首次登录模态框 -->
         <hb-modal
             class="first-login-modal"
             v-model="firstLogin"
@@ -193,9 +193,10 @@
                 <a href="//v.xiumi.us/board/v5/2XWpR/190719124">《隐私条款》</a>
             </p>
             <p style="margin-top: 0.36rem; text-align: left;">1、同意即授权免登录外部平台，将可简化领取各类福利的操作过程。</p>
-            <p style="text-align: left;">2、若您不希望授权登陆外部平台，可在“个人中心-系统设置”中关闭。</p>
+            <p style="text-align: left;">2、若您不希望授权登录外部平台，可在“个人中心-系统设置”中关闭。</p>
         </hb-modal>
 
+        <!-- 领取成功红包弹框 -->
         <hb-success-modal
             v-model="hbSuccessModalShow"
             :hbList="successHbList"
@@ -214,6 +215,7 @@ import hbSuccessModal from '@/components/HbSuccessModal/HbSuccessModal.vue';
 import Draggable from '@/components/Draggable';
 
 import indexService from '@/service/indexService';
+import commonService from '@/service/commonService';
 import settingService from '@/service/settingService';
 
 export default {
@@ -279,12 +281,11 @@ export default {
             }
         },
         async firstLoginModalClose(action, done) {
-            if (action === 'confirm') {
-                await settingService.setUserSetting({
-                    agreePrivacy: 1
-                });
-                this.$toast('已授权登陆');
-            }
+            await settingService.setUserSetting({
+                agreePrivacy: action === 'confirm' ? 1 : 0
+            });
+            this.$toast(action === 'confirm' ? '已授权登录' : '已关闭授权登录');
+
             done();
             localStorage.setItem('firstLogin', new Date().getTime());
         },
@@ -313,7 +314,7 @@ export default {
                     return;
                 }
 
-                // 饿了么登陆接口
+                // 饿了么登录接口
                 await indexService.eleLogin({
                     mobile: this.phoneNum,
                     smsCode: this.validaCode,
@@ -332,12 +333,18 @@ export default {
                 });
 
                 const type = +res.type;
-                type === 1 && this.showHbModal(res);
+                if (type === 1) {
+                    await commonService.fetchSetUserInfo(true);
+                    this.$toast.clear();
 
-                type === 2 &&
+                    this.showHbModal(res);
+                }
+
+                if (type === 2) {
                     setTimeout(() => {
                         location.href = res.url;
                     }, 500);
+                }
             } catch (err) {
                 this.$toast.clear();
             }

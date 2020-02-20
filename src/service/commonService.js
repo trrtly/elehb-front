@@ -36,8 +36,8 @@ export default {
         });
     },
     // 获取设置用户信息
-    async fetchSetUserInfo() {
-        return store.state.userInfo || (await store.dispatch('fetchSetUserInfo'));
+    async fetchSetUserInfo(flag = false) {
+        return flag ? await store.dispatch('fetchSetUserInfo') : store.state.userInfo || (await store.dispatch('fetchSetUserInfo'));
     },
     // 获取拼接授权页面链接
     async validateHref(
