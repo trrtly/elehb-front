@@ -24,7 +24,7 @@
                     <div class="brokerage-item-right">
                         <span class="din-font fz-28" :style="brokerage.cms > 0 && { color: '#fb5227' }">
                             <i>{{ brokerage.cms > 0 ? '+' : '-' }}</i>
-                            {{ brokerage.cms }}.00
+                            {{ brokerage.cms }}
                         </span>
                         <span class="fz-24">元</span>
                     </div>
