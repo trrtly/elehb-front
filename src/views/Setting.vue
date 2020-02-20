@@ -8,6 +8,7 @@
         <van-cell-group>
             <van-cell title="用户服务协议" is-link url="//r.xiumi.us/board/v5/2XWpR/190715124" />
             <van-cell title="隐私条款" is-link url="//v.xiumi.us/board/v5/2XWpR/190719124" />
+            <van-cell title="清空缓存" @click="clearStorage" />
         </van-cell-group>
     </div>
 </template>
@@ -43,6 +44,10 @@ export default {
                     this.autoLoginLoading = false;
                     this.autoLogin = autoLoginStatus;
                 });
+        },
+        clearStorage() {
+            localStorage.removeItem('firstLogin');
+            this.$toast('清除缓存成功');
         }
     }
 };

@@ -42,7 +42,8 @@ axios.interceptors.response.use(
             const errMsg = responeData.msg ? `错误：${responeData.msg}` : 'unknow error';
             errMsg && Toast(`${errMsg}`);
 
-            return Promise.reject(error);
+            throw new Error(errMsg);
+            // return Promise.reject(error);
         }
     }
 );

@@ -3,30 +3,32 @@
         <van-overlay :show="innerShow">
             <div :class="bem('content')">
                 <section :class="bem('hb-container')">
+                    <div :class="bem('hb-title')">{{ title }}</div>
+
                     <div :class="bem('hb-wrapper')">
                         <ul
                             :class="bem('hb-list')"
                             @touchstart.stop="touchStartY = $event.touches[0].pageY"
                             @touchmove.stop="scroll($event, $event.currentTarget)"
                         >
-                            <li :class="bem('hb-item')" v-for="(hb, index) in 6 /*hbList*/" :key="index">
+                            <li :class="bem('hb-item')" v-for="(hb, index) in hbList" :key="index">
                                 <div :class="bem('hb-item-left')">
                                     <span class="fz-32 font-bold" style="position: relative; top: 0.02rem;">￥</span>
-                                    <span class="din-font" style="font-size: 0.5rem;">4</span>
+                                    <span class="din-font" style="font-size: 0.5rem;">{{ hb.amount | numFilter }}</span>
                                 </div>
                                 <div :class="bem('hb-item-right')">
-                                    <p class="fz-32 font-bold" style="color: #393939;">饿了么通用红包</p>
-                                    <p class="fz-24" style="margin-top: 0.18rem; color: #666666;">满35可用</p>
+                                    <p class="fz-32 font-bold" style="color: #393939;">{{ hb.title }}</p>
+                                    <p class="fz-24" style="margin-top: 0.18rem; color: #666666;">满{{ hb.threshold | numFilter }}可用</p>
                                 </div>
                             </li>
                         </ul>
                     </div>
                     <div :class="bem('hb-bottom')">
                         <p class="hb-bottom-desc fz-24">请打开饿了么APP“我的-红包-店铺红包”查看</p>
-                        <div class="hb-bottom-button font-bold">
+                        <div class="hb-bottom-button font-bold" @click="jumpToUrl">
                             <p class="hb-bottom-button__text fz-36" style="margin-top: 0.14rem;">再领一个免费红包</p>
                             <p class="hb-bottom-button__countdown fz-24" style="margin-top: 0.04rem;">
-                                (<van-count-down ref="jumpCountDown" :time="5000" format="ss秒" :auto-start="false" />后跳转)
+                                (<van-count-down ref="jumpCountDown" :time="5000" format="ss秒" :auto-start="false" @finish="jumpToUrl" />后跳转)
                             </p>
                         </div>
                     </div>
@@ -49,9 +51,17 @@ export default {
             type: Boolean,
             default: false
         },
+        title: {
+            type: String,
+            default: ''
+        },
         hbList: {
             type: Array,
             default: () => []
+        },
+        jumpUrl: {
+            type: String,
+            default: ''
         }
     },
     model: {
@@ -80,14 +90,27 @@ export default {
                 e.preventDefault();
             }
         },
+        jumpToUrl() {
+            this.jumpUrl && (location.href = this.jumpUrl);
+        },
         closeModal() {
+            this.$refs.jumpCountDown.reset();
             this.innerShow = false;
-            this.$emit('returnBack', this.innerShowFlag);
+            this.$emit('returnBack', this.innerShow);
+        }
+    },
+    filters: {
+        numFilter(num) {
+            return parseFloat(num).toFixed(0);
         }
     },
     watch: {
         show(v) {
             this.innerShow = v;
+
+            if (v === false) {
+                this.$emit('close');
+            }
         },
         innerShow(v) {
             this.$refs.jumpCountDown[v ? 'start' : 'reset']();
@@ -101,6 +124,7 @@ export default {
             // 处理QQ浏览器滚动穿透--暂时
             document.body.style.position = v ? 'fixed' : 'static';
             document.body.style.overflow = v ? 'hidden' : 'auto';
+            document.body.style.width = v ? '100%' : '';
 
             // 处理QQ浏览器滚动穿透--暂时
             if (!v) {
@@ -127,6 +151,7 @@ export default {
     }
 
     @include element('hb-container') {
+        position: relative;
         width: 6.12rem;
         height: 8.9rem;
         background: url('./assets/hb-success-bg@2x.png') no-repeat;
@@ -148,6 +173,15 @@ export default {
         overflow-y: scroll;
         -webkit-overflow-scrolling: auto;
         touch-action: pan-y;
+    }
+
+    @include element('hb-title') {
+        position: absolute;
+        left: 50%;
+        top: 1.1rem;
+        transform: translate3d(-50%, 0, 0);
+        font-size: 0.28rem;
+        color: #f6ceb9;
     }
 
     @include element('hb-item') {

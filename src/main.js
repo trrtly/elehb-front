@@ -14,6 +14,11 @@ import './utils/directive/routeJump';
 
 import './components/WmqModal/WmqModal.js';
 
+// scroll polyfill
+import smoothscroll from 'smoothscroll-polyfill';
+// kick off the polyfill!
+smoothscroll.polyfill();
+
 // import vant components
 import { Swipe, SwipeItem, Dialog, Field, Button, CountDown, Image, Overlay, Checkbox, CheckboxGroup, Skeleton } from 'vant';
 

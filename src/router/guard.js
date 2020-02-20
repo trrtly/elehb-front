@@ -13,7 +13,6 @@ export async function beforeEnter(to, from, next) {
 
         // 后续需要优化
         await commonService.fetchSetUserInfo();
-        await commonService.fetchSetPlatformInfo();
 
         next({
             path: to.path,
@@ -24,7 +23,6 @@ export async function beforeEnter(to, from, next) {
             // 拉取用户信息
             // 后续需要优化
             await commonService.fetchSetUserInfo();
-            await commonService.fetchSetPlatformInfo();
 
             next();
         } else {

@@ -6,8 +6,14 @@
 
 <script>
 import 'reset-css'; // reset-css
+import commonService from '@/service/commonService';
 
-export default {};
+export default {
+    async created() {
+        // 获取平台信息
+        await commonService.fetchSetPlatformInfo();
+    }
+};
 </script>
 
 <style lang="scss">

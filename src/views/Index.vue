@@ -9,9 +9,15 @@
                 <div class="header-bottom">
                     <!-- 轮播 -->
                     <van-swipe class="header-swiper" :autoplay="3000" indicator-color="#00000000">
-                        <van-swipe-item v-for="e in swipeImages" :key="e.id" style="background-color: #39a9ed;">
-                            <a :href="e.url"><img style="withd: 100%;" :src="e.img" alt="i"/></a>
-                        </van-swipe-item>
+                        <template v-if="swipeImages.length > 0">
+                            <van-swipe-item v-for="e in swipeImages" :key="e.id" style="background-color: #39a9ed;">
+                                <a :href="e.url"><img style="withd: 100%;" :src="e.img" alt="i"/></a>
+                            </van-swipe-item>
+                        </template>
+
+                        <template v-else>
+                            <van-swipe-item style="background-color: #39a9ed;">暂无内容</van-swipe-item>
+                        </template>
                     </van-swipe>
                 </div>
             </header>
@@ -50,10 +56,11 @@
                             maxlength="11"
                             placeholder="请输入饿了么账号（手机号）"
                             :error-message="phoneErrMsg"
+                            @input="checkLoginStatus"
                         />
                     </div>
 
-                    <div>
+                    <div v-if="!eleLoginStatus">
                         <van-field
                             class="valida-code-input van-hairline--surround"
                             type="number"
@@ -89,7 +96,7 @@
                     </div>
                 </div>
 
-                <van-button class="hb-form-submit fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getHbModal">
+                <van-button class="hb-form-submit fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getHb">
                     立即领取
                 </van-button>
 
@@ -189,7 +196,13 @@
             <p style="text-align: left;">2、若您不希望授权登陆外部平台，可在“个人中心-系统设置”中关闭。</p>
         </hb-modal>
 
-        <hb-success-modal v-model="hbSuccessModalShow"></hb-success-modal>
+        <hb-success-modal
+            v-model="hbSuccessModalShow"
+            :hbList="successHbList"
+            :title="successHbTitle"
+            :jump-url="successJumpUrl"
+            @close="succesHbModalClose"
+        ></hb-success-modal>
     </div>
 </template>
 
@@ -198,7 +211,6 @@
 import { mapState } from 'vuex';
 import hbModal from '@/components/WmqModal/WmqModal.vue';
 import hbSuccessModal from '@/components/HbSuccessModal/HbSuccessModal.vue';
-import BScroll from '@better-scroll/core';
 import Draggable from '@/components/Draggable';
 
 import indexService from '@/service/indexService';
@@ -212,27 +224,16 @@ export default {
 
         try {
             this.hbList = await indexService.getRedPacks();
-            this.swipeImages = await indexService.getBanners();
+            const banners = await indexService.getBanners();
+            this.swipeImages = Array.isArray(banners) && banners.length > 0 ? banners : [];
             this.loading = false;
         } catch (error) {
             this.loading = false;
         }
-
-        this.$nextTick(() => {
-            // init betterScroll
-            this.scroller = new BScroll(this.$refs.indexWrapper, {
-                bounce: {
-                    top: false,
-                    bottom: false
-                },
-                preventDefaultException: {
-                    className: /[(^|\s)hb-|(^|\s)van-]/
-                }
-            });
-        });
     },
     data() {
         return {
+            eleLoginStatus: false, // 饿了么登录状态
             firstLogin: false,
             loading: true,
 
@@ -240,8 +241,7 @@ export default {
             hbList: [],
             currentHbSelection: 0, // 默认选中第一个红包
 
-            // phoneValid: false,
-            phoneNum: '18577361464',
+            phoneNum: '',
             captchaModalShow: false,
 
             captchaCode: '',
@@ -252,7 +252,10 @@ export default {
             isGetingCode: false,
             validaCode: '',
 
-            hbSuccessModalShow: false
+            hbSuccessModalShow: false,
+            successHbList: [],
+            successHbTitle: '',
+            successJumpUrl: ''
         };
     },
     computed: {
@@ -268,16 +271,22 @@ export default {
         ...mapState(['userInfo'])
     },
     methods: {
+        async checkLoginStatus() {
+            if (this.phoneValid) {
+                this.eleLoginStatus = await indexService.eleIsLogin({
+                    mobile: this.phoneNum
+                });
+            }
+        },
         async firstLoginModalClose(action, done) {
             if (action === 'confirm') {
                 await settingService.setUserSetting({
                     agreePrivacy: 1
                 });
+                this.$toast('已授权登陆');
             }
             done();
             localStorage.setItem('firstLogin', new Date().getTime());
-
-            this.$toast('已授权登陆');
         },
         checkFirstLogin() {
             this.firstLogin = localStorage.getItem('firstLogin') === null;
@@ -285,55 +294,66 @@ export default {
         itemClick(index) {
             this.currentHbSelection = index;
             this.$nextTick(() => {
-                this.scroller.refresh();
-                this.scroller.scrollToElement(this.$refs.mainSection, 500);
+                this.$refs.mainSection.scrollIntoView({ behavior: 'smooth' });
             });
         },
-        // 获取红包弹窗
-        async getHbModal() {
-            // 检测积分余额
-            // this.$wmqModal({
-            //     text: '您的积分余额不足，快来充值积分吧！',
-            //     showConfirmButton: true,
-            //     confirmButtonText: '前往充值',
-            //     confirm: () => {
-            //         this.$router.push('/recharge');
-            //     }
-            // });
-            // 校验手机号
-            // if (!this.phoneValid) { return; }
-            // this.hbSuccessModalShow = true;
-            // setTimeout(() => {
-            //     this.hbSuccessModalShow = false;
-            // }, 5000);
-
-            // 饿了么登陆接口
-            await indexService.eleLogin({
-                mobile: this.phoneNum,
-                smsCode: this.validaCode,
-                validateToken: this.validateToken
-            });
-
+        // 确定获取红包按钮
+        async getHb() {
             let currentHb = this.hbList[this.currentHbSelection];
+
+            if (!this.phoneValid) {
+                this.$toast('请输入正确的手机号');
+                return;
+            }
+
+            // 如果没登录
+            if (!this.eleLoginStatus && +currentHb.score > 0) {
+                if (this.validaCode.trim() === '') {
+                    this.$toast('验证码不能为空');
+                    return;
+                }
+
+                // 饿了么登陆接口
+                await indexService.eleLogin({
+                    mobile: this.phoneNum,
+                    smsCode: this.validaCode,
+                    validateToken: this.validateToken
+                });
+            }
 
             this.$toast('领取中，请稍后...', {
                 duration: 0
             });
 
-            let redpacks = await indexService.getRedPack({
-                id: currentHb.id,
-                mobile: this.phoneNum
-            });
+            try {
+                let res = await indexService.getRedPack({
+                    id: currentHb.id,
+                    mobile: this.phoneNum
+                });
 
-            this.$toast.clear();
+                const type = +res.type;
+                type === 1 && this.showHbModal(res);
+
+                type === 2 &&
+                    setTimeout(() => {
+                        location.href = res.url;
+                    }, 500);
+            } catch (err) {
+                this.$toast.clear();
+            }
 
             // 清空数据
             this.captchaCode = '';
             this.captchaHash = '';
             this.validateToken = '';
             this.validaCode = '';
-
-            console.log(redpacks);
+        },
+        // 展示领取成功红包弹窗
+        showHbModal(remoteData) {
+            this.successHbList = remoteData.list;
+            this.successHbTitle = remoteData.subTitle;
+            this.successJumpUrl = remoteData.url;
+            this.hbSuccessModalShow = true;
         },
         async getValidationCode() {
             if (!this.phoneValid) {
@@ -341,12 +361,7 @@ export default {
                 return;
             }
 
-            // 是否登陆
-            const eleIsLogin = await indexService.eleIsLogin({
-                mobile: this.phoneNum
-            });
-
-            if (!eleIsLogin) {
+            if (!this.eleLoginStatus) {
                 // 弹图形验证码
                 this.captchaModalShow = true;
                 this.getNewCaptcha(this.phoneNum);
@@ -378,11 +393,6 @@ export default {
                     return Promise.resolve(res.validateToken);
                 });
         },
-        // 领取红包
-        getCoupon() {
-            // 积分余额不足
-            this.captchaModalShow = false;
-        },
         // 获取新的验证码
         getNewCaptcha(phone) {
             indexService
@@ -393,6 +403,11 @@ export default {
                     this.captchaHash = res.captchaHash;
                     this.captchaImage = res.captchaImage;
                 });
+        },
+        succesHbModalClose() {
+            this.successHbList = [];
+            this.successHbTitle = '';
+            this.successJumpUrl = '';
         }
     },
     components: {

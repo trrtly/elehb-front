@@ -147,23 +147,33 @@ export default {
             this.elem.removeEventListener('touchmove', this.elementMove, false);
             this.elem.onmouseup = null;
             this.elem.ontouchend = null;
+        },
+        init() {
+            this.isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            this.elem = this.$el;
+
+            this.elem.style.left = '';
+            this.elem.style.top = '';
+            this.initStyle.right !== undefined && (this.elem.style.right = this.initStyle.right);
+            this.initStyle.bottom !== undefined && (this.elem.style.bottom = this.initStyle.bottom);
+
+            this.left = this.elem.offsetLeft;
+            this.top = this.elem.offsetTop;
+
+            this.elem.style.right = '';
+            this.elem.style.bottom = '';
+
+            this.elem.style.left = `${this.left}px`;
+            this.elem.style.top = `${this.top}px`;
         }
     },
     mounted() {
-        this.isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        this.elem = this.$el;
+        this.init();
 
-        this.initStyle.right !== undefined && (this.elem.style.right = this.initStyle.right);
-        this.initStyle.bottom !== undefined && (this.elem.style.bottom = this.initStyle.bottom);
-
-        this.left = this.elem.offsetLeft;
-        this.top = this.elem.offsetTop;
-
-        this.elem.style.right = '';
-        this.elem.style.bottom = '';
-
-        this.elem.style.left = `${this.left}px`;
-        this.elem.style.top = `${this.top}px`;
+        window.addEventListener('resize', this.init);
+    },
+    beforeDestroy() {
+        window.removeEventListener('resize', this.init);
     }
 };
 </script>

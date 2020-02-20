@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import commonService from '../service/commonService';
+import commonService from '@/service/commonService';
 
 Vue.use(Vuex);
 
