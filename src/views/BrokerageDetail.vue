@@ -3,7 +3,7 @@
         <header class="brokerage-header">
             <div class="brokerage-header-title fz-28"><span>当前佣金余额</span></div>
             <div class="brokerage-header-detail fz-28">
-                <span class="din-font">{{ userBrokerage }}.00</span>
+                <span class="din-font">{{ userBrokerage }}</span>
                 元
             </div>
             <!-- <div class="brokerage-rule">
@@ -17,7 +17,7 @@
                     <!-- 左侧插槽  -->
                     <template slot="title">
                         <p class="brokerage-source fz-28 font-bold">{{ brokerage.title }}</p>
-                        <p style="font-size: 0.22rem; color: #a8a8a8;">{{ formateTime(brokerage.createdAt) }}</p>
+                        <p style="font-size: 0.22rem; color: #a8a8a8;">{{ (brokerage.createdAt * 1000) | formatTime }}</p>
                     </template>
 
                     <!-- 右侧插槽 -->

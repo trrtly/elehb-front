@@ -23,7 +23,7 @@ Vue.prototype.isPhoneNum = function(num) {
     return /^1(3|4|5|7|8)\d{9}$/.test(num);
 };
 
-Vue.prototype.formateTime = function(nowDate) {
+export const formatTime = function(nowDate) {
     if (!(nowDate instanceof Date)) {
         nowDate = new Date(nowDate);
     }
@@ -36,3 +36,5 @@ Vue.prototype.formateTime = function(nowDate) {
 
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
+
+Vue.prototype.formatTime = formatTime;

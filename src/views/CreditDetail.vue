@@ -14,7 +14,7 @@
                     <!-- 左侧插槽  -->
                     <template slot="title">
                         <p class="fz-28 font-bold">{{ creditDetail.title }}</p>
-                        <p style="font-size: 0.22rem; color: #a8a8a8;">{{ formateTime(creditDetail.createdAt) }}</p>
+                        <p style="font-size: 0.22rem; color: #a8a8a8;">{{ (creditDetail.createdAt * 1000) | formatTime }}</p>
                     </template>
 
                     <!-- 右侧插槽 -->

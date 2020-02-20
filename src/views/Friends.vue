@@ -10,7 +10,7 @@
 
         <section class="friends-list">
             <van-list :offset="1" v-model="friendsLoading" :finished="finished" finished-text="没有更多了" @load="getList">
-                <van-cell v-for="friend in friendsList" :key="friend.id" :value="formateTime(friend.createdAt)" value-class="friend-join-time">
+                <van-cell v-for="friend in friendsList" :key="friend.id" :value="formatTime(friend.createdAt * 1000)" value-class="friend-join-time">
                     <template slot="title">
                         <div class="friend-left flex-vertical">
                             <img class="friend-avatar" :src="friend.headimgurl" alt="avatar" />
