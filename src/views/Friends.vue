@@ -45,7 +45,7 @@ export default {
     },
     data() {
         return {
-            totalFriends: 245,
+            totalFriends: 0,
 
             friendsLoading: false,
             finished: false,

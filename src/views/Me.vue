@@ -45,7 +45,7 @@
                         <p>◆ 立即获得<span class="din-font font-bold" style="color: #2f5ee3;">10</span>积分奖励</p>
                         <!-- <p>◆ 好友每笔充值金额的<span class="din-font font-bold" style="color: #2f5ee3;">20%</span>佣金</p> -->
                     </div>
-                    <van-button class="invite-link-btn fz-24" color="#2f5ee3" round plain @click="copyText(inviteLink)">复制邀请链接</van-button>
+                    <!-- <van-button class="invite-link-btn fz-24" color="#2f5ee3" round plain @click="copyText(inviteLink)">复制邀请链接</van-button> -->
                 </div>
                 <div class="invite-right">
                     <span class="flex fz-28" style="color: #2f5ee3; align-self: flex-end;" v-route-jump="'/friends'">
@@ -339,7 +339,7 @@ export default {
     .me-footer {
         display: flex;
         flex-grow: 1;
-        margin: 0.74rem 0.28rem;
+        margin: 0.74rem 0.28rem 0.2rem;
 
         .hb-redeem-btn {
             align-self: flex-end;

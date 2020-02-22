@@ -15,7 +15,7 @@
     >
         <div slot="title" :class="bem('title')">
             {{ title }}
-            <van-icon :class="bem('close-btn')" name="cross" @click="closeModal" />
+            <van-icon :class="bem('close-btn')" name="cross" @click="crossClose" />
         </div>
         <div :class="bem('body')">
             <template v-if="text">
@@ -83,7 +83,7 @@ export default {
         };
     },
     methods: {
-        closeModal() {
+        crossClose() {
             const action = 'closeCross';
             const _dialog = this.$refs.dialog;
             _dialog.beforeClose(action, (state) => {
@@ -91,13 +91,17 @@ export default {
                     _dialog.onClose(action);
                 }
             });
-            // this.innerShowFlag = false;
-            this.$emit('returnBack', this.innerShowFlag);
+        },
+        closeModal() {
+            this.innerShowFlag = false;
         }
     },
     watch: {
         show(v) {
             this.innerShowFlag = v;
+        },
+        innerShowFlag(v) {
+            this.$emit('returnBack', v);
         }
     }
 };

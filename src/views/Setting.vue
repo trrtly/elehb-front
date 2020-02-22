@@ -47,6 +47,7 @@ export default {
         },
         clearStorage() {
             localStorage.removeItem('firstLogin');
+            localStorage.removeItem('phone');
             this.$toast('清除缓存成功');
         }
     }

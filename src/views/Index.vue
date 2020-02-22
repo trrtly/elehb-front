@@ -45,7 +45,7 @@
                     <van-skeleton v-for="(e, index) in 2" :key="index" title title-width="30%" :row="2" :loading="loading" />
                 </ul>
 
-                <div class="hb-form" v-if="hbList[currentHbSelection] && hbList[currentHbSelection].score > 0">
+                <div class="hb-form" v-if="hbList[currentHbSelection]">
                     <div>
                         <van-field
                             class="phone-input van-hairline--surround"
@@ -60,7 +60,7 @@
                         />
                     </div>
 
-                    <div v-if="!eleLoginStatus">
+                    <div v-if="!eleLoginStatus && hbList[currentHbSelection].score > 0">
                         <van-field
                             class="valida-code-input van-hairline--surround"
                             type="number"
@@ -144,8 +144,14 @@
             </div>
         </div> -->
 
-        <draggable :initStyle="{ right: 0, bottom: '2.9rem' }" lockVertical v-route-jump="'/comment'">
+        <!-- 自动评价flot -->
+        <!-- <draggable :initStyle="{ right: 0, bottom: '2.9rem' }" lockVertical v-route-jump="'/comment'">
             <div class="auto-comment-wrapper"></div>
+        </draggable> -->
+
+        <!-- 签到flot -->
+        <draggable :initStyle="{ right: 0, bottom: '2.9rem' }" lockVertical @click="sign">
+            <div class="sign-wrapper"></div>
         </draggable>
 
         <!-- 验证码回执模态框 -->
@@ -224,11 +230,22 @@ export default {
         // 检查是否是第一次进入
         this.checkFirstLogin();
 
+        const lastPhoneNum = localStorage.getItem('phone');
+
+        if (lastPhoneNum) {
+            this.phoneNum = lastPhoneNum;
+        }
+
         try {
             this.hbList = await indexService.getRedPacks();
             const banners = await indexService.getBanners();
             this.swipeImages = Array.isArray(banners) && banners.length > 0 ? banners : [];
             this.loading = false;
+
+            if (lastPhoneNum) {
+                const list = this.hbList || [];
+                list[0]?.score > 0 && this.checkLoginStatus();
+            }
         } catch (error) {
             this.loading = false;
         }
@@ -265,14 +282,18 @@ export default {
             return (index) => this.currentHbSelection === index;
         },
         phoneErrMsg() {
-            return this.phoneValid ? '' : '手机号格式有误';
+            return this.phoneNum === '' || this.phoneValid ? '' : '手机号格式有误';
         },
         phoneValid() {
             return this.phoneNum !== '' && this.isPhoneNum(this.phoneNum);
         },
+        currentSelectedHb() {
+            return this.hbList[this.currentHbSelection];
+        },
         ...mapState(['userInfo'])
     },
     methods: {
+        // 检查该手机号是否是已经登录的状态
         async checkLoginStatus() {
             if (this.phoneValid) {
                 this.eleLoginStatus = await indexService.eleIsLogin({
@@ -281,6 +302,7 @@ export default {
             }
         },
         async firstLoginModalClose(action, done) {
+            debugger;
             await settingService.setUserSetting({
                 agreePrivacy: action === 'confirm' ? 1 : 0
             });
@@ -293,14 +315,17 @@ export default {
             this.firstLogin = localStorage.getItem('firstLogin') === null;
         },
         itemClick(index) {
+            if (this.currentHbSelection == index) return;
+
             this.currentHbSelection = index;
+            this.currentSelectedHb.score > 0 && this.checkLoginStatus();
             this.$nextTick(() => {
                 this.$refs.mainSection.scrollIntoView({ behavior: 'smooth' });
             });
         },
         // 确定获取红包按钮
         async getHb() {
-            let currentHb = this.hbList[this.currentHbSelection];
+            let currentHb = this.currentSelectedHb;
 
             if (!this.phoneValid) {
                 this.$toast('请输入正确的手机号');
@@ -345,6 +370,9 @@ export default {
                         location.href = res.url;
                     }, 500);
                 }
+
+                // 保存领取成功的手机号
+                localStorage.setItem('phone', this.phoneNum);
             } catch (err) {
                 this.$toast.clear();
             }
@@ -415,7 +443,9 @@ export default {
             this.successHbList = [];
             this.successHbTitle = '';
             this.successJumpUrl = '';
-        }
+        },
+        // 每日签到
+        sign() {}
     },
     components: {
         hbModal,
@@ -682,11 +712,19 @@ export default {
     box-shadow: 0 0 0.1rem #fb6b41;
 }
 
-.auto-comment-wrapper {
+.auto-comment-wrapper,
+.sign-wrapper {
     width: 1.96rem;
     height: 1.38rem;
+    background-size: contain !important;
+}
+
+.auto-comment-wrapper {
     background: url('../assets/index/comment@2x.png') no-repeat;
-    background-size: contain;
+}
+
+.sign-wrapper {
+    background: url('../assets/index/sign@2x.png') no-repeat;
 }
 
 .user-center-wrapper:active {
