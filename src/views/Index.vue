@@ -302,7 +302,6 @@ export default {
             }
         },
         async firstLoginModalClose(action, done) {
-            debugger;
             await settingService.setUserSetting({
                 agreePrivacy: action === 'confirm' ? 1 : 0
             });
