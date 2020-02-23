@@ -11,7 +11,8 @@ import commonService from '@/service/commonService';
 export default {
     async created() {
         // 获取平台信息
-        await commonService.fetchSetPlatformInfo();
+        const res = await commonService.fetchSetPlatformInfo();
+        document.title = res.name;
     }
 };
 </script>
