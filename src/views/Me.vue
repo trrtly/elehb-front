@@ -42,7 +42,10 @@
                 <div class="invite-left">
                     <div class="invite-text fz-28">
                         <p style="color: #545454;">每邀请一位好友的奖励：</p>
-                        <p>◆ 立即获得<span class="din-font font-bold" style="color: #2f5ee3;">10</span>积分奖励</p>
+                        <p>
+                            ◆ 立即获得<span class="din-font font-bold" style="color: #2f5ee3;">{{ platformInfo.inviteScore }}</span
+                            >积分奖励
+                        </p>
                         <!-- <p>◆ 好友每笔充值金额的<span class="din-font font-bold" style="color: #2f5ee3;">20%</span>佣金</p> -->
                     </div>
                     <!-- <van-button class="invite-link-btn fz-24" color="#2f5ee3" round plain @click="copyText(inviteLink)">复制邀请链接</van-button> -->

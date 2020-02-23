@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Toast } from 'vant';
 
 const urls = {
+    userSignin: '/api/v1/user/signin',
     getPlatformInfo: '/api/v1/platform',
     getToken: '/api/v1/token',
     getUserInfo: '/api/v1/user'
@@ -11,7 +12,8 @@ const urls = {
 export default {
     // 获取并设置平台相关信息
     async fetchSetPlatformInfo() {
-        return store.state.platformInfo || (await store.dispatch('fetchSetPlatformInfo'));
+        const platformInfo = store.state.platformInfo;
+        return Object.keys(platformInfo).length > 0 ? platformInfo : await store.dispatch('fetchSetPlatformInfo');
     },
     // 获取平台相关信息
     getPlatformInfo() {
@@ -29,6 +31,10 @@ export default {
                 Toast('获取token失败');
             });
     },
+    // 用户签到
+    userSignin() {
+        return axios.post(urls.userSignin, {}, { showError: false });
+    },
     // 获取用户微信信息
     getUserInfo() {
         return axios.get(urls.getUserInfo).catch(() => {
@@ -37,7 +43,8 @@ export default {
     },
     // 获取设置用户信息
     async fetchSetUserInfo(flag = false) {
-        return flag ? await store.dispatch('fetchSetUserInfo') : store.state.userInfo || (await store.dispatch('fetchSetUserInfo'));
+        const userInfo = store.state.userInfo;
+        return flag ? await store.dispatch('fetchSetUserInfo') : Object.keys(userInfo) > 0 ? userInfo : await store.dispatch('fetchSetUserInfo');
     },
     // 获取拼接授权页面链接
     async validateHref(

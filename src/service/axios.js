@@ -16,6 +16,9 @@ axios.interceptors.request.use(
         if (!noAuthUrls.includes(config.url)) {
             config.headers.Authorization = localStorage.getItem('token');
         }
+
+        config.showError = true; // 默认显示错误信息
+
         return config;
     },
     function(error) {
@@ -34,16 +37,17 @@ axios.interceptors.response.use(
         // 对响应错误做点什么
         const resp = error.response;
         const responeData = resp.data;
+        const config = error.config; // 传入的配置项 axios 0.18版本才有用
 
         // 接口401则重新跳转微信授权页面
         if (+resp.status === 401) {
             commonService.toValidateHref();
         } else {
             const errMsg = responeData.msg ? `错误：${responeData.msg}` : 'unknow error';
-            errMsg && Toast(`${errMsg}`);
+            config.showError && errMsg && Toast(`${errMsg}`);
 
-            throw new Error(errMsg);
-            // return Promise.reject(error);
+            // throw new Error(errMsg);
+            return Promise.reject(responeData);
         }
     }
 );

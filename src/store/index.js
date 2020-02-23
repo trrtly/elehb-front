@@ -6,7 +6,10 @@ import { Math } from 'core-js';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {},
+    state: {
+        userInfo: {},
+        platformInfo: {}
+    },
     getters: {
         randomCps(state) {
             const cps = state.platformInfo.cps;
@@ -20,6 +23,10 @@ export default new Vuex.Store({
         },
         setUserInfo(state, userInfo) {
             state.userInfo = userInfo;
+        },
+        addUserScore(state, score) {
+            const newScore = state.userInfo.score + score;
+            state.userInfo = Object.assign({}, { ...state.userInfo }, { score: newScore });
         }
     },
     actions: {

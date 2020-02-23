@@ -20,7 +20,9 @@ import smoothscroll from 'smoothscroll-polyfill';
 smoothscroll.polyfill();
 
 // import vant components
-import { Swipe, SwipeItem, Dialog, Field, Button, CountDown, Image, Overlay, Checkbox, CheckboxGroup, Skeleton } from 'vant';
+import { Swipe, SwipeItem, Dialog, Field, Button, CountDown, Image, Overlay, Checkbox, CheckboxGroup, Skeleton, Toast } from 'vant';
+
+Toast.setDefaultOptions({ duration: 3000 });
 
 // import vue copy
 import VueClipboard from 'vue-clipboard2';

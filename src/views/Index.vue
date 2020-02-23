@@ -10,8 +10,8 @@
                     <!-- 轮播 -->
                     <van-swipe class="header-swiper" :autoplay="3000" indicator-color="#00000000">
                         <template v-if="swipeImages.length > 0">
-                            <van-swipe-item v-for="e in swipeImages" :key="e.id" style="background-color: #39a9ed;">
-                                <a :href="e.url"><img style="withd: 100%;" :src="e.img" alt="i"/></a>
+                            <van-swipe-item v-for="e in swipeImages" :key="e.id">
+                                <a :href="e.url"><img style="width: 100%;" :src="e.img" alt="i"/></a>
                             </van-swipe-item>
                         </template>
 
@@ -150,8 +150,8 @@
         </draggable> -->
 
         <!-- 签到flot -->
-        <draggable :initStyle="{ right: 0, bottom: '2.9rem' }" lockVertical @click="sign">
-            <div class="sign-wrapper"></div>
+        <draggable :initStyle="{ right: 0, bottom: '2.9rem' }" lockVertical>
+            <div class="sign-wrapper" @click="sign"></div>
         </draggable>
 
         <!-- 验证码回执模态框 -->
@@ -314,13 +314,14 @@ export default {
             this.firstLogin = localStorage.getItem('firstLogin') === null;
         },
         itemClick(index) {
-            if (this.currentHbSelection == index) return;
-
-            this.currentHbSelection = index;
-            this.currentSelectedHb.score > 0 && this.checkLoginStatus();
             this.$nextTick(() => {
                 this.$refs.mainSection.scrollIntoView({ behavior: 'smooth' });
             });
+
+            if (this.currentHbSelection !== index) {
+                this.currentHbSelection = index;
+                this.currentSelectedHb.score > 0 && this.checkLoginStatus();
+            }
         },
         // 确定获取红包按钮
         async getHb() {
@@ -444,7 +445,24 @@ export default {
             this.successJumpUrl = '';
         },
         // 每日签到
-        sign() {}
+        async sign() {
+            if (this.signed) return this.$toast('您今天已经签到过了，明天再来哦~');
+
+            commonService
+                .userSignin()
+                .then((res) => {
+                    this.$store.commit('addUserScore', res.score);
+                    this.$toast(`签到成功，获得${res.score}积分`);
+                    this.signed = true;
+                })
+                .catch((error) => {
+                    if (+error.code === 1017) {
+                        this.$toast('您今天已经签到过了，明天再来哦~');
+                        this.signed = true;
+                    }
+                });
+            // this.$toast('您今天已经签到过了，明天再来哦~');
+        }
     },
     components: {
         hbModal,
