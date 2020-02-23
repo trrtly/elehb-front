@@ -2,8 +2,6 @@ import store from '../store';
 import axios from 'axios';
 import { Toast } from 'vant';
 
-Toast.setDefaultOptions({ duration: 3000 });
-
 const urls = {
     userSignin: '/api/v1/user/signin',
     getPlatformInfo: '/api/v1/platform',

@@ -4,8 +4,6 @@ import VueAxios from 'vue-axios';
 import commonService from './commonService';
 import { Toast } from 'vant';
 
-Toast.setDefaultOptions({ duration: 3000 });
-
 Vue.use(VueAxios, axios);
 
 // 不需要auth头的url

@@ -347,7 +347,9 @@ export default {
                 });
             }
 
-            this.$toast('领取中，请稍后...', {
+            this.$toast.allowMultiple();
+
+            const successToast = this.$toast('领取中，请稍后...', {
                 duration: 0
             });
 
@@ -360,9 +362,9 @@ export default {
                 const type = +res.type;
                 if (type === 1) {
                     this.$store.dispatch('fetchSetUserInfo');
-                    this.$toast.clear();
 
                     this.showHbModal(res);
+                    successToast.clear();
                 }
 
                 if (type === 2) {
@@ -374,7 +376,7 @@ export default {
                 // 保存领取成功的手机号
                 localStorage.setItem('phone', this.phoneNum);
             } catch (err) {
-                this.$toast.clear();
+                successToast.clear();
             }
 
             // 清空数据
