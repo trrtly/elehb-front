@@ -359,7 +359,7 @@ export default {
 
                 const type = +res.type;
                 if (type === 1) {
-                    await commonService.fetchSetUserInfo(true);
+                    this.$store.dispatch('fetchSetUserInfo');
                     this.$toast.clear();
 
                     this.showHbModal(res);

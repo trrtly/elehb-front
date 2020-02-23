@@ -2,6 +2,8 @@ import store from '../store';
 import axios from 'axios';
 import { Toast } from 'vant';
 
+Toast.setDefaultOptions({ duration: 3000 });
+
 const urls = {
     userSignin: '/api/v1/user/signin',
     getPlatformInfo: '/api/v1/platform',
@@ -42,9 +44,9 @@ export default {
         });
     },
     // 获取设置用户信息
-    async fetchSetUserInfo(flag = false) {
+    async fetchSetUserInfo() {
         const userInfo = store.state.userInfo;
-        return flag ? await store.dispatch('fetchSetUserInfo') : Object.keys(userInfo) > 0 ? userInfo : await store.dispatch('fetchSetUserInfo');
+        return Object.keys(userInfo).length > 0 ? userInfo : await store.dispatch('fetchSetUserInfo');
     },
     // 获取拼接授权页面链接
     async validateHref(
