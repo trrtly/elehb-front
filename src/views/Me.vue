@@ -64,11 +64,11 @@
         <section class="common-wrapper">
             <h5 class="fz-28 font-bold">常用功能</h5>
             <ul class="common-btn-list fz-28">
-                <li class="new">
+                <li class="new" @click="urlJump('//b.xiumi.us/board/v5/2XWpR/196004336')">
                     <img class="common-btn-icon" src="../assets/me/icon_new@2x.png" alt="new" />
                     <span class="common-btn-text">新手指引</span>
                 </li>
-                <li class="faq">
+                <li class="faq" @click="urlJump('//b.xiumi.us/board/v5/2XWpR/196004601')">
                     <img class="common-btn-icon" src="../assets/me/icon_faq@2x.png" alt="faq" />
                     <span class="common-btn-text">常见问题</span>
                 </li>
@@ -130,6 +130,9 @@ export default {
                 let res = await this.myQRPromise;
                 this.myQRCode = res.url;
             }
+        },
+        urlJump(url) {
+            url && (location.href = url);
         }
     },
     computed: {
