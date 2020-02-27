@@ -243,8 +243,8 @@ export default {
             this.loading = false;
 
             if (lastPhoneNum) {
-                const list = this.hbList || [];
-                list[0]?.score > 0 && this.checkLoginStatus();
+                // const list = this.hbList || [];
+                await this.checkLoginStatus();
             }
         } catch (error) {
             this.loading = false;
@@ -300,6 +300,7 @@ export default {
                     mobile: this.phoneNum
                 });
             }
+            return Promise.resolve();
         },
         async firstLoginModalClose(action, done) {
             await settingService.setUserSetting({
@@ -320,7 +321,7 @@ export default {
 
             if (this.currentHbSelection !== index) {
                 this.currentHbSelection = index;
-                this.currentSelectedHb.score > 0 && this.checkLoginStatus();
+                this.checkLoginStatus();
             }
         },
         // 确定获取红包按钮
