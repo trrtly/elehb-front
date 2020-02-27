@@ -60,7 +60,7 @@
                         />
                     </div>
 
-                    <div v-if="!eleLoginStatus && hbList[currentHbSelection].score > 0">
+                    <div v-if="!eleLoginStatus">
                         <van-field
                             class="valida-code-input van-hairline--surround"
                             type="number"
@@ -333,25 +333,29 @@ export default {
             }
 
             // 如果没登录
-            if (!this.eleLoginStatus && +currentHb.score > 0) {
-                if (this.validaCode.trim() === '') {
-                    this.$toast('验证码不能为空');
-                    return;
-                }
-
-                // 饿了么登录接口
-                await indexService.eleLogin({
-                    mobile: this.phoneNum,
-                    smsCode: this.validaCode,
-                    validateToken: this.validateToken
-                });
+            // if (!this.eleLoginStatus && +currentHb.score > 0) {
+            if (this.validaCode.trim() === '') {
+                this.$toast('验证码不能为空');
+                return;
             }
 
-            this.$toast.allowMultiple();
-
-            const successToast = this.$toast('领取中，请稍后...', {
-                duration: 0
+            // 饿了么登录接口
+            await indexService.eleLogin({
+                mobile: this.phoneNum,
+                smsCode: this.validaCode,
+                validateToken: this.validateToken
             });
+            // }
+
+            let successToast;
+
+            if (+currentHb.score > 0) {
+                this.$toast.allowMultiple();
+
+                successToast = this.$toast('领取中，请稍后...', {
+                    duration: 0
+                });
+            }
 
             try {
                 let res = await indexService.getRedPack({
@@ -364,7 +368,7 @@ export default {
                     this.$store.dispatch('fetchSetUserInfo');
 
                     this.showHbModal(res);
-                    successToast.clear();
+                    successToast && successToast.clear();
                 }
 
                 if (type === 2) {
@@ -376,7 +380,7 @@ export default {
                 // 保存领取成功的手机号
                 localStorage.setItem('phone', this.phoneNum);
             } catch (err) {
-                successToast.clear();
+                successToast && successToast.clear();
             }
 
             // 清空数据
