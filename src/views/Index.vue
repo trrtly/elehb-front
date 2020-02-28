@@ -334,19 +334,19 @@ export default {
             }
 
             // 如果没登录
-            // if (!this.eleLoginStatus && +currentHb.score > 0) {
-            if (this.validaCode.trim() === '') {
-                this.$toast('验证码不能为空');
-                return;
-            }
+            if (!this.eleLoginStatus) {
+                if (this.validaCode.trim() === '') {
+                    this.$toast('验证码不能为空');
+                    return;
+                }
 
-            // 饿了么登录接口
-            await indexService.eleLogin({
-                mobile: this.phoneNum,
-                smsCode: this.validaCode,
-                validateToken: this.validateToken
-            });
-            // }
+                // 饿了么登录接口
+                await indexService.eleLogin({
+                    mobile: this.phoneNum,
+                    smsCode: this.validaCode,
+                    validateToken: this.validateToken
+                });
+            }
 
             let successToast;
 
