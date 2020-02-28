@@ -6,8 +6,6 @@ export async function beforeEnter(to, from, next) {
 
     let token = localStorage.getItem('token');
 
-    // query.code = '061K0o131EH32T1JED331RHw131K0o1e';
-
     if (query.code) {
         // code存在
         let res = await commonService.getToken(query.code);

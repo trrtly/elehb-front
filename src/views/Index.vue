@@ -353,7 +353,8 @@ export default {
             if (+currentHb.score > 0) {
                 this.$toast.allowMultiple();
 
-                successToast = this.$toast('领取中，请稍后...', {
+                successToast = this.$toast({
+                    message: '领取中，请稍后...',
                     duration: 0
                 });
             }
