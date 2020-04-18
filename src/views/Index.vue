@@ -252,7 +252,7 @@ export default {
     },
     data() {
         return {
-            eleLoginStatus: false, // 饿了么登录状态
+            eleLoginStatus: true, // 饿了么登录状态
             firstLogin: false,
             loading: true,
 
@@ -334,7 +334,7 @@ export default {
             }
 
             // 如果没登录
-            if (!this.eleLoginStatus) {
+            if (!this.eleLoginStatus && currentHb.type !== 2) {
                 if (this.validaCode.trim() === '') {
                     this.$toast('验证码不能为空');
                     return;
