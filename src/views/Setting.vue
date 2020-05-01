@@ -2,7 +2,10 @@
     <div class="setting-wrapper">
         <van-cell-group>
             <van-cell title="授权免登录" center>
-                <van-switch :value="autoLogin" @input="onChange" :loading="autoLoginLoading" active-color="#09BB07" />
+                <van-switch :value="autoLogin" @input="loginOnChange" :loading="autoLoginLoading" active-color="#09BB07" />
+            </van-cell>
+            <van-cell title="每日提醒" center>
+                <van-switch :value="remind" @input="remindOnChange" :loading="remindLoading" active-color="#09BB07" />
             </van-cell>
         </van-cell-group>
         <van-cell-group>
@@ -30,11 +33,14 @@ export default {
     data() {
         return {
             autoLogin: false,
-            autoLoginLoading: false
+            remind: false,
+
+            autoLoginLoading: false,
+            remindLoading: false
         };
     },
     methods: {
-        async onChange(autoLoginStatus) {
+        async loginOnChange(autoLoginStatus) {
             this.autoLoginLoading = true;
             settingService
                 .setUserSetting({
@@ -45,6 +51,7 @@ export default {
                     this.autoLogin = autoLoginStatus;
                 });
         },
+        remindOnChange() {},
         clearStorage() {
             localStorage.removeItem('firstLogin');
             localStorage.removeItem('phone');

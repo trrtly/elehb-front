@@ -39,13 +39,18 @@
                                     <span class="hb-selection-price-text">{{ hb.score > 0 ? '积分/次' : '免费' }}</span>
                                 </div>
                             </div>
-                            <div class="hb-selection-bottom" v-if="isHbSelected(index)" v-html="hb.description"></div>
+                            <div
+                                class="hb-selection-bottom"
+                                :class="[(index + 1) % 2 === 0 ? 'right' : 'left']"
+                                v-if="isHbSelected(index)"
+                                v-html="hb.description"
+                            ></div>
                         </li>
                     </van-skeleton>
                     <van-skeleton v-for="(e, index) in 2" :key="index" title title-width="30%" :row="2" :loading="loading" />
                 </ul>
 
-                <div class="hb-form" v-if="hbList[currentHbSelection]">
+                <!-- <div class="hb-form" v-if="hbList[currentHbSelection]">
                     <div>
                         <van-field
                             class="phone-input van-hairline--surround"
@@ -66,7 +71,7 @@
                             type="number"
                             required
                             clearable
-                            v-model="validaCode"
+                            v-model.trim="validaCode"
                             placeholder="短信验证码"
                         >
                             <van-button
@@ -94,7 +99,7 @@
                             />
                         </van-field>
                     </div>
-                </div>
+                </div> -->
 
                 <van-button class="hb-form-submit fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getHb">
                     立即领取
@@ -328,25 +333,25 @@ export default {
         async getHb() {
             let currentHb = this.currentSelectedHb;
 
-            if (!this.phoneValid) {
-                this.$toast('请输入正确的手机号');
-                return;
-            }
+            // if (!this.phoneValid) {
+            //     this.$toast('请输入正确的手机号');
+            //     return;
+            // }
 
             // 如果没登录
-            if (!this.eleLoginStatus && currentHb.type !== 2) {
-                if (this.validaCode.trim() === '') {
-                    this.$toast('验证码不能为空');
-                    return;
-                }
+            // if (!this.eleLoginStatus && currentHb.type !== 2) {
+            //     if (this.validaCode === '') {
+            //         this.$toast('验证码不能为空');
+            //         return;
+            //     }
 
-                // 饿了么登录接口
-                await indexService.eleLogin({
-                    mobile: this.phoneNum,
-                    smsCode: this.validaCode,
-                    validateToken: this.validateToken
-                });
-            }
+            //     // 饿了么登录接口
+            //     await indexService.eleLogin({
+            //         mobile: this.phoneNum,
+            //         smsCode: this.validaCode,
+            //         validateToken: this.validateToken
+            //     });
+            // }
 
             let successToast;
 
@@ -361,26 +366,27 @@ export default {
 
             try {
                 let res = await indexService.getRedPack({
-                    id: currentHb.id,
-                    mobile: this.phoneNum
+                    id: currentHb.id
+                    // mobile: this.phoneNum
                 });
 
                 const type = +res.type;
-                if (type === 1) {
-                    this.$store.dispatch('fetchSetUserInfo');
+                // if (type === 1) {
+                //     this.$store.dispatch('fetchSetUserInfo');
 
-                    this.showHbModal(res);
-                    successToast && successToast.clear();
-                }
+                //     successToast && successToast.clear();
+                //     this.showHbModal(res);
+                // }
 
                 if (type === 2) {
+                    successToast && successToast.clear();
                     setTimeout(() => {
                         location.href = res.url;
                     }, 500);
                 }
 
                 // 保存领取成功的手机号
-                localStorage.setItem('phone', this.phoneNum);
+                // localStorage.setItem('phone', this.phoneNum);
             } catch (err) {
                 successToast && successToast.clear();
             }
@@ -560,7 +566,11 @@ export default {
 }
 
 .main-section > .hb-selections-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     padding: 0.28rem;
+    padding-bottom: 0.1rem;
     background-color: #fff;
     border-radius: 0.12rem;
     box-shadow: 0.01rem 0.01rem 0.1rem 0.02rem #eeeeee;
@@ -569,7 +579,9 @@ export default {
 /* hb-selections */
 .hb-selections-wrapper > .hb-selection {
     position: relative;
-    padding: 0.3rem 0.28rem 0.24rem 0.14rem;
+    margin-bottom: 0.2rem;
+    width: 3.08rem;
+    height: 1.39rem;
     box-sizing: border-box;
     background-color: #f7f7f9;
     border-radius: 0.08rem;
@@ -577,20 +589,58 @@ export default {
 
 .hb-selections-wrapper > .hb-selection.active {
     // min-height: 2.3rem;
+    margin-bottom: 1.06rem !important;
     border: 1px solid #2f5ee3;
-    background: #f3f4ff url('../assets/index/click-bg@2x.png') right bottom no-repeat;
+    // background: #f3f4ff url('../assets/index/click-bg@2x.png') right bottom no-repeat;
+    background: #f3f4ff;
     background-size: 2.55rem 1.7rem;
 }
 
-.hb-selections-wrapper > .hb-selection:not(:last-child) {
-    margin-bottom: 0.2rem;
-}
+// .hb-selections-wrapper > .hb-selection:not(:nth-last-child(-n + 2)) {
+//     margin-bottom: 0.2rem;
+// }
 
 .hb-selection .hb-selection-bottom {
+    padding: 0.2rem;
+    position: absolute;
+    bottom: -0.94rem;
+    width: 6.36rem;
+    z-index: 1;
     font-size: 0.24rem;
-    margin-top: 0.14rem;
     line-height: 0.34rem;
-    color: #545454;
+    color: #2f5ee3;
+    background-color: #eaeffc;
+    border-radius: 0.08rem;
+    box-sizing: border-box;
+
+    &.right {
+        right: -0.01rem;
+
+        &::before {
+            right: 1.35rem;
+        }
+    }
+
+    &.left {
+        left: 0;
+
+        &::before {
+            left: 1.35rem;
+        }
+    }
+
+    &::before {
+        position: absolute;
+        content: '';
+        top: -0.16rem;
+        border-color: transparent !important;
+        border-left: 0.18rem;
+        border-right: 0.18rem;
+        border-top: 0;
+        border-bottom: 0.2rem;
+        border-bottom-color: #eaeffc !important;
+        border-style: solid;
+    }
 
     /deep/ .hb-selection-bottom__rules p:not(:last-child) {
         margin-bottom: 0.2rem;
@@ -602,13 +652,18 @@ export default {
 }
 
 .hb-selection .hb-selection-title {
+    margin-bottom: 0.22rem;
     font-size: 0.32rem;
     font-weight: bold;
     color: #3d3d3d;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
 }
 
 .hb-selection.active .hb-selection-title {
-    font-size: 0.36rem;
+    font-size: 0.32rem;
 }
 
 .hb-selections-wrapper > .hb-selection.active .hb-selection-title {
@@ -616,8 +671,12 @@ export default {
 }
 
 .hb-selections-wrapper .hb-selection-upper {
+    padding-top: 0.32rem;
+    height: 100%;
+    box-sizing: border-box;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    // justify-content: space-between;
     align-items: center;
 }
 
@@ -629,8 +688,8 @@ export default {
     // 修正移动端偏差
     & span:nth-child(2) {
         margin-left: 0.04rem;
-        position: relative;
-        top: -3px;
+        // position: relative;
+        // top: -3px;
     }
 }
 
@@ -749,7 +808,7 @@ export default {
 }
 
 .sign-wrapper {
-    background: url('../assets/index/sign@2x.png') no-repeat;
+    background: url('../assets/index/jifen@2x.png') no-repeat;
 }
 
 .user-center-wrapper:active {
