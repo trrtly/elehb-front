@@ -51,7 +51,7 @@ export default {
             brokerageLoading: false,
             finished: false,
             brokerageHistory: [],
-            userBrokerage: 0,
+            userBrokerage: '0.00',
 
             currentPage: 1,
             pageLimit: 5

@@ -49,7 +49,7 @@ let Modal = (options = {}) => {
     document.body.appendChild(instance.$el);
 
     Vue.nextTick(function() {
-        instance.innerShowFlag = true;
+        instance.show = true;
     });
 
     return instance;
