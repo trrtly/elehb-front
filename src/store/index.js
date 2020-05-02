@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import commonService from '@/service/commonService';
+import meService from '@/service/meService';
 import { Math } from 'core-js';
 
 Vue.use(Vuex);
@@ -8,7 +9,12 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         userInfo: {},
-        platformInfo: {}
+        platformInfo: {},
+
+        myQRShow: false,
+        myQRCode: '',
+
+        kefuShow: false
     },
     getters: {
         randomCps(state) {
@@ -27,6 +33,15 @@ export default new Vuex.Store({
         addUserScore(state, score) {
             const newScore = state.userInfo.score + score;
             state.userInfo = Object.assign({}, { ...state.userInfo }, { score: newScore });
+        },
+        changeMyQR(state, flag) {
+            state.myQRShow = flag;
+        },
+        setMyQRCode(state, url) {
+            state.myQRCode = url;
+        },
+        changeKefuShow(state, flag) {
+            state.kefuShow = flag;
         }
     },
     actions: {
@@ -39,6 +54,18 @@ export default new Vuex.Store({
             let userInfo = await commonService.getUserInfo();
             userInfo && commit('setUserInfo', userInfo);
             return Promise.resolve(userInfo);
+        },
+        async fetchSetMyQR({ commit, state }, force = false) {
+            if (!state.myQRCode || force) {
+                let { url } = await meService.getMyQRCode();
+                url && commit('setMyQRCode', url);
+                return Promise.resolve(url);
+            }
+            return Promise.resolve(state.myQRCode);
+        },
+        openMyQRCode() {
+            this.dispatch('fetchSetMyQR');
+            this.commit('changeMyQR', true);
         }
     },
     modules: {}

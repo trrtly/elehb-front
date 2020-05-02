@@ -55,7 +55,7 @@
                         好友列表
                         <van-icon name="arrow" />
                     </span>
-                    <van-button class="invite-btn fz-24" color="linear-gradient(to right, #ff8b56, #fb5d37)" round @click="showQRDialog"
+                    <van-button class="invite-btn fz-24" color="linear-gradient(to right, #ff8b56, #fb5d37)" round @click="openMyQRCode"
                         >邀请好友</van-button
                     >
                 </div>
@@ -72,7 +72,7 @@
                     <img class="common-btn-icon" src="../assets/me/icon_faq@2x.png" alt="faq" />
                     <span class="common-btn-text">常见问题</span>
                 </li>
-                <li class="kefu" @click="kefuShow = !kefuShow">
+                <li class="kefu" @click="$store.commit('changeKefuShow', true)">
                     <img class="common-btn-icon" src="../assets/me/icon_kefu@2x.png" alt="kefu" />
                     <span class="common-btn-text">联系客服</span>
                 </li>
@@ -85,52 +85,26 @@
         <footer class="me-footer">
             <redeem-btn />
         </footer>
-
-        <!-- 客服弹层 -->
-        <hb-modal class="kefu-modal" v-model="kefuShow" title="请长按识别二维码">
-            <van-image :src="platformInfo.kfImg" style="width: 3.1rem; height: 3.1rem;" />
-        </hb-modal>
-
-        <!-- 我的邀请码弹窗 -->
-        <van-overlay :show="myQRShow" @click="myQRShow = false">
-            <van-image class="my-qr-code" :src="myQRCode" @click.stop />
-        </van-overlay>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import RedeemBtn from '../components/RedeemBtn/RedeemBtn';
-import meService from '../service/meService';
-import WmqModal from '../components/WmqModal/WmqModal.vue';
 
 export default {
     name: 'me',
     created() {
         // 更新用户信息
         this.$store.dispatch('fetchSetUserInfo');
-        // 预先加载接口
-        this.myQRPromise = meService.getMyQRCode();
     },
     data() {
         return {
-            myQRPromise: null,
-            inviteLink: 'www.baidu.com',
-            myQRCode: '',
-
-            kefuShow: false,
-            myQRShow: false
+            inviteLink: 'www.baidu.com'
         };
     },
     methods: {
-        async showQRDialog() {
-            this.myQRShow = true;
-
-            if (!this.myQRCode) {
-                let res = await this.myQRPromise;
-                this.myQRCode = res.url;
-            }
-        },
+        ...mapActions(['openMyQRCode']),
         urlJump(url) {
             url && (location.href = url);
         }
@@ -139,8 +113,7 @@ export default {
         ...mapState(['userInfo', 'platformInfo', 'shareQRCode'])
     },
     components: {
-        RedeemBtn,
-        HbModal: WmqModal
+        RedeemBtn
     }
 };
 </script>
@@ -349,22 +322,6 @@ export default {
 
         .hb-redeem-btn {
             align-self: flex-end;
-        }
-    }
-
-    .my-qr-code {
-        position: absolute;
-        width: 80%;
-        top: 50%;
-        left: 50%;
-        transform: translate3d(-50%, -50%, 0);
-    }
-
-    .kefu-modal {
-        width: unset;
-
-        /deep/ .hb-modal__body {
-            padding: 0.4rem 0.9rem 0.6rem;
         }
     }
 }

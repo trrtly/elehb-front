@@ -9,7 +9,7 @@ const urls = {
     getUserInfo: '/api/v1/user'
 };
 
-export default {
+const service = {
     // 获取并设置平台相关信息
     async fetchSetPlatformInfo() {
         const platformInfo = store.state.platformInfo;
@@ -66,5 +66,28 @@ export default {
     },
     async toValidateHref() {
         window.location.href = await this.validateHref();
-    }
+    },
+    // 每日签到
+    sign: (function() {
+        let signed = false;
+        return async () => {
+            if (signed) return Toast('您今天已经签到过了，明天再来哦~');
+
+            service
+                .userSignin()
+                .then((res) => {
+                    store.commit('addUserScore', res.score);
+                    Toast(`签到成功，获得${res.score}积分`);
+                    signed = true;
+                })
+                .catch((error) => {
+                    if (+error.code === 1017) {
+                        Toast('您今天已经签到过了，明天再来哦~');
+                        signed = true;
+                    }
+                });
+        };
+    })()
 };
+
+export default service;

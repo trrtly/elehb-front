@@ -60,7 +60,10 @@
 
         <section class="extra-desc-wrapper">
             <p>充值说明</p>
-            <p>1、为避免不可抗力因素，请加客服微信：<a class="wechat-link" href="javascript: void(0);">外卖券小姐姐</a>，以防失联</p>
+            <p>
+                1、为避免不可抗力因素，请加客服微信：<a class="wechat-link" @click.prevent="$store.commit('changeKefuShow', true)">外卖券小姐姐</a
+                >，以防失联
+            </p>
             <p>2、积分可用于本平台现有和未来的各种服务，充值金额不可退款</p>
         </section>
 
@@ -106,10 +109,18 @@ export default {
         };
     },
     computed: {
+        ...mapState(['userInfo']),
         isCreditSelected() {
             return (index) => this.currentSelection === index;
         },
-        ...mapState(['userInfo'])
+        kefuShow: {
+            get() {
+                return this.$store.state.kefuShow;
+            },
+            set(val) {
+                this.$store.state.kefuShow = val;
+            }
+        }
     },
     methods: {
         toRecharge(index) {

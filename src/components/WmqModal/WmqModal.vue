@@ -1,7 +1,7 @@
 <template>
     <van-dialog
         :class="bem()"
-        v-model="innerShowFlag"
+        v-model="show"
         :close-on-click-overlay="closeOnClickOverlay"
         :show-confirm-button="showConfirmButton"
         :show-cancel-button="showCancelButton"
@@ -73,15 +73,6 @@ export default {
             }
         }
     },
-    model: {
-        prop: 'show',
-        event: 'returnBack'
-    },
-    data() {
-        return {
-            innerShowFlag: this.show
-        };
-    },
     methods: {
         crossClose() {
             const action = 'closeCross';
@@ -93,15 +84,7 @@ export default {
             });
         },
         closeModal() {
-            this.innerShowFlag = false;
-        }
-    },
-    watch: {
-        show(v) {
-            this.innerShowFlag = v;
-        },
-        innerShowFlag(v) {
-            this.$emit('returnBack', v);
+            this.$emit('update:show', false);
         }
     }
 };

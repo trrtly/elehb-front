@@ -1,18 +1,53 @@
 <template>
     <div id="app" ref="appWrapper">
         <router-view />
+
+        <!-- 客服弹层 -->
+        <hb-modal class="kefu-modal" :show.sync="kefuShow" :beforeClose="kefuBeforeClose" title="请长按识别二维码">
+            <van-image :src="platformInfo.kfImg" style="width: 3.1rem; height: 3.1rem;" />
+        </hb-modal>
+
+        <!-- 我的邀请码弹窗 -->
+        <van-overlay :show="myQRShow" @click="$store.commit('changeMyQR', false)">
+            <van-image class="my-qr-code" :src="myQRCode" @click.stop />
+        </van-overlay>
     </div>
 </template>
 
 <script>
 import 'reset-css'; // reset-css
 import commonService from '@/service/commonService';
+import WmqModal from '@/components/WmqModal/WmqModal.vue';
+import { Overlay } from 'vant';
+import { mapState } from 'vuex';
 
 export default {
     async created() {
         // 获取平台信息
         const res = await commonService.fetchSetPlatformInfo();
         document.title = res.name;
+
+        this.$store.dispatch('fetchSetMyQR');
+    },
+    computed: {
+        ...mapState(['platformInfo', 'myQRShow', 'myQRCode']),
+        kefuShow: {
+            get() {
+                return this.$store.state.kefuShow;
+            },
+            set(val) {
+                this.$store.state.kefuShow = val;
+            }
+        }
+    },
+    methods: {
+        kefuBeforeClose() {
+            this.$store.commit('changeKefuShow', false);
+        }
+    },
+    components: {
+        vanOverlay: Overlay,
+        HbModal: WmqModal
     }
 };
 </script>
@@ -33,7 +68,7 @@ body,
 
 #app > div {
     // min-height: 100% !important;
-    height: 100%;
+    // height: 100%;
     overflow-y: scroll;
 }
 
@@ -124,6 +159,23 @@ a {
 
     &:visited {
         color: #2f5ee3 !important;
+    }
+}
+
+.my-qr-code {
+    position: absolute;
+    width: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.kefu-modal {
+    width: auto;
+    overflow-y: hidden !important;
+
+    /deep/ .hb-modal__body {
+        padding: 0.4rem 0.9rem 0.6rem;
     }
 }
 </style>

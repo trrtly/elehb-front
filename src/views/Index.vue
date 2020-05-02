@@ -25,27 +25,28 @@
             <section class="main-section" ref="mainSection">
                 <ul class="hb-selections-wrapper">
                     <van-skeleton title title-width="30%" :row="2" :loading="loading">
-                        <li
-                            class="hb-selection"
-                            :class="{ active: isHbSelected(index) }"
-                            v-for="(hb, index) in hbList"
-                            :key="hb.id"
-                            @click="itemClick(index)"
-                        >
-                            <div class="hb-selection-upper">
-                                <div class="hb-selection-title">{{ hb.title }}</div>
-                                <div class="hb-selection-price">
-                                    <span class="hb-selection-price-num din-font" v-show="hb.score > 0">{{ hb.score }}</span>
-                                    <span class="hb-selection-price-text">{{ hb.score > 0 ? '积分/次' : '免费' }}</span>
+                        <template v-for="(hb, index) in hbList">
+                            <li class="hb-selection" :class="{ active: isHbSelected(index) }" :key="hb.id" @click="itemClick(index)">
+                                <div class="hb-selection-upper">
+                                    <div class="hb-selection-title">{{ hb.title }}</div>
+                                    <div class="hb-selection-price">
+                                        <span class="hb-selection-price-num din-font" v-show="hb.score > 0">{{ hb.score }}</span>
+                                        <span class="hb-selection-price-text">{{ hb.score > 0 ? '积分/次' : '免费' }}</span>
+                                    </div>
                                 </div>
-                            </div>
+                            </li>
                             <div
                                 class="hb-selection-bottom"
-                                :class="[(index + 1) % 2 === 0 ? 'right' : 'left']"
-                                v-if="isHbSelected(index)"
+                                :class="[isHbSelected(index) && (index + 1) % 2 === 0 ? 'right' : 'left']"
+                                v-if="
+                                    (isHbSelected(index) && index % 2 !== 0) ||
+                                        (isHbSelected(index - 1) && (index - 1) % 2 === 0) ||
+                                        (isHbSelected(index) && index === hbList.length - 1)
+                                "
+                                :key="hb.description"
                                 v-html="hb.description"
                             ></div>
-                        </li>
+                        </template>
                     </van-skeleton>
                     <van-skeleton v-for="(e, index) in 2" :key="index" title title-width="30%" :row="2" :loading="loading" />
                 </ul>
@@ -188,7 +189,7 @@
         <!-- 首次登录模态框 -->
         <hb-modal
             class="first-login-modal"
-            v-model="firstLogin"
+            :show.sync="firstLogin"
             :close-on-click-overlay="false"
             :show-confirm-button="true"
             :show-cancel-button="true"
@@ -208,13 +209,15 @@
         </hb-modal>
 
         <!-- 领取成功红包弹框 -->
-        <hb-success-modal
+        <!-- <hb-success-modal
             v-model="hbSuccessModalShow"
             :hbList="successHbList"
             :title="successHbTitle"
             :jump-url="successJumpUrl"
             @close="succesHbModalClose"
-        ></hb-success-modal>
+        ></hb-success-modal> -->
+
+        <credit-modal :show.sync="creditModalShow"></credit-modal>
     </div>
 </template>
 
@@ -222,7 +225,7 @@
 // @ is an alias to /src
 import { mapState } from 'vuex';
 import hbModal from '@/components/WmqModal/WmqModal.vue';
-import hbSuccessModal from '@/components/HbSuccessModal/HbSuccessModal.vue';
+import CreditModal from '@/components/CreditModal/CreditModal.vue';
 import Draggable from '@/components/Draggable';
 
 import indexService from '@/service/indexService';
@@ -232,6 +235,7 @@ import settingService from '@/service/settingService';
 export default {
     name: 'home',
     async created() {
+        this.$store.dispatch('fetchSetUserInfo');
         // 检查是否是第一次进入
         this.checkFirstLogin();
 
@@ -279,7 +283,9 @@ export default {
             hbSuccessModalShow: false,
             successHbList: [],
             successHbTitle: '',
-            successJumpUrl: ''
+            successJumpUrl: '',
+
+            creditModalShow: false
         };
     },
     computed: {
@@ -459,29 +465,14 @@ export default {
             this.successJumpUrl = '';
         },
         // 每日签到
-        async sign() {
-            if (this.signed) return this.$toast('您今天已经签到过了，明天再来哦~');
-
-            commonService
-                .userSignin()
-                .then((res) => {
-                    this.$store.commit('addUserScore', res.score);
-                    this.$toast(`签到成功，获得${res.score}积分`);
-                    this.signed = true;
-                })
-                .catch((error) => {
-                    if (+error.code === 1017) {
-                        this.$toast('您今天已经签到过了，明天再来哦~');
-                        this.signed = true;
-                    }
-                });
-            // this.$toast('您今天已经签到过了，明天再来哦~');
+        sign() {
+            commonService.sign();
         }
     },
     components: {
         hbModal,
-        hbSuccessModal,
-        Draggable
+        Draggable,
+        CreditModal
     },
     watch: {
         captchaModalShow(newVal) {
@@ -589,7 +580,7 @@ export default {
 
 .hb-selections-wrapper > .hb-selection.active {
     // min-height: 2.3rem;
-    margin-bottom: 1.06rem !important;
+    // margin-bottom: 1.06rem !important;
     border: 1px solid #2f5ee3;
     // background: #f3f4ff url('../assets/index/click-bg@2x.png') right bottom no-repeat;
     background: #f3f4ff;
@@ -600,10 +591,11 @@ export default {
 //     margin-bottom: 0.2rem;
 // }
 
-.hb-selection .hb-selection-bottom {
+.hb-selection-bottom {
     padding: 0.2rem;
-    position: absolute;
-    bottom: -0.94rem;
+    margin-bottom: 0.2rem;
+    position: relative;
+    // bottom: -0.94rem;
     width: 6.36rem;
     z-index: 1;
     font-size: 0.24rem;
@@ -613,20 +605,12 @@ export default {
     border-radius: 0.08rem;
     box-sizing: border-box;
 
-    &.right {
-        right: -0.01rem;
-
-        &::before {
-            right: 1.35rem;
-        }
+    &.right::before {
+        right: 1.35rem;
     }
 
-    &.left {
-        left: 0;
-
-        &::before {
-            left: 1.35rem;
-        }
+    &.left::before {
+        left: 1.35rem;
     }
 
     &::before {
