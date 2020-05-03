@@ -41,17 +41,17 @@
                 <tbody>
                     <tr>
                         <td>价格</td>
-                        <td>10元</td>
+                        <td>8元</td>
                         <td>10元</td>
                     </tr>
                     <tr>
                         <td>详情</td>
-                        <td>220积分可兑换22次，相当于能领5元通用红包22次</td>
+                        <td>66积分可兑换22次，相当于能领3~5元红包22个</td>
                         <td>可领5元红包8次(免费4次+奖励金兑换4次)</td>
                     </tr>
                     <tr>
                         <td>节省</td>
-                        <td>共约节省<span class="din-font font-bold" style="color: #2f5ee3;">110</span>元</td>
+                        <td>共约节省<span class="din-font font-bold" style="color: #2f5ee3;">66~110</span>元</td>
                         <td>共约节省40元</td>
                     </tr>
                 </tbody>
@@ -61,7 +61,7 @@
         <section class="extra-desc-wrapper">
             <p>充值说明</p>
             <p>
-                1、为避免不可抗力因素，请加客服微信：<a class="wechat-link" @click.prevent="$store.commit('changeKefuShow', true)">外卖券小姐姐</a
+                1、为避免公众号失联，请加客服微信：<a class="wechat-link" @click.prevent="$store.commit('changeKefuShow', true)">外卖券小姐姐</a
                 >，以防失联
             </p>
             <p>2、积分可用于本平台现有和未来的各种服务，充值金额不可退款</p>

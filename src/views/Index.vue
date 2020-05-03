@@ -3,8 +3,8 @@
         <div class="scroll-container">
             <header class="header">
                 <div class="header-upper">
-                    <img class="header-element-logo" src="../assets/index/banner-text@2x.png" alt="ElementLogo" />
-                    <img class="header-decorate-pic" src="../assets/index/banner-pic@2x.png" alt="Decorate" />
+                    <!-- <img class="header-element-logo" src="../assets/index/banner-text@2x.png" alt="ElementLogo" />
+                    <img class="header-decorate-pic" src="../assets/index/banner-pic@2x.png" alt="Decorate" /> -->
                 </div>
                 <div class="header-bottom">
                     <!-- 轮播 -->
@@ -217,6 +217,8 @@
             @close="succesHbModalClose"
         ></hb-success-modal> -->
 
+        <virtual-hb-list-modal :show.sync="virtualHbListModalShow"></virtual-hb-list-modal>
+
         <credit-modal :show.sync="creditModalShow"></credit-modal>
     </div>
 </template>
@@ -226,6 +228,7 @@
 import { mapState } from 'vuex';
 import hbModal from '@/components/WmqModal/WmqModal.vue';
 import CreditModal from '@/components/CreditModal/CreditModal.vue';
+import VirtualHbListModal from '@/components/VirtualHbListModal/VirtualHbListModal.vue';
 import Draggable from '@/components/Draggable';
 
 import indexService from '@/service/indexService';
@@ -285,7 +288,8 @@ export default {
             successHbTitle: '',
             successJumpUrl: '',
 
-            creditModalShow: false
+            creditModalShow: false,
+            virtualHbListModalShow: false
         };
     },
     computed: {
@@ -472,7 +476,8 @@ export default {
     components: {
         hbModal,
         Draggable,
-        CreditModal
+        CreditModal,
+        VirtualHbListModal
     },
     watch: {
         captchaModalShow(newVal) {
@@ -535,7 +540,8 @@ export default {
     position: relative;
     z-index: 1;
     width: 100%;
-    margin-top: 1.4rem;
+    // margin-top: 1.4rem;
+    margin-top: 0.3rem;
 }
 
 .header-bottom > .header-swiper {

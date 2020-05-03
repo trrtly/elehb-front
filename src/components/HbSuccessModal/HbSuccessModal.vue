@@ -1,6 +1,6 @@
 <template>
     <div :class="bem()">
-        <van-overlay :show="innerShow">
+        <van-overlay :show="show">
             <div :class="bem('content')">
                 <section :class="bem('hb-container')">
                     <div class="font-bold" :class="bem('hb-maintitle')">{{ mainTitle }}</div>
@@ -38,31 +38,16 @@ export default {
         mainTitle: String,
         bottomDesc: String
     },
-    model: {
-        prop: 'show',
-        event: 'returnBack'
-    },
-    data() {
-        return {
-            innerShow: this.show
-        };
-    },
     methods: {
         closeModal() {
-            this.$refs.jumpCountDown.reset();
-            this.innerShow = false;
-            this.$emit('returnBack', this.innerShow);
+            this.$emit('update:show', false);
         }
     },
     watch: {
         show(v) {
-            this.innerShow = v;
-
             if (v === false) {
                 this.$emit('close');
             }
-        },
-        innerShow(v) {
             // 处理QQ浏览器滚动穿透--暂时
             if (v) {
                 this.scrollTop = document.body.parentNode.scrollTop || document.body.scrollTop;
@@ -106,6 +91,8 @@ export default {
     }
 
     @include element('hb-wrapper') {
+        margin-top: 2.1rem;
+        height: 4.42rem;
         padding-bottom: 0.33rem;
         border-bottom-left-radius: 175px 49px;
         border-bottom-right-radius: 175px 49px;
@@ -114,20 +101,24 @@ export default {
 
     @include element('hb-maintitle') {
         position: absolute;
+        width: 100%;
         left: 50%;
-        top: 1.1rem;
+        top: 0.6rem;
         transform: translate3d(-50%, 0, 0);
         font-size: 0.52rem;
         color: #fff;
+        text-align: center;
     }
 
     @include element('hb-title') {
         position: absolute;
+        width: 100%;
         left: 50%;
         top: 1.1rem;
         transform: translate3d(-50%, 0, 0);
         font-size: 0.28rem;
         color: #f6ceb9;
+        text-align: center;
     }
 
     @include element('hb-bottom') {
