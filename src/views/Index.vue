@@ -219,6 +219,8 @@
 
         <virtual-hb-list-modal :show.sync="virtualHbListModalShow"></virtual-hb-list-modal>
 
+        <cash-hb-list-modal :show.sync="cashHbListModal"></cash-hb-list-modal>
+
         <credit-modal :show.sync="creditModalShow"></credit-modal>
     </div>
 </template>
@@ -229,6 +231,7 @@ import { mapState } from 'vuex';
 import hbModal from '@/components/WmqModal/WmqModal.vue';
 import CreditModal from '@/components/CreditModal/CreditModal.vue';
 import VirtualHbListModal from '@/components/VirtualHbListModal/VirtualHbListModal.vue';
+import CashHbListModal from '@/components/CashHbListModal/CashHbListModal.vue';
 import Draggable from '@/components/Draggable';
 
 import indexService from '@/service/indexService';
@@ -289,7 +292,8 @@ export default {
             successJumpUrl: '',
 
             creditModalShow: false,
-            virtualHbListModalShow: false
+            virtualHbListModalShow: false,
+            cashHbListModal: false
         };
     },
     computed: {
@@ -477,7 +481,8 @@ export default {
         hbModal,
         Draggable,
         CreditModal,
-        VirtualHbListModal
+        VirtualHbListModal,
+        CashHbListModal
     },
     watch: {
         captchaModalShow(newVal) {
