@@ -101,12 +101,15 @@ export default {
     }
 
     .inner-body {
-        flex: 1;
-        font-size: 0.24rem;
+        font-size: 0.28rem;
         max-height: 2.3rem;
-        overflow-y: auto;
+        // overflow-y: auto;
         text-align: left;
         user-select: text;
+    }
+
+    .inner-desc {
+        font-size: 0.24rem;
     }
 }
 </style>
