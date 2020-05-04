@@ -403,7 +403,14 @@ export default {
                 // 保存领取成功的手机号
                 // localStorage.setItem('phone', this.phoneNum);
             } catch (err) {
-                console.log(err);
+                const errCode = err.code;
+
+                // 积分不足弹框
+                if (errCode === 1006) {
+                    this.creditModalType = 1;
+                    this.showTaskCenter = true;
+                }
+
                 successToast && successToast.clear();
             }
 
@@ -735,7 +742,7 @@ export default {
     bottom: 0;
     background-color: #fff;
     font-size: 0.28rem;
-    z-index: 99;
+    z-index: 1;
 }
 
 .hb-bar .hb-user {

@@ -15,7 +15,9 @@
                                 <p class="item-body-desc">可随机获得<span style="color: #2F5EE3;">1~3</span>积分</p>
                             </div>
                         </div>
-                        <van-button round color="linear-gradient(to right, #ff8b56, #fb5d37)" @click="signIn">去签到</van-button>
+                        <van-button round color="linear-gradient(to right, #ff8b56, #fb5d37)" @click="signIn" :disabled="signed">{{
+                            signed ? '已签到' : '去签到'
+                        }}</van-button>
                     </li>
                     <li class="credit-item">
                         <div>
@@ -68,13 +70,18 @@ export default {
     computed: {
         ...mapState(['platformInfo'])
     },
+    data() {
+        return {
+            signed: false
+        };
+    },
     methods: {
         ...mapActions(['openMyQRCode']),
         closeModal() {
             this.$emit('update:show', false);
         },
-        signIn() {
-            commonService.sign();
+        async signIn() {
+            this.signed = await commonService.sign();
         }
     },
     components: {

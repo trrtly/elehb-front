@@ -71,20 +71,25 @@ const service = {
     sign: (function() {
         let signed = false;
         return async () => {
-            if (signed) return Toast('您今天已经签到过了，明天再来哦~');
+            if (signed) {
+                Toast('您今天已经签到过了，明天再来哦~');
+                return signed;
+            }
 
-            service
+            return service
                 .userSignin()
                 .then((res) => {
                     store.commit('addUserScore', res.score);
                     Toast(`签到成功，获得${res.score}积分`);
                     signed = true;
+                    return signed;
                 })
                 .catch((error) => {
                     if (+error.code === 1017) {
                         Toast('您今天已经签到过了，明天再来哦~');
                         signed = true;
                     }
+                    return signed;
                 });
         };
     })()
