@@ -381,8 +381,8 @@ export default {
 
             try {
                 let res = await indexService.getRedPack({
-                    id: currentHb.id,
-                    mobile: this.phoneNum
+                    id: currentHb.id
+                    // mobile: this.phoneNum
                 });
 
                 const type = +res.type;
@@ -735,6 +735,7 @@ export default {
     bottom: 0;
     background-color: #fff;
     font-size: 0.28rem;
+    z-index: 99;
 }
 
 .hb-bar .hb-user {
