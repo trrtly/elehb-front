@@ -157,7 +157,7 @@
 
         <!-- 签到flot -->
         <draggable :initStyle="{ right: 0, bottom: '2.9rem' }" lockVertical>
-            <div class="sign-wrapper" @click="sign"></div>
+            <div class="sign-wrapper" @click="showTaskCenter"></div>
         </draggable>
 
         <!-- 验证码回执模态框 -->
@@ -221,7 +221,7 @@
 
         <cash-hb-list-modal :show.sync="cashHbListModal"></cash-hb-list-modal>
 
-        <credit-modal :show.sync="creditModalShow"></credit-modal>
+        <credit-modal :show.sync="creditModalShow" :type="creditModalType"></credit-modal>
     </div>
 </template>
 
@@ -235,7 +235,6 @@ import CashHbListModal from '@/components/CashHbListModal/CashHbListModal.vue';
 import Draggable from '@/components/Draggable';
 
 import indexService from '@/service/indexService';
-import commonService from '@/service/commonService';
 import settingService from '@/service/settingService';
 
 export default {
@@ -292,6 +291,8 @@ export default {
             successJumpUrl: '',
 
             creditModalShow: false,
+            creditModalType: 1,
+
             virtualHbListModalShow: false,
             cashHbListModal: false
         };
@@ -380,8 +381,8 @@ export default {
 
             try {
                 let res = await indexService.getRedPack({
-                    id: currentHb.id
-                    // mobile: this.phoneNum
+                    id: currentHb.id,
+                    mobile: this.phoneNum
                 });
 
                 const type = +res.type;
@@ -402,6 +403,7 @@ export default {
                 // 保存领取成功的手机号
                 // localStorage.setItem('phone', this.phoneNum);
             } catch (err) {
+                console.log(err);
                 successToast && successToast.clear();
             }
 
@@ -472,9 +474,10 @@ export default {
             this.successHbTitle = '';
             this.successJumpUrl = '';
         },
-        // 每日签到
-        sign() {
-            commonService.sign();
+        // 任务中心
+        showTaskCenter() {
+            this.creditModalType = 2;
+            this.creditModalShow = true;
         }
     },
     components: {

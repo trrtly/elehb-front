@@ -3,7 +3,7 @@
         <van-overlay :show="show">
             <div class="credit-container">
                 <div class="credit-head">
-                    <p class="head-text font-bold">您的积分不足</p>
+                    <p class="head-text font-bold">{{ type === 1 ? '您的积分不足' : '领取积分' }}</p>
                     <p class="head-desc">可以尝试以下方式获取积分</p>
                 </div>
                 <ul class="credit-body">
@@ -59,6 +59,10 @@ export default {
         show: {
             type: Boolean,
             default: false
+        },
+        type: {
+            type: Number,
+            default: 1
         }
     },
     computed: {
