@@ -217,9 +217,10 @@
             @close="succesHbModalClose"
         ></hb-success-modal> -->
 
-        <virtual-hb-list-modal :show.sync="virtualHbListModalShow"></virtual-hb-list-modal>
+        <virtual-hb-list-modal :show.sync="virtualHbListModalShow" :title="virtualHbTitle" :virtualHb="virtualHb"></virtual-hb-list-modal>
 
-        <cash-hb-list-modal :show.sync="cashHbListModal"></cash-hb-list-modal>
+        <cash-hb-list-modal :show.sync="cashHbListModal" :title="cashHbTitle" :cashHbList="cashHbList">
+        </cash-hb-list-modal>
 
         <credit-modal :show.sync="creditModalShow" :type="creditModalType"></credit-modal>
     </div>
@@ -294,7 +295,11 @@ export default {
             creditModalType: 1,
 
             virtualHbListModalShow: false,
-            cashHbListModal: false
+            virtualHbTitle: false,
+            virtualHb: {},
+            cashHbListModal: false,
+            cashHbTitle: '',
+            cashHbList: []
         };
     },
     computed: {
@@ -399,6 +404,10 @@ export default {
                         location.href = res.url;
                     }, 500);
                 }
+                if (type === 3) {
+                    successToast && successToast.clear();
+                    this.showActivityResult(res);
+                }
 
                 // 保存领取成功的手机号
                 // localStorage.setItem('phone', this.phoneNum);
@@ -485,6 +494,26 @@ export default {
         showTaskCenter() {
             this.creditModalType = 2;
             this.creditModalShow = true;
+        },
+        showActivityResult(res) {
+            switch (res.activity.type) {
+                // 随机现金红包
+                case 1:
+                    this.cashHbListModal = true;
+                    this.cashHbTitle = res.subTitle;
+                    this.cashHbList = { amount: res.activity.amount, title: res.activity.name };
+                break;
+                // 饿了么月卡
+                case 2:
+                    this.virtualHbListModalShow = true;
+                    this.virtualHbTitle = res.subTitle;
+                    this.virtualHb.title = res.activity.name;
+                    this.virtualHb.content = res.activity.code;
+                break;
+                // 百度网盘
+                case 3:
+                break;
+            }
         }
     },
     components: {
