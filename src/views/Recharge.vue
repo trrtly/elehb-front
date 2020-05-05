@@ -109,12 +109,12 @@ export default {
             WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
                 {
-                    "appId": res.appId,
-                    "timeStamp": res.timeStamp,
-                    "nonceStr": res.nonceStr,
-                    "package": res.package,
-                    "signType": res.signType,
-                    "paySign": res.paySign
+                    appId: res.appId,
+                    timeStamp: res.timeStamp,
+                    nonceStr: res.nonceStr,
+                    package: res.package,
+                    signType: res.signType,
+                    paySign: res.paySign
                 },
                 function (res) {
                     if (res.err_msg == 'get_brand_wcpay_request:ok') {
