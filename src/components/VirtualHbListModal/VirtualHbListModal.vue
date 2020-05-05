@@ -1,5 +1,5 @@
 <template>
-    <hb-success-modal :show.sync="innerShow" main-title="兑换成功" :title="title" bottom-desc="请加客服微信领取">
+    <hb-success-modal :show.sync="innerShow" :main-title="mainTitle" :title="title" bottom-desc="请加客服微信领取">
         <div class="body-wrapper" slot="mainBody">
             <div class="virtual-inner">
                 <p class="inner-head">
@@ -31,6 +31,7 @@ export default {
             default: false
         },
         title: String,
+        mainTitle: String,
         virtualHb: {
             type: Object,
             default: () => ({})

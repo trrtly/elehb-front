@@ -217,7 +217,8 @@
             @close="succesHbModalClose"
         ></hb-success-modal> -->
 
-        <virtual-hb-list-modal :show.sync="virtualHbListModalShow" :title="virtualHbTitle" :virtualHb="virtualHb"></virtual-hb-list-modal>
+        <virtual-hb-list-modal :show.sync="virtualHbListModalShow" :main-title="virtualHbMainTitle" :title="virtualHbTitle" :virtualHb="virtualHb">
+        </virtual-hb-list-modal>
 
         <cash-hb-list-modal :show.sync="cashHbListModal" :main-title="cashHbMainTitle" :title="cashHbTitle" :cashHbList="cashHbList">
         </cash-hb-list-modal>
@@ -295,7 +296,8 @@ export default {
             creditModalType: 1,
 
             virtualHbListModalShow: false,
-            virtualHbTitle: false,
+            virtualHbMainTitle: '',
+            virtualHbTitle: '',
             virtualHb: {},
             cashHbListModal: false,
             cashHbMainTitle: '',
@@ -504,6 +506,7 @@ export default {
                 this.cashHbList = [{ amount: res.activity.amount, title: res.activity.name }];
             } else if (res.activity.type == 2 || res.activity.type == 3) {
                 this.virtualHbListModalShow = true;
+                this.virtualHbMainTitle = res.title;
                 this.virtualHbTitle = res.subTitle;
                 this.virtualHb.title = res.activity.name;
                 this.virtualHb.content = res.activity.code;
