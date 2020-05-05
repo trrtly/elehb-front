@@ -99,7 +99,6 @@ export default {
                             done();
                         })
                         .catch(() => {
-                            this.$toast('提现失败');
                             done();
                         });
                 }
