@@ -116,7 +116,7 @@ export default {
                     signType: res.signType,
                     paySign: res.paySign
                 },
-                function (res) {
+                function(res) {
                     if (res.err_msg == 'get_brand_wcpay_request:ok') {
                         WeixinJSBridge.call('closeWindow');
                         this.$wmqModal({
