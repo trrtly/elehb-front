@@ -40,7 +40,9 @@
                                 <p class="item-body-desc">不定期充值优惠等着你</p>
                             </div>
                         </div>
-                        <van-button round color="linear-gradient(to right, #ff8b56, #fb5d37)" url="'{{ platformInfo.rechargeUrl }}'">去充值</van-button>
+                        <van-button round color="linear-gradient(to right, #ff8b56, #fb5d37)" :url="platformInfo.rechargeUrl">
+                            去充值
+                        </van-button>
                     </li>
                 </ul>
             </div>
