@@ -219,7 +219,7 @@
 
         <virtual-hb-list-modal :show.sync="virtualHbListModalShow" :title="virtualHbTitle" :virtualHb="virtualHb"></virtual-hb-list-modal>
 
-        <cash-hb-list-modal :show.sync="cashHbListModal" :title="cashHbTitle" :cashHbList="cashHbList">
+        <cash-hb-list-modal :show.sync="cashHbListModal" :main-title="cashHbMainTitle" :title="cashHbTitle" :cashHbList="cashHbList">
         </cash-hb-list-modal>
 
         <credit-modal :show.sync="creditModalShow" :type="creditModalType"></credit-modal>
@@ -298,6 +298,7 @@ export default {
             virtualHbTitle: false,
             virtualHb: {},
             cashHbListModal: false,
+            cashHbMainTitle: '',
             cashHbTitle: '',
             cashHbList: []
         };
@@ -496,23 +497,16 @@ export default {
             this.creditModalShow = true;
         },
         showActivityResult(res) {
-            switch (res.activity.type) {
-                // 随机现金红包
-                case 1:
-                    this.cashHbListModal = true;
-                    this.cashHbTitle = res.subTitle;
-                    this.cashHbList = { amount: res.activity.amount, title: res.activity.name };
-                break;
-                // 饿了么月卡
-                case 2:
-                    this.virtualHbListModalShow = true;
-                    this.virtualHbTitle = res.subTitle;
-                    this.virtualHb.title = res.activity.name;
-                    this.virtualHb.content = res.activity.code;
-                break;
-                // 百度网盘
-                case 3:
-                break;
+            if (res.activity.type == 1) {
+                this.cashHbListModal = true;
+                this.cashHbMainTitle = res.title;
+                this.cashHbTitle = res.subTitle;
+                this.cashHbList = [{ amount: res.activity.amount, title: res.activity.name }];
+            } else if (res.activity.type == 2 || res.activity.type == 3) {
+                this.virtualHbListModalShow = true;
+                this.virtualHbTitle = res.subTitle;
+                this.virtualHb.title = res.activity.name;
+                this.virtualHb.content = res.activity.code;
             }
         }
     },

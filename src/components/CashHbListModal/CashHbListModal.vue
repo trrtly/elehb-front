@@ -1,5 +1,5 @@
 <template>
-    <hb-success-modal :show.sync="innerShow" main-title="成功领取现金" :title="title" bottom-desc="请前往“个人中心-我的佣金-提现”">
+    <hb-success-modal :show.sync="innerShow" :main-title="mainTitle" :title="title" bottom-desc="请前往“个人中心-我的佣金-提现”">
         <template slot="mainBody">
             <ul
                 :class="bem('hb-list')"
@@ -9,7 +9,7 @@
                 <li :class="bem('hb-item')" v-for="(hb, index) in cashHbList" :key="index">
                     <div :class="bem('hb-item-left')">
                         <span class="fz-32 font-bold" style="position: relative; top: 0.02rem;">￥</span>
-                        <span class="din-font" style="font-size: 0.5rem;">{{ hb.amount | numFilter }}</span>
+                        <span class="din-font" style="font-size: 0.5rem;">{{ hb.amount }}</span>
                     </div>
                     <div :class="bem('hb-item-right')">
                         <p class="fz-32 font-bold" style="color: #393939;">{{ hb.title }}</p>
@@ -36,6 +36,7 @@ export default {
             default: false
         },
         title: String,
+        mainTitle: String,
         cashHbList: {
             type: Array,
             default: () => []
