@@ -4,7 +4,7 @@ const ImageminWebpWebpackPlugin = require('imagemin-webp-webpack-plugin');
 // vue.config.js
 module.exports = {
     devServer: {
-        proxy: 'http://qq2jabjph5t8drkl.quanduogo.com'
+        proxy: 'http://localhost:8000'
     },
     css: {
         loaderOptions: {

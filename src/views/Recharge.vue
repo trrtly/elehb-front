@@ -11,17 +11,17 @@
             <ul class="credit-selection-list">
                 <li
                     class="credit-selection"
-                    :class="{ active: isCreditSelected(index) }"
-                    v-for="(item, index) in creditSelection"
-                    :key="index"
-                    @click="toRecharge(index)"
+                    :class="{ active: isCreditSelected(item.id) }"
+                    v-for="item in creditSelection"
+                    :key="item.id"
+                    @click="toRecharge(item.id)"
                 >
                     <p class="credit-text fz-28">
-                        <span class="din-font fz-36">{{ item.creditNum }}</span>
+                        <span class="din-font fz-36">{{ item.score }}</span>
                         积分
                     </p>
-                    <p class="credit-price fz-24">售价: {{ item.price }}元</p>
-                    <div v-if="item.recommended" class="credit-recommended">推荐</div>
+                    <p class="credit-price fz-24">售价: {{ item.amount }}元</p>
+                    <div v-if="item.tag" class="credit-recommended">{{ item.tag }}</div>
                 </li>
             </ul>
         </header>
@@ -81,37 +81,19 @@ import rechargeService from '@/service/rechargeService';
 export default {
     async created() {
         const list = await rechargeService.getRechargeList();
-        list.score && (this.creditSelection = list.score);
+        this.creditSelection = list;
     },
     data() {
         return {
             credit: 1000,
-            creditSelection: [
-                {
-                    creditNum: 17,
-                    price: '1.00'
-                },
-                {
-                    creditNum: 100,
-                    price: '5.00'
-                },
-                {
-                    creditNum: 220,
-                    price: '10.00',
-                    recommended: true
-                },
-                {
-                    creditNum: 480,
-                    price: '20.00'
-                }
-            ],
+            creditSelection: [],
             currentSelection: '' // 默认无选中
         };
     },
     computed: {
         ...mapState(['userInfo']),
         isCreditSelected() {
-            return (index) => this.currentSelection === index;
+            return (id) => this.currentSelection === id;
         },
         kefuShow: {
             get() {
@@ -123,18 +105,72 @@ export default {
         }
     },
     methods: {
-        toRecharge(index) {
-            this.currentSelection = index;
-
-            this.$wmqModal({
-                title: '支付成功',
-                text: '积分充值已完成，赶快去领取红包吧！',
-                showConfirmButton: true,
-                confirmButtonText: '立即领取',
-                confirm: () => {
-                    this.$router.push('/');
+        onBridgeReady(res) {
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                {
+                    "appId": res.appId,
+                    "timeStamp": res.timeStamp,
+                    "nonceStr": res.nonceStr,
+                    "package": res.package,
+                    "signType": res.signType,
+                    "paySign": res.paySign
+                },
+                function (res) {
+                    if (res.err_msg == 'get_brand_wcpay_request:ok') {
+                        WeixinJSBridge.call('closeWindow');
+                        this.$wmqModal({
+                            title: '支付成功',
+                            text: '积分充值已完成，赶快去领取红包吧！',
+                            showConfirmButton: true,
+                            confirmButtonText: '立即领取',
+                            confirm: () => {
+                                this.$router.push('/');
+                            }
+                        });
+                    } else if (res.err_msg == 'get_brand_wcpay_request:cancel') {
+                        alert('支付取消');
+                    } else if (res.err_msg == 'get_brand_wcpay_request:fail') {
+                        alert('支付失败');
+                    }
                 }
+            );
+        },
+        async toRecharge(id) {
+            this.currentSelection = id;
+
+            this.$toast.allowMultiple();
+
+            let successToast = this.$toast({
+                message: '支付中，请稍后...',
+                duration: 0
             });
+
+            try {
+                let res = await rechargeService.createOrder({
+                    id: id
+                });
+                if (typeof WeixinJSBridge == 'undefined') {
+                    if (document.addEventListener) {
+                        document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(res), false);
+                    } else if (document.attachEvent) {
+                        document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady(res));
+                        document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady(res));
+                    }
+                } else {
+                    this.onBridgeReady(res);
+                }
+            } catch (err) {
+                const errCode = err.code;
+
+                // 积分不足弹框
+                if (errCode === 1006) {
+                    this.creditModalType = 1;
+                    this.showTaskCenter = true;
+                }
+
+                successToast && successToast.clear();
+            }
         }
     },
     components: {

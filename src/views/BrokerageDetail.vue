@@ -54,7 +54,7 @@ export default {
             userBrokerage: '0.00',
 
             currentPage: 1,
-            pageLimit: 5
+            pageLimit: 20
         };
     },
     computed: {
