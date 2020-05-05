@@ -148,7 +148,8 @@ export default {
 
             try {
                 let res = await rechargeService.createOrder({
-                    id: id
+                    id: id,
+                    openid: this.$router.app._route.query.openid
                 });
                 if (typeof WeixinJSBridge == 'undefined') {
                     if (document.addEventListener) {

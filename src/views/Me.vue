@@ -22,8 +22,8 @@
                             class="me-recharge-btn fz-28 font-bold"
                             size="small"
                             color="linear-gradient(to right, #ffe28a, #ffcf51)"
+                            :url="platformInfo.rechargeUrl"
                             round
-                            to="/recharge"
                             >充值</van-button
                         >
                         <!-- <van-button class="me-recharge-btn fz-28 font-bold" size="small" round to="/credit">查看</van-button> -->

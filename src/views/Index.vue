@@ -138,7 +138,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/recharge">充值积分</van-button> -->
+            <!-- <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" url="{{ platformInfo.rechargeUrl }}">充值积分</van-button> -->
             <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/me">前往个人中心</van-button>
         </footer>
 
@@ -318,7 +318,7 @@ export default {
         currentSelectedHb() {
             return this.hbList[this.currentHbSelection];
         },
-        ...mapState(['userInfo'])
+        ...mapState(['userInfo', 'platformInfo'])
     },
     methods: {
         // 检查该手机号是否是已经登录的状态

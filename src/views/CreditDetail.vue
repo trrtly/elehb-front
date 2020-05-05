@@ -28,7 +28,8 @@
             </van-list>
         </section>
 
-        <van-button class="bottom-button" block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/recharge">充值积分</van-button>
+        <van-button class="bottom-button" block color="linear-gradient(to right, #6552ff, #2c3ffb)" url="{{ platformInfo.rechargeUrl }}">
+            充值积分</van-button>
     </div>
 </template>
 
@@ -55,7 +56,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(['userInfo'])
+        ...mapState(['userInfo', 'platformInfo'])
     },
     methods: {
         async getList() {
