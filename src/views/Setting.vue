@@ -4,9 +4,9 @@
             <van-cell title="授权免登录" center>
                 <van-switch :value="autoLogin" @input="loginOnChange" :loading="autoLoginLoading" active-color="#09BB07" />
             </van-cell>
-            <van-cell title="每日提醒" center>
+            <!-- <van-cell title="每日提醒" center>
                 <van-switch :value="remind" @input="remindOnChange" :loading="remindLoading" active-color="#09BB07" />
-            </van-cell>
+            </van-cell> -->
         </van-cell-group>
         <van-cell-group>
             <van-cell title="用户服务协议" is-link url="//r.xiumi.us/board/v5/2XWpR/190715124" />
