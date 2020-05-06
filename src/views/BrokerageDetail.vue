@@ -94,8 +94,13 @@ export default {
                     brokerageDetailService
                         .withDraw()
                         .then(() => {
-                            this.$toast('提现成功');
                             done();
+                            this.$wmqModal({
+                                title: '',
+                                text: '提现成功，请前往公众号领取',
+                                showConfirmButton: true,
+                                confirmButtonText: '我知道了'
+                            });
                         })
                         .catch(() => {
                             done();

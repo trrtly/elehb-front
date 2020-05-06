@@ -120,7 +120,7 @@ export default {
         position: absolute;
         width: 100%;
         left: 50%;
-        top: 1.1rem;
+        top: 1.2rem;
         transform: translate3d(-50%, 0, 0);
         font-size: 0.28rem;
         color: #f6ceb9;

@@ -118,6 +118,10 @@ body {
     content: '';
 }
 
+.van-cell__title {
+    flex: 2;
+}
+
 /* common */
 .fz-40 {
     font-size: 0.4rem;

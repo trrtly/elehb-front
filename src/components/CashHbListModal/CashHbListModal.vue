@@ -9,7 +9,7 @@
                 <li :class="bem('hb-item')" v-for="(hb, index) in cashHbList" :key="index">
                     <div :class="bem('hb-item-left')">
                         <span class="fz-32 font-bold" style="position: relative; top: 0.02rem;">￥</span>
-                        <span class="din-font" style="font-size: 0.5rem;">{{ hb.amount }}</span>
+                        <span class="din-font" style="font-size: 0.5rem;">{{ hb.amount | numFilter }}</span>
                     </div>
                     <div :class="bem('hb-item-right')">
                         <p class="fz-32 font-bold" style="color: #393939;">{{ hb.title }}</p>
@@ -85,38 +85,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@include element('hb-list') {
-    margin-top: 2.1rem;
-    padding: 0.2rem 0.2rem 0;
-    min-height: 4.14rem;
-    max-height: 4.14rem;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: auto;
-    touch-action: pan-y;
-}
-
-@include element('hb-item') {
-    display: flex;
-    padding: 0.29rem 0.38rem;
-    width: 100%;
-    height: 1.28rem;
-    background: #fdebd3;
-    border-radius: 8px;
-    box-shadow: 0px 0px 2px 2px #efefef2e;
-    box-sizing: border-box;
-
-    &:not(:first-child) {
-        margin-top: 0.14rem;
+.cash-hb-list-modal {
+    @include element('hb-list') {
+        // margin-top: 2.1rem;
+        padding: 0.2rem 0.2rem 0;
+        min-height: 4.14rem;
+        max-height: 4.14rem;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: auto;
+        touch-action: pan-y;
     }
-}
 
-@include element('hb-item-left') {
-    display: flex;
-    align-items: center;
-    color: #e72a29;
-}
+    @include element('hb-item') {
+        display: flex;
+        padding: 0.29rem 0.38rem;
+        width: 100%;
+        height: 1.28rem;
+        background: #fdebd3;
+        border-radius: 8px;
+        box-shadow: 0px 0px 2px 2px #efefef2e;
+        box-sizing: border-box;
 
-@include element('hb-item-right') {
-    margin-left: 0.38rem;
+        &:not(:first-child) {
+            margin-top: 0.14rem;
+        }
+    }
+
+    @include element('hb-item-left') {
+        display: flex;
+        align-items: center;
+        color: #e72a29;
+    }
+
+    @include element('hb-item-right') {
+        margin-left: 0.38rem;
+    }
 }
 </style>

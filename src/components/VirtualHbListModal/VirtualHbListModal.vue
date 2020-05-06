@@ -95,7 +95,7 @@ export default {
     box-shadow: 0px 0px 2px 2px #efefef2e;
     box-sizing: border-box;
     text-align: center;
-    word-break: break-word;
+    word-break: break-all;
 
     .inner-head {
         font-size: 0.32rem;
@@ -107,6 +107,7 @@ export default {
         // overflow-y: auto;
         text-align: left;
         user-select: text;
+        font-weight: bold;
     }
 
     .inner-desc {
