@@ -44,7 +44,11 @@
                                         (isHbSelected(index) && index === hbList.length - 1)
                                 "
                                 :key="hb.description"
-                                v-html="isHbSelected(index) && (index + 1) % 2 === 0 ? hb.description : hbList[index - 1].description"
+                                v-html="
+                                    (isHbSelected(index) && (index + 1) % 2 === 0) || (isHbSelected(index) && index === hbList.length - 1)
+                                        ? hb.description
+                                        : hbList[index - 1].description
+                                "
                             ></div>
                         </template>
                     </van-skeleton>
