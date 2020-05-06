@@ -9,7 +9,7 @@
                 <li :class="bem('hb-item')" v-for="(hb, index) in cashHbList" :key="index">
                     <div :class="bem('hb-item-left')">
                         <span class="fz-32 font-bold" style="position: relative; top: 0.02rem;">￥</span>
-                        <span class="din-font" style="font-size: 0.5rem;">{{ hb.amount | numFilter }}</span>
+                        <span class="din-font" style="font-size: 0.5rem;">{{ hb.amount }}</span>
                     </div>
                     <div :class="bem('hb-item-right')">
                         <p class="fz-32 font-bold" style="color: #393939;">{{ hb.title }}</p>
@@ -61,11 +61,6 @@ export default {
             ) {
                 e.preventDefault();
             }
-        }
-    },
-    filters: {
-        numFilter(num) {
-            return parseFloat(num).toFixed(0);
         }
     },
     watch: {
