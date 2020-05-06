@@ -41,10 +41,8 @@ export default {
     methods: {
         closeModal() {
             this.$emit('update:show', false);
-        }
-    },
-    watch: {
-        show(v) {
+        },
+        showChange(v) {
             if (v === false) {
                 this.$emit('close');
             }
@@ -64,6 +62,14 @@ export default {
                 document.body.scrollTop = document.body.parentNode.scrollTop = this.scrollTop;
             }
         }
+    },
+    watch: {
+        show(v) {
+            this.showChange(v);
+        }
+    },
+    beforeDestroy() {
+        this.showChange(false);
     },
     components: {
         vanOverlay: Overlay,

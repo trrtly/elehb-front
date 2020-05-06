@@ -22,7 +22,7 @@
                             class="me-recharge-btn fz-28 font-bold"
                             size="small"
                             color="linear-gradient(to right, #ffe28a, #ffcf51)"
-                            :url="platformInfo.rechargeUrl"
+                            @click="$toast('充值功能维护中~')"
                             round
                             >充值</van-button
                         >

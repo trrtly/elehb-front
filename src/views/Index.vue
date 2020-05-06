@@ -44,7 +44,7 @@
                                         (isHbSelected(index) && index === hbList.length - 1)
                                 "
                                 :key="hb.description"
-                                v-html="hb.description"
+                                v-html="isHbSelected(index) && (index + 1) % 2 === 0 ? hb.description : hbList[index - 1].description"
                             ></div>
                         </template>
                     </van-skeleton>
@@ -420,7 +420,7 @@ export default {
                 // 积分不足弹框
                 if (errCode === 1006) {
                     this.creditModalType = 1;
-                    this.showTaskCenter = true;
+                    this.creditModalShow = true;
                 }
 
                 successToast && successToast.clear();
