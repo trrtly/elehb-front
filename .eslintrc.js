@@ -4,7 +4,7 @@ module.exports = {
         node: true
     },
     extends: ['plugin:vue/essential', '@vue/prettier'],
-    globals: {"WeixinJSBridge" : false},
+    globals: { WeixinJSBridge: false },
     rules: {
         'no-console': 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
