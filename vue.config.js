@@ -35,17 +35,17 @@ module.exports = {
                         overrideExtension: false,
                         detailedLogs: true,
                         strict: false
-                    }),
-                    new SkeletonPlugin({
-                        pathname: path.resolve(__dirname, './shell'), // 用来存储 shell 文件的地址
-                        staticDir: path.resolve(__dirname, './dist'), // 最好和 `output.path` 相同
-                        routes: ['/'], // 将需要生成骨架屏的路由添加到数组中
-                        defer: 10000,
-                        device: 'iPhone 6',
-                        cssUnit: 'rem',
-                        decimal: 4,
-                        loading: 'chiaroscuro'
                     })
+                    // new SkeletonPlugin({
+                    //     pathname: path.resolve(__dirname, './shell'), // 用来存储 shell 文件的地址
+                    //     staticDir: path.resolve(__dirname, './dist'), // 最好和 `output.path` 相同
+                    //     routes: ['/'], // 将需要生成骨架屏的路由添加到数组中
+                    //     defer: 10000,
+                    //     device: 'iPhone 6',
+                    //     cssUnit: 'rem',
+                    //     decimal: 4,
+                    //     loading: 'chiaroscuro'
+                    // })
                 ]
             };
         }
@@ -84,10 +84,10 @@ module.exports = {
                 };
             });
 
-        config.plugin('html').tap((opts) => {
-            opts[0].minify.removeComments = false;
-            return opts;
-        });
+        // config.plugin('html').tap((opts) => {
+        //     opts[0].minify.removeComments = false;
+        //     return opts;
+        // });
     },
 
     productionSourceMap: false
