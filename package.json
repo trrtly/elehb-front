@@ -38,6 +38,7 @@
     "image-webpack-loader": "^6.0.0",
     "imagemin-webp-webpack-plugin": "^3.3.1",
     "node-sass": "^4.13.0",
+    "page-skeleton-webpack-plugin": "^0.10.12",
     "postcss-pxtorem": "^4.0.1",
     "prettier": "^1.18.2",
     "sass-loader": "^8.0.0",
