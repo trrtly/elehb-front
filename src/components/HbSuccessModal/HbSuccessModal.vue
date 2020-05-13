@@ -26,7 +26,11 @@
 
 <script>
 import { Overlay, Icon } from 'vant';
+import imagePreloader from 'image-promise';
 
+import bg from './assets/hb-success-bg@2x.png';
+
+imagePreloader([bg]);
 export default {
     name: 'hbSuccessModal',
     props: {

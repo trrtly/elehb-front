@@ -65,6 +65,7 @@ export default {
 .setting-wrapper {
     background-color: #f7f7f7;
     padding: 0.3rem;
+    height: 100%;
 
     .van-switch {
         font-size: 0.42rem;
