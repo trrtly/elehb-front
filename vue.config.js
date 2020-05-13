@@ -1,7 +1,7 @@
 const WebpackDeepScopeAnalysisPlugin = require('webpack-deep-scope-plugin').default;
 const ImageminWebpWebpackPlugin = require('imagemin-webp-webpack-plugin');
-const { SkeletonPlugin } = require('page-skeleton-webpack-plugin');
-const path = require('path');
+// const { SkeletonPlugin } = require('page-skeleton-webpack-plugin');
+// const path = require('path');
 
 // vue.config.js
 module.exports = {

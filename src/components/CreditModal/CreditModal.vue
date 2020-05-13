@@ -58,6 +58,12 @@ import { mapState, mapActions } from 'vuex';
 import { Overlay, Icon, Button } from 'vant';
 import commonService from '../../service/commonService';
 
+import imagePreloader from 'image-promise';
+
+import bg from './assets/bg-1@2x.png';
+
+imagePreloader([bg]);
+
 export default {
     props: {
         show: {
