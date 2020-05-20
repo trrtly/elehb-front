@@ -28,7 +28,7 @@ const service = {
                 code: userCode
             })
             .catch(() => {
-                Toast('获取token失败');
+                // Toast('获取token失败');
             });
     },
     // 用户签到
