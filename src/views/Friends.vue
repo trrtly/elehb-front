@@ -82,12 +82,13 @@ export default {
             this.friendsList = [...this.friendsList, ...list];
         },
         async showQRDialog() {
-            this.myQRShow = true;
+            return this.$toast('邀请功能维护中~');
+            // this.myQRShow = true;
 
-            if (!this.myQRCode) {
-                let res = await this.myQRPromise;
-                this.myQRCode = res.url;
-            }
+            // if (!this.myQRCode) {
+            //     let res = await this.myQRPromise;
+            //     this.myQRCode = res.url;
+            // }
         }
     }
 };

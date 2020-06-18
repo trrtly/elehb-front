@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import commonService from '@/service/commonService';
 import meService from '@/service/meService';
-import { Math } from 'core-js';
+import { Toast } from 'vant';
 
 Vue.use(Vuex);
 
@@ -64,8 +64,9 @@ export default new Vuex.Store({
             return Promise.resolve(state.myQRCode);
         },
         openMyQRCode() {
-            this.dispatch('fetchSetMyQR');
-            this.commit('changeMyQR', true);
+            return Toast('邀请功能维护中~');
+            // this.dispatch('fetchSetMyQR');
+            // this.commit('changeMyQR', true);
         }
     },
     modules: {}
