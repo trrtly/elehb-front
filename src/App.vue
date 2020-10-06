@@ -101,8 +101,9 @@ body,
     background: #fff;
 }
 
-#app > div {
+#app > div:first-child {
     overflow-y: scroll;
+    margin-bottom: 100px;
 }
 
 body {

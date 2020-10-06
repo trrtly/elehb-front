@@ -126,7 +126,6 @@ export default {
 .home-body {
     flex: 1;
     margin-top: -20px;
-    margin-bottom: 100px;
     z-index: 99;
 }
 
