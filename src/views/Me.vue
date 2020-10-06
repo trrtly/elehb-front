@@ -120,6 +120,7 @@ export default {
 
 <style lang="scss" scoped>
 .me-wrapper {
+    margin-bottom: 100px;
     height: 100%;
     display: flex;
     flex-direction: column;

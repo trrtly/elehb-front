@@ -2,6 +2,9 @@ import Vue from 'vue';
 import App from './App.vue';
 import store from './store';
 import router from './router';
+import VueCompositionAPI from '@vue/composition-api';
+
+Vue.use(VueCompositionAPI);
 
 // import utils
 import './utils';
@@ -20,7 +23,22 @@ import smoothscroll from 'smoothscroll-polyfill';
 smoothscroll.polyfill();
 
 // import vant components
-import { Swipe, SwipeItem, Dialog, Field, Button, CountDown, Image, Overlay, Checkbox, CheckboxGroup, Skeleton, Toast } from 'vant';
+import {
+    Swipe,
+    SwipeItem,
+    Dialog,
+    Field,
+    Button,
+    CountDown,
+    Image,
+    Overlay,
+    Checkbox,
+    CheckboxGroup,
+    Skeleton,
+    Tabbar,
+    TabbarItem,
+    Toast
+} from 'vant';
 
 Toast.setDefaultOptions({ position: 'bottom', duration: 3000 });
 
@@ -45,6 +63,8 @@ Vue.use(Swipe)
     .use(Checkbox)
     .use(CheckboxGroup)
     .use(Skeleton)
+    .use(Tabbar)
+    .use(TabbarItem)
     .use(VueClipboard);
 
 Vue.config.productionTip = false;

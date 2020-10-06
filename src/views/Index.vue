@@ -358,26 +358,6 @@ export default {
         async getHb() {
             let currentHb = this.currentSelectedHb;
 
-            // if (!this.phoneValid) {
-            //     this.$toast('请输入正确的手机号');
-            //     return;
-            // }
-
-            // 如果没登录
-            // if (!this.eleLoginStatus && currentHb.type !== 2) {
-            //     if (this.validaCode === '') {
-            //         this.$toast('验证码不能为空');
-            //         return;
-            //     }
-
-            //     // 饿了么登录接口
-            //     await indexService.eleLogin({
-            //         mobile: this.phoneNum,
-            //         smsCode: this.validaCode,
-            //         validateToken: this.validateToken
-            //     });
-            // }
-
             let successToast;
 
             if (+currentHb.score > 0) {
@@ -396,12 +376,6 @@ export default {
                 });
 
                 const type = +res.type;
-                // if (type === 1) {
-                //     this.$store.dispatch('fetchSetUserInfo');
-
-                //     successToast && successToast.clear();
-                //     this.showHbModal(res);
-                // }
 
                 if (type === 2) {
                     successToast && successToast.clear();
@@ -414,9 +388,6 @@ export default {
                     this.showActivityResult(res);
                 }
                 this.$store.dispatch('fetchSetUserInfo');
-
-                // 保存领取成功的手机号
-                // localStorage.setItem('phone', this.phoneNum);
             } catch (err) {
                 const errCode = err.code;
 

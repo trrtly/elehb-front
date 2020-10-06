@@ -3,7 +3,7 @@ import commonService from '../service/commonService';
 export async function beforeEnter(to, from, next) {
     // 判断一下有没有微信授权
     let query = to.query;
-    // query.code = '061vNVfh0T8sxu13ITfh0LL9gh0vNVf2';
+    // query.code = '081JeRFa1EHKJz0flUIa1avuFd0JeRFR';
     let token = localStorage.getItem('token');
 
     if (query.code) {
