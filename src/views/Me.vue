@@ -41,12 +41,13 @@
             <div class="invite-inner">
                 <div class="invite-left">
                     <div class="invite-text fz-28">
-                        <p style="color: #545454;">每邀请一位好友的奖励：</p>
-                        <p>
+                        <p style="color: #707070; margin-top: 0.02rem;">◆ 生成专属海报</p>
+                        <!-- <p style="color: #545454;">每邀请一位好友的奖励：</p> -->
+                        <!-- <p>
                             ◆ 立即获得<span class="din-font font-bold" style="color: #2f5ee3;">{{ platformInfo.inviteScore }}</span
                             >积分奖励
-                        </p>
-                        <p>◆ 可获得好友充值金额的<span class="din-font font-bold" style="color: #2f5ee3;">20%</span></p>
+                        </p> -->
+                        <!-- <p>◆ 可获得好友充值金额的<span class="din-font font-bold" style="color: #2f5ee3;">20%</span></p> -->
                     </div>
                     <!-- <van-button class="invite-link-btn fz-24" color="#2f5ee3" round plain @click="copyText(inviteLink)">复制邀请链接</van-button> -->
                 </div>
@@ -82,15 +83,14 @@
                 </li>
             </ul>
         </section>
-        <footer class="me-footer">
+        <!-- <footer class="me-footer">
             <redeem-btn />
-        </footer>
+        </footer> -->
     </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import RedeemBtn from '../components/RedeemBtn/RedeemBtn';
 
 export default {
     name: 'me',
@@ -111,9 +111,6 @@ export default {
     },
     computed: {
         ...mapState(['userInfo', 'platformInfo', 'shareQRCode'])
-    },
-    components: {
-        RedeemBtn
     }
 };
 </script>

@@ -54,7 +54,7 @@
 
             <div class="additon-desc-section">
                 <h2 class="case-title fz-32 font-bold">领红包点外卖得返利</h2>
-                <ul class="show-case-list">
+                <ul class="show-case-list fz-24">
                     <li>
                         <img class="case-logo" src="../assets/index/icon_shouquan@2x.png" alt="shou-quan" />
                         <p>每日领红包</p>
@@ -72,8 +72,8 @@
                 </ul>
             </div>
 
-            <div class="desc-section">
-                <h3>注意事项</h3>
+            <div class="desc-section fz-24">
+                <h3 class="font-bold">注意事项</h3>
                 <p>1、注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项</p>
                 <p>2、注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项</p>
                 <p>3、注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项</p>

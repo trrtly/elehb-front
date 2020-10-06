@@ -55,69 +55,12 @@
                     <van-skeleton v-for="(e, index) in 2" :key="index" title title-width="30%" :row="2" :loading="loading" />
                 </ul>
 
-                <!-- <div class="hb-form" v-if="hbList[currentHbSelection]">
-                    <div>
-                        <van-field
-                            class="phone-input van-hairline--surround"
-                            type="number"
-                            required
-                            clearable
-                            v-model="phoneNum"
-                            maxlength="11"
-                            placeholder="请输入饿了么账号（手机号）"
-                            :error-message="phoneErrMsg"
-                            @input="checkLoginStatus"
-                        />
-                    </div>
-
-                    <div v-if="!eleLoginStatus">
-                        <van-field
-                            class="valida-code-input van-hairline--surround"
-                            type="number"
-                            required
-                            clearable
-                            v-model.trim="validaCode"
-                            placeholder="短信验证码"
-                        >
-                            <van-button
-                                v-if="!isGetingCode"
-                                style="height: 0.4rem; line-height: 0.4rem;"
-                                slot="button"
-                                size="small"
-                                type="info"
-                                color="#2c3ffb"
-                                round
-                                plain
-                                hairline
-                                @click="getValidationCode"
-                            >
-                                获取验证码
-                            </van-button>
-                            <van-count-down
-                                v-else
-                                slot="button"
-                                ref="textCountDown"
-                                :time="30000"
-                                format="ss s"
-                                :auto-start="false"
-                                @finish="isGetingCode = false"
-                            />
-                        </van-field>
-                    </div>
-                </div> -->
-
                 <van-button class="hb-form-submit fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" @click="getHb">
                     立即领取
                 </van-button>
 
                 <div class="hb-rules-wrapper">
                     <p>领取规则：</p>
-                    <!-- <div class="hb-rules" v-html="hbList[currentHbSelection] && hbList[currentHbSelection].rule"></div> -->
-                    <!-- <p>
-                        1、每个手机号每日限领1次，部分异常账号由于饿了么风控原因，无法领取红包，请更换其他手机号领取；
-                    </p>
-                    <p>2、若领取失败，不会消耗积分；</p>
-                    <p>3、领取的红包有效期以饿了么为准，请及时使用 。</p> -->
                     <p>1、每日可分别领取一次午餐大红包和晚餐大红包</p>
                     <p>2、若领取失败，不会消耗积分</p>
                     <p>3、领取的红包有效期以饿了么为准，请及时使用</p>
@@ -143,19 +86,6 @@
             <!-- <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" url="{{ platformInfo.rechargeUrl }}">充值积分</van-button> -->
             <van-button class="hb-recharge fz-32" block color="linear-gradient(to right, #6552ff, #2c3ffb)" to="/me">前往个人中心</van-button>
         </footer>
-
-        <!-- 个人中心悬浮 -->
-        <!-- <div class="user-center-wrapper" v-route-jump="'/me'">
-            <div class="user-center-btn fz-32">
-                <span class="user-center-icon"></span>
-                <span class="user-center-text fz-28">个人中心</span>
-            </div>
-        </div> -->
-
-        <!-- 自动评价flot -->
-        <!-- <draggable :initStyle="{ right: 0, bottom: '2.9rem' }" lockVertical v-route-jump="'/comment'">
-            <div class="auto-comment-wrapper"></div>
-        </draggable> -->
 
         <!-- 签到flot -->
         <draggable :initStyle="{ right: 0, bottom: '2.9rem' }" lockVertical>
@@ -209,15 +139,6 @@
             <p style="margin-top: 0.36rem; text-align: left;">1、同意即授权免登录外部平台，将可简化领取各类福利的操作过程。</p>
             <p style="text-align: left;">2、若您不希望授权登录外部平台，可在“个人中心-系统设置”中关闭。</p>
         </hb-modal>
-
-        <!-- 领取成功红包弹框 -->
-        <!-- <hb-success-modal
-            v-model="hbSuccessModalShow"
-            :hbList="successHbList"
-            :title="successHbTitle"
-            :jump-url="successJumpUrl"
-            @close="succesHbModalClose"
-        ></hb-success-modal> -->
 
         <virtual-hb-list-modal :show.sync="virtualHbListModalShow" :main-title="virtualHbMainTitle" :title="virtualHbTitle" :virtualHb="virtualHb">
         </virtual-hb-list-modal>
