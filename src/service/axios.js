@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-import commonService from './commonService';
+// import commonService from './commonService';
 import { Toast } from 'vant';
 
 Vue.use(VueAxios, axios);
@@ -41,7 +41,7 @@ axios.interceptors.response.use(
 
         // 接口401则重新跳转微信授权页面
         if (+resp.status === 401) {
-            commonService.toValidateHref();
+            // commonService.toValidateHref();
         } else {
             const errMsg = responeData.msg ? `${responeData.msg}` : 'unknow error';
             config.showError && errMsg && Toast(`${errMsg}`);

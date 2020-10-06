@@ -3,13 +3,13 @@
         <router-view />
 
         <van-tabbar v-if="$route.meta.showBar" class="home-bar" route>
-            <van-tabbar-item replace to="/">
+            <van-tabbar-item to="/">
                 <span>首页</span>
                 <template #icon="props">
                     <img :src="props.active ? barIcon.index.active : barIcon.index.inactive" />
                 </template>
             </van-tabbar-item>
-            <van-tabbar-item replace to="/me">
+            <van-tabbar-item to="/me">
                 <span>我的</span>
                 <template #icon="props">
                     <img :src="props.active ? barIcon.me.active : barIcon.me.inactive" />
